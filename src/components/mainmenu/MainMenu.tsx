@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import './MainMenu.css';
-import {MainMenuButton} from '../mainmenubutton/MainMenuButton';
+import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
 
 import { getGameMode } from '../../redux/selectors';
-import { GameState } from '../../models';
+import { GameState, GameStateTypes } from '../../models';
 import { continueGame, startNewGame, goToJunkyard, goToSettings } from '../../redux/actions';
 
 interface GameModeProps {
@@ -13,33 +13,33 @@ interface GameModeProps {
     goToJunkyard?: () => void,
     continueGame?: () => void,
     goToSettings?: () => void,
-    gameMode?: string
+    gameMode?: GameStateTypes
 }
 
 export class MainMenu extends React.Component<GameModeProps, {}> {
 
     canContinue:boolean = false;
 
-    continueGame = () => {
-        if (this.props && this.props.gameMode && this.props.continueGame) {
+    continueGame() {
+        if (this.props && this.props.continueGame) {
             this.props.continueGame();
         }        
     }
 
-    startNewGame = () => {
-        if (this.props && this.props.gameMode && this.props.startNewGame) {
+    startNewGame() {
+        if (this.props && this.props.startNewGame) {
             this.props.startNewGame();
         }        
     }
 
-    goToJunkJard = () => {
-        if (this.props && this.props.gameMode && this.props.goToJunkyard) {
+    goToJunkJard() {
+        if (this.props && this.props.goToJunkyard) {
             this.props.goToJunkyard();
         }        
     }
 
-    goToSettings = () => {
-        if (this.props && this.props.gameMode && this.props.goToSettings) {
+    goToSettings() {
+        if (this.props && this.props.goToSettings) {
             this.props.goToSettings();
         }        
     }
@@ -55,22 +55,22 @@ export class MainMenu extends React.Component<GameModeProps, {}> {
                             <MainMenuButton 
                                 title="Kontynuuj"
                                 active={ this.canContinue }
-                                onClick={ this.continueGame }
+                                onClick={ () => this.continueGame() }
                             />
                             <MainMenuButton
                                 title="Nowa gra"
                                 active={true}
-                                onClick={ this.startNewGame }
+                                onClick={ () => this.startNewGame() }
                             />
                             <MainMenuButton
                                 title="Śmietnisko"
                                 active={true}
-                                onClick={ this.goToJunkJard }
+                                onClick={ () => this.goToJunkJard() }
                             />
                             <MainMenuButton
                                 title="Ustawienia"
                                 active={true}
-                                onClick={ this.goToSettings }
+                                onClick={ () => this.goToSettings() }
                             />
                         </div>
                     </div>                    

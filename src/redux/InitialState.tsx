@@ -1,5 +1,5 @@
-import { GameState } from "../models";
+import { GameState, GameStateTypes } from "../models";
 
 export const InitialGameState: GameState  = {
-    mode: 'main_menu',
+    mode: GameStateTypes.MAIN_MENU,
 };

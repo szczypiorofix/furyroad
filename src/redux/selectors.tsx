@@ -1,3 +1,3 @@
-import { GameState } from '../models';
+import { GameState, GameStateTypes } from '../models';
 
-export const getGameMode = (state: GameState): string => state.mode;
+export const getGameMode = (state: GameState): GameStateTypes => state.mode;

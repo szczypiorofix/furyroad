@@ -15,11 +15,13 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 
 export const loadState = (): GameState | undefined => {
     try {
-        const serializedState = localStorage.getItem('state');
-        if (serializedState === null) {
-            return InitialGameState;
-        }
-        return JSON.parse(serializedState);
+        // Wczytywanie z localStorage po odświeżeniu strony
+        
+        // const serializedState = localStorage.getItem('state');
+        // if (serializedState === null) {
+        //     return InitialGameState;
+        // }
+        // return JSON.parse(serializedState);
     } catch (err) {
         return InitialGameState;
     }

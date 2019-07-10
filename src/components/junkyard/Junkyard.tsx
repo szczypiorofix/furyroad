@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import './MainGame.css';
+import './Junkyard.css';
 import {MainMenuButton} from '../mainmenubutton/MainMenuButton';
 
 import { getGameMode } from '../../redux/selectors';
@@ -13,7 +13,7 @@ interface GameModeProps {
     gameMode?: GameStateTypes
 }
 
-export class MainGame extends React.Component<GameModeProps, {}> {
+export class Junkyard extends React.Component<GameModeProps, {}> {
 
     canContinue:boolean = false;
 
@@ -27,7 +27,7 @@ export class MainGame extends React.Component<GameModeProps, {}> {
         console.log("CURRENT GAME MODE: " + this.props.gameMode);
         return (
             <React.Fragment>
-                <h2 className="maingame-title">THIS IS MAIN GAME VIEW</h2>
+                <h2 className="junkyard-title">THIS IS JUNKYARD MENU</h2>
                 <MainMenuButton 
                     title="MENU GŁÓWNE"
                     active={ true }
@@ -46,4 +46,4 @@ const mapDispatchToProps = (dispatch:any) => ({
     goToMainMenu: () => dispatch(goToMainMenu())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainGame);
+export default connect(mapStateToProps, mapDispatchToProps)(Junkyard);

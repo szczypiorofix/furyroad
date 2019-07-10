@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import MainMenu from './components/mainmenu/MainMenu';
+import Game from './components/game/Game';
 
 
 function App() {
   return (
-    <MainMenu />
+    <Game />
   );
 }
 

@@ -3,33 +3,12 @@
 @import url('https://fonts.googleapis.com/css?family=Exo+2&display=swap&subset=latin-ext');
 
 @import 'normalize.less';
-
-
-@backgroundColor: #E1E1E1;
-@textMainColor: #262626;
-@textMainColorLight: #FAFAFA;
-@accentDarkColor: #303F9F;
-@accentLightColor: #3F51B5;
-@accentGray: rgba(136,136,136,0.73);
-
-
-@desktop: ~"only screen and (min-width: 1280px)";
-@tablet:  ~"only screen and (min-width: 600px) and (max-width: 1279px)";
-@mobile:  ~"only screen and (max-width: 599px)";
-
-
+@import 'Settings.less';
 
 * {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-.boxShadow(@ho) {
-    box-shadow: @ho;
-    -webkit-box-shadow: @ho;
-    -moz-box-shadow: @ho;
-    -ms-box-shadow: @ho;
 }
 
 html, body {

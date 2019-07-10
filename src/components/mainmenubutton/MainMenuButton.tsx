@@ -1,16 +1,20 @@
 import React from 'react';
+
 import './MainMenuButton.css';
-import {MainMenuButtonModel} from './MainMenuButtonModel';
+import { MainMenuButtonModel } from '../../models';
 
 
 
-
-export default class MainMenuButton extends React.Component<MainMenuButtonModel, {}> {
+export class MainMenuButton extends React.Component<MainMenuButtonModel, {}> {
 
     render():JSX.Element {
         return (
-            <button>{this.props.title}</button>
+            <button 
+                style={this.props.active ? {visibility:'visible'} : {visibility:'hidden'}}
+                onClick={ () => this.props.onClick() }
+                >
+                {this.props.title}
+            </button>
         )
     }
-
 }

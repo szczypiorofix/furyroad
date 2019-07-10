@@ -6,7 +6,7 @@ var config = {
     password: process.env.FTPPASS,
     host: process.env.FTPHOST,
     port: process.env.FTPPORT,
-    localRoot: __dirname + "/../dist/",
+    localRoot: __dirname + "/build/",
     remoteRoot: "/public_html",
     include: ['*']
 }

@@ -7,6 +7,7 @@ jobs:
        - checkout
        - run: npm install
        - run: npm run build
+       - run: node deploy.js
 
 workflows:
   version: 2

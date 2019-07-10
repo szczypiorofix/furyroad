@@ -27,7 +27,7 @@ export class MainGame extends React.Component<GameModeProps, {}> {
         console.log("CURRENT GAME MODE: " + this.props.gameMode);
         return (
             <React.Fragment>
-                <h2 className="maingame-title">THIS IS MAIN GAME VIEW</h2>
+                <h2 className="maingame-title">THIS IS MAIN GAME VIEW _ FURY ROAD !!!</h2>
                 <MainMenuButton 
                     title="MENU GŁÓWNE"
                     active={ true }

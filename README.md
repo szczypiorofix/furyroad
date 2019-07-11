@@ -4,7 +4,7 @@ A post-apocalyptic drive-through-wasteland game.
 
 
 ## Status
-build:[![CircleCI](https://circleci.com/gh/szczypiorofix/furyroad.svg?style=svg)](https://circleci.com/gh/szczypiorofix/furyroad)
+Latest build: [![CircleCI](https://circleci.com/gh/szczypiorofix/furyroad.svg?style=svg)](https://circleci.com/gh/szczypiorofix/furyroad)
 
 
 ## Website
@@ -34,4 +34,5 @@ build:[![CircleCI](https://circleci.com/gh/szczypiorofix/furyroad.svg?style=svg)
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-[License](https://img.shields.io/badge/license-MIT-green.svg)
+
+![License](https://img.shields.io/badge/license-MIT-green.svg "License icon")

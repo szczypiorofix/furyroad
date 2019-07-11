@@ -27,12 +27,14 @@ export class MainGame extends React.Component<GameModeProps, {}> {
         console.log("CURRENT GAME MODE: " + this.props.gameMode);
         return (
             <React.Fragment>
-                <h2 className="maingame-title">THIS IS MAIN GAME VIEW _ FURY ROAD !!!</h2>
+                <h2 className="maingame-title">THIS IS MAIN GAME VIEW</h2>
+                <h3>This is the new game, seriously...</h3>
+                <h3>You'll se something brand new here.</h3>
                 <MainMenuButton 
                     title="MENU GŁÓWNE"
                     active={ true }
                     onClick={ () => this.goToMainMenu() }
-                />
+                    />
             </React.Fragment>
         )
     }

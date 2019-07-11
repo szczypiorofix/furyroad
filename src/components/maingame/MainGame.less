@@ -1,5 +1,52 @@
 @import '../../Settings.less';
 
-h2.maingame-title {
-    color:red;
+
+div.main-game-div {
+    
+    background-color: @color2;
+    color: @color4;
+
+    h1.maingame-title {
+        text-align: center;
+    }
+    // MainMenuButton
+    button {
+        margin-left: 10px;
+        min-width: 120px;
+        width: 120px;
+        padding: 2px;
+        font-size: 14px;
+    }
+
+    div.main-view-container {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "header main footer";
+    }
+
+    div.main-view-left {
+        grid-area: header;
+        div.statistics-panel {
+            display: flex;
+            flex-direction: column;
+            
+        }
+    }
+
+    div.main-view-middle {
+        grid-area: main;
+        div.events-panel {
+            
+        }
+    }
+
+    div.main-view-right {
+        grid-area: footer;
+        div.upgrades-panel {
+
+        }
+    }
 }
+

@@ -47,7 +47,7 @@ export class MainMenu extends React.Component<GameModeProps, {}> {
     }
 
     render():JSX.Element {
-        console.log("CURRENT GAME MODE: " + this.props.gameMode);
+        // console.log("CURRENT GAME MODE: " + this.props.gameMode);
         return (
             <React.Fragment>
                 <div className="mainmenu-bg">

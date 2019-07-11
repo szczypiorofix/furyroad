@@ -8,7 +8,21 @@ export enum GameStateTypes {
     ENDGAME
 }
 
+export interface GameStats {
+    fuel: number,
+    fuelConsumption: number,
+    currentSpeed: number,
+    distance: number,
+    carHealth: number,
+    carMaxHealth: number,
+    carAttactRatio: number,
+    carShields: number,
+    food: number,
+    water: number,
+    scrap: number
+}
+
 export interface GameState {
-    // mode: 'main_menu' | 'continue' | 'new_game' | 'settings' | 'junkyard' | 'endgame'
-    mode: GameStateTypes
+    mode: GameStateTypes,
+    stats: GameStats
 }

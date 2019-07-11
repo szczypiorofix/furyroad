@@ -16,9 +16,6 @@ interface GameModeProps {
 export class Game extends React.Component<GameModeProps, {}> {
 
     render():JSX.Element {
-
-        console.log(this.props.gameMode);
-
         switch(this.props.gameMode) {
             case GameStateTypes.NEW_GAME:
                 return <MainGame />

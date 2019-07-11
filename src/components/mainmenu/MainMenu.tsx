@@ -8,6 +8,7 @@ import { getGameMode } from '../../redux/selectors';
 import { GameState, GameStateTypes } from '../../models';
 import { continueGame, startNewGame, goToJunkyard, goToSettings } from '../../redux/actions';
 
+
 interface GameModeProps {
     startNewGame?: () => void,
     goToJunkyard?: () => void,
@@ -15,6 +16,7 @@ interface GameModeProps {
     goToSettings?: () => void,
     gameMode?: GameStateTypes
 }
+
 
 export class MainMenu extends React.Component<GameModeProps, {}> {
 

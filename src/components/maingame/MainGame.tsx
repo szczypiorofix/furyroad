@@ -29,11 +29,12 @@ export class MainGame extends React.Component<GameModeProps, {}> {
             <React.Fragment>
                 <h2 className="maingame-title">THIS IS MAIN GAME VIEW</h2>
                 <h3>This is the new game, seriously...</h3>
+                <h3>You'll se something brand new here.</h3>
                 <MainMenuButton 
-                    title="MENU GŝÓWNE"
+                    title="MENU GŁÓWNE"
                     active={ true }
                     onClick={ () => this.goToMainMenu() }
-                />
+                    />
             </React.Fragment>
         )
     }

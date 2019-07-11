@@ -5,13 +5,14 @@ var config = {
     user: process.env.FTPUSER,
     password: process.env.FTPPASS,
     host: process.env.FTPHOST,
-    port: process.env.FTPPORT,
+    port: 21,
     localRoot: __dirname + "/build/",
     remoteRoot: "/public_html",
+    deleteRemote: true,
     include: ['*']
 }
     
-ftpDeploy.deploy(config, function(err) {
+ftpDeploy.deploy(config, function(err, res) {
     if (err) console.log(err)
-    else console.log('done');
+    else console.log('Upload done: '+res);
 });

@@ -19,10 +19,12 @@ Latest build: [![CircleCI](https://circleci.com/gh/szczypiorofix/furyroad.svg?st
 
 ## Used npm packages
 
-* react-moment
-* react-iframe
-* react-skycons
 * typescript
+* react-redux
+* react-scripts
+* redux-logger
+* typesafe-actions
+
 
 
 ## Author

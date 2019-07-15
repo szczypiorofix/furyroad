@@ -1,22 +1,22 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger';
 
-import { CombinedActions } from './actions';
-import myCombinedReducers from './reducer';
+import myCombinedReducers from './reducers';
 
 
 
-export const initialState:CombinedActions = {
-    action1: {
-        type: "ADD_TODO",
-        text: "Initial state ADD TODO"
-    },
-    action2: {
-        type: 'SHOW_ALL',
-        filter: "Show all options"
-    }
+let middleware: any[] = [];
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    const logger = createLogger({
+        diff: true,
+    });
+    middleware = [...middleware, logger];
 }
 
-export const store = createStore(myCombinedReducers);
+
+
+export const store = createStore(myCombinedReducers, applyMiddleware(...middleware));
+
 
 export const unsubscribe = store.subscribe( () => console.log(store.getState() ));
 

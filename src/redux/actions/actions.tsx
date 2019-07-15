@@ -1,14 +1,6 @@
 
 // Action types
-// export enum ActionTypes {
-//     ADD_TODO = "ADD_TODO",
-//     REM_TODO = "REM_TODO",
-// }
 
-export const VisibilityFilters = {
-    SHOW_ALL: 'SHOW_ALL',
-    SHOW_ACTIVE: 'SHOW_ACTIVE'
-}
 
 
 export interface TodoAction {
@@ -36,5 +28,5 @@ export function addTodo(text: string) {
 
 
 export function changeVisibility(filter:string) {
-    return { type: 'CHANGE_VISIBILITY', filter }
+    return { type: SET_VISIBILITY_FILTER, filter }
 }

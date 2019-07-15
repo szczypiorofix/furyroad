@@ -10,19 +10,11 @@ export enum GameStateTypes {
 
 export interface GameStats {
     fuel: number,
-    fuelConsumption: number,
-    currentSpeed: number,
-    distance: number,
-    carHealth: number,
-    carMaxHealth: number,
-    carAttactRatio: number,
-    carShields: number,
-    food: number,
     water: number,
-    scrap: number
 }
 
 export interface GameState {
+    // [key: string]: any,
     mode: GameStateTypes,
     stats: GameStats
 }

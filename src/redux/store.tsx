@@ -1,45 +1,22 @@
-import { createStore, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger';
+import { createStore } from 'redux';
 
-import gameReducer from './reducers/gameReducer';
-import { GameState } from '../models';
-import { InitialGameState } from './InitialState';
+import { CombinedActions } from './actions';
+import myCombinedReducers from './reducer';
 
-let middleware: any[] = [];
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    const logger = createLogger({
-        diff: true,
-    });
-    middleware = [...middleware, logger];
+
+
+export const initialState:CombinedActions = {
+    action1: {
+        type: "ADD_TODO",
+        text: "Initial state ADD TODO"
+    },
+    action2: {
+        type: 'SHOW_ALL',
+        filter: "Show all options"
+    }
 }
 
-export const loadState = (): GameState | undefined => {
-    try {
-        // Wczytywanie z localStorage po odświeżeniu strony
-        
-        // const serializedState = localStorage.getItem('state');
-        // if (serializedState === null) {
-        //     return InitialGameState;
-        // }
-        // return JSON.parse(serializedState);
-    } catch (err) {
-        return InitialGameState;
-    }
-};
+export const store = createStore(myCombinedReducers);
 
-export const saveState = (state: GameState) => {
-    try {
-        const serializedState = JSON.stringify(state);
-        localStorage.setItem('state', serializedState);
-        console.log('saved');
-    } catch {
-        // ignore write errors
-    }
-};
+export const unsubscribe = store.subscribe( () => console.log(store.getState() ));
 
-const store = createStore<GameState, any, any, any>(gameReducer, loadState(), applyMiddleware(...middleware));
-store.subscribe(() => {
-    saveState(store.getState());
-});
-
-export default store;

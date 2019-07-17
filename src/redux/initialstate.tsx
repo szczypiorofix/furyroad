@@ -8,7 +8,8 @@ const initialState: GameRootState = {
     },
     gamestats: {
         fuel: 50,
-        water: 20
+        water: 20,
+        food: 20
     }
 }
 

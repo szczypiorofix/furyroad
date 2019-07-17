@@ -1,25 +1,17 @@
 import { action } from 'typesafe-actions'
 
+import { StatToModify } from '../../models';
+
+
 export enum GameMode {
-    GAME_MODFUEL  = "MOD_FUEL",
-    GAME_MODWATER  = "MOD_WATER"
+    GAME_MODSTAT  = "MOD_STAT",
 }
 
-export interface GameModFuel {
-    readonly type: GameMode.GAME_MODFUEL;
-    readonly payload: number;
+export interface GameModStat {
+    readonly type: GameMode.GAME_MODSTAT;
+    payload: StatToModify
 }
 
-export interface GameModWater {
-    readonly type: GameMode.GAME_MODWATER;
-    readonly payload: number;
-}
+export type GameModeAction = GameModStat;
 
-
-export type GameModeAction = GameModFuel | GameModWater;
-
-
-
-export const modFuel = (amount: number) => action(GameMode.GAME_MODFUEL, amount);
-
-export const modWater = (amount: number) => action(GameMode.GAME_MODWATER, amount);
+export const modStat = (stat:StatToModify) => action(GameMode.GAME_MODSTAT, stat);

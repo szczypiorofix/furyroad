@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 
 import './MainGame.css';
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
-import { GameRootState } from '../../models';
+import { GameRootState, GameStatsEnum, StatToModify } from '../../models';
 import { getGameMode, getGameStats } from '../../redux/selectors';
-import { goToMainMenu, modFuel, modWater } from '../../redux/actions';
+import { goToMainMenu, modStat } from '../../redux/actions';
 import { MainGameProps } from './MainGameModel';
 
 
@@ -30,22 +30,22 @@ export class MainGame extends React.Component<MainGameProps, {}> {
                             <MainMenuButton
                                 title="+ 10 FUEL"
                                 active={ true }
-                                onClick={ () => this.props.modFuel(10) }
+                                onClick={ () => this.props.modStat({attribute: GameStatsEnum.FUEL, value: 10}) }
                             />
                             <MainMenuButton
                                 title="- 10 FUEL"
                                 active={ true }
-                                onClick={ () => this.props.modFuel(-10) }
+                                onClick={ () => this.props.modStat({attribute: GameStatsEnum.FUEL, value: -10}) }
                             />
                             <MainMenuButton
                                 title="+ 10 WATER"
                                 active={ true }
-                                onClick={ () => this.props.modWater(10) }
+                                onClick={ () => this.props.modStat({attribute: GameStatsEnum.WATER, value: 10}) }
                             />
                             <MainMenuButton
                                 title="- 10 WATER"
                                 active={ true }
-                                onClick={ () => this.props.modWater(-10) }
+                                onClick={ () => this.props.modStat({attribute: GameStatsEnum.WATER, value: -10}) }
                             />
                         </div>
                         <div className="main-view-middle">
@@ -72,8 +72,7 @@ const mapStateToProps = (state:GameRootState) => ({
  
 const mapDispatchToProps = (dispatch:any) => ({
     gotoMainMenu: () => dispatch(goToMainMenu()),
-    modFuel: (amount: number) => dispatch(modFuel(amount)),
-    modWater: (amount: number) => dispatch(modWater(amount))
+    modStat: (stat: StatToModify) => dispatch(modStat(stat)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainGame);

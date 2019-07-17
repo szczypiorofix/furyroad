@@ -8,9 +8,20 @@ export enum MainGameStateTypes {
     ENDGAME = "ENDGAME"
 }
 
+export enum GameStatsEnum {
+    FUEL="fuel", WATER="water", FOOD="food"
+}
+
 export interface GameStats {
+    [key: string]: number,
     fuel: number,
     water: number,
+    food: number
+}
+
+export interface StatToModify {
+    attribute: string,
+    value: number
 }
 
 export interface MainMenuState {

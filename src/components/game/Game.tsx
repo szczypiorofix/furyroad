@@ -3,40 +3,34 @@ import { connect } from 'react-redux';
 
 import MainMenu from '../mainmenu/MainMenu';
 import MainGame from '../maingame/MainGame';
-import Junkyard from '../junkyard/Junkyard';
 
 import { getGameMode } from '../../redux/selectors';
-import { GameState, GameStateTypes } from '../../models';
+import { GameProps } from './GameModel';
+import { GameRootState, MainGameStateTypes } from '../../models';
 
 
-interface GameModeProps {
-    gameMode: GameStateTypes
-}
-
-export class Game extends React.Component<GameModeProps, {}> {
+export class Game extends React.Component<GameProps, {}> {
 
     render():JSX.Element {
 
-        console.log(this.props.gameMode);
-
-        switch(this.props.gameMode) {
-            case GameStateTypes.NEW_GAME:
-                return <MainGame />
-            case GameStateTypes.MAIN_MENU:
+        // return <MainMenu />
+        
+        switch (this.props.gameMode.mode) {
+            case MainGameStateTypes.MAIN_MENU:
                 return <MainMenu />
-            case GameStateTypes.JUNKYARD:
-                return <Junkyard />
+            case MainGameStateTypes.NEW_GAME:
+                return <MainGame />
             default:
                 return <MainMenu />
-        }      
+        }
     }
 }
 
-const mapStateToProps = (state: GameState) => ({
-    gameMode: getGameMode(state),
+const mapStateToProps = (state:GameRootState) => ({
+    gameMode:  getGameMode(state)
  });
  
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch:any) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

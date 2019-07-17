@@ -3,51 +3,19 @@ import { connect } from 'react-redux';
 
 import './MainMenu.css';
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
-
+import { GameRootState } from '../../models';
 import { getGameMode } from '../../redux/selectors';
-import { GameState, GameStateTypes } from '../../models';
-import { continueGame, startNewGame, goToJunkyard, goToSettings } from '../../redux/actions';
+import { goToNewGame, goToJunkyard } from '../../redux/actions';
+import { MainMenuProps } from './MainMenuModel';
 
 
-interface GameModeProps {
-    startNewGame?: () => void,
-    goToJunkyard?: () => void,
-    continueGame?: () => void,
-    goToSettings?: () => void,
-    gameMode?: GameStateTypes
-}
 
-
-export class MainMenu extends React.Component<GameModeProps, {}> {
+export class MainMenu extends React.Component<MainMenuProps, {}> {
 
     canContinue:boolean = false;
 
-    continueGame() {
-        if (this.props && this.props.continueGame) {
-            this.props.continueGame();
-        }        
-    }
-
-    startNewGame() {
-        if (this.props && this.props.startNewGame) {
-            this.props.startNewGame();
-        }        
-    }
-
-    goToJunkJard() {
-        if (this.props && this.props.goToJunkyard) {
-            this.props.goToJunkyard();
-        }        
-    }
-
-    goToSettings() {
-        if (this.props && this.props.goToSettings) {
-            this.props.goToSettings();
-        }        
-    }
-
     render():JSX.Element {
-        console.log("CURRENT GAME MODE: " + this.props.gameMode);
+        
         return (
             <React.Fragment>
                 <div className="mainmenu-bg">
@@ -57,22 +25,22 @@ export class MainMenu extends React.Component<GameModeProps, {}> {
                             <MainMenuButton 
                                 title="Kontynuuj"
                                 active={ this.canContinue }
-                                onClick={ () => this.continueGame() }
+                                onClick={ () => console.log("CONTINUE!") }
                             />
                             <MainMenuButton
                                 title="Nowa gra"
                                 active={true}
-                                onClick={ () => this.startNewGame() }
+                                onClick={ () => this.props.startNewGame() }
                             />
                             <MainMenuButton
                                 title="Śmietnisko"
                                 active={true}
-                                onClick={ () => this.goToJunkJard() }
+                                onClick={ () => this.props.gotoJunkyard() }
                             />
                             <MainMenuButton
                                 title="Ustawienia"
                                 active={true}
-                                onClick={ () => this.goToSettings() }
+                                onClick={ () => console.log("SETTINGS!") }
                             />
                         </div>
                     </div>                    
@@ -82,15 +50,13 @@ export class MainMenu extends React.Component<GameModeProps, {}> {
     }
 }
 
-const mapStateToProps = (state:GameState) => ({
-    gameMode: getGameMode(state),
+const mapStateToProps = (state:GameRootState) => ({
+    gameMode:  getGameMode(state)
  });
  
 const mapDispatchToProps = (dispatch:any) => ({
-    startNewGame: () => dispatch(startNewGame()),
-    goToJunkyard: () => dispatch(goToJunkyard()),
-    continueGame: () => dispatch(continueGame()),
-    goToSettings: () => dispatch(goToSettings())
+    startNewGame: () => dispatch(goToNewGame()),
+    gotoJunkyard: () => dispatch(goToJunkyard()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainMenu);

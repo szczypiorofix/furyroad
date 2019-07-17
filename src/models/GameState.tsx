@@ -1,11 +1,11 @@
 
-export enum GameStateTypes {
-    MAIN_MENU,
-    CONTINUE,
-    NEW_GAME,
-    SETTINGS,
-    JUNKYARD,
-    ENDGAME
+export enum MainGameStateTypes {
+    MAIN_MENU = "MAIN_MENU",
+    CONTINUE = "CONTINUE",
+    NEW_GAME = "NEW_GAME",
+    SETTINGS = "SETTINGS",
+    JUNKYARD = "JUNKYARD",
+    ENDGAME = "ENDGAME"
 }
 
 export interface GameStats {
@@ -13,8 +13,11 @@ export interface GameStats {
     water: number,
 }
 
-export interface GameState {
-    // [key: string]: any,
-    mode: GameStateTypes,
-    stats: GameStats
+export interface MainMenuState {
+    mode: MainGameStateTypes
+}
+
+export interface GameRootState {
+    mainmenustate: MainMenuState;
+    gamestats: GameStats;
 }

@@ -1,20 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import './MainMenu.css';
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
+import { GameRootState } from '../../models';
+import { getGameMode } from '../../redux/selectors';
+import { goToNewGame, goToJunkyard } from '../../redux/actions';
+import { MainMenuProps } from './MainMenuModel';
 
 
 
-export class MainMenu extends React.Component<{}, {}> {
+export class MainMenu extends React.Component<MainMenuProps, {}> {
 
     canContinue:boolean = false;
 
-    readR(text:string) {
-        return {type: 'string', text};
-    }
-
     render():JSX.Element {
-        // console.log("CURRENT GAME MODE: " + this.props.gameMode);
+        
         return (
             <React.Fragment>
                 <div className="mainmenu-bg">
@@ -29,17 +30,17 @@ export class MainMenu extends React.Component<{}, {}> {
                             <MainMenuButton
                                 title="Nowa gra"
                                 active={true}
-                                onClick={ () => console.log(this.readR("dupa")) }
+                                onClick={ () => this.props.startNewGame() }
                             />
                             <MainMenuButton
                                 title="Śmietnisko"
                                 active={true}
-                                onClick={ () => console.log("JUNKYARD!") }
+                                onClick={ () => this.props.gotoJunkyard() }
                             />
                             <MainMenuButton
                                 title="Ustawienia"
                                 active={true}
-                                onClick={ () => console.log("SETTINGS!") }  // this.goToSettings()
+                                onClick={ () => console.log("SETTINGS!") }
                             />
                         </div>
                     </div>                    
@@ -48,3 +49,14 @@ export class MainMenu extends React.Component<{}, {}> {
         )
     }
 }
+
+const mapStateToProps = (state:GameRootState) => ({
+    gameMode:  getGameMode(state)
+ });
+ 
+const mapDispatchToProps = (dispatch:any) => ({
+    startNewGame: () => dispatch(goToNewGame()),
+    gotoJunkyard: () => dispatch(goToJunkyard()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainMenu);

@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux'
-import { visibilityFilter, todoApp } from './reducer';
+
+
+import mainmenureducer from './mainmenureducer';
+import gameStatsReducer from './gamestatsreducer';
 
 
 const myCombinedReducers = combineReducers({
-    action1: visibilityFilter,
-    action2: todoApp
+    mainmenustate: mainmenureducer,
+    gamestats: gameStatsReducer
 });
 
-
-// export * from './reducer';
 
 export default myCombinedReducers;

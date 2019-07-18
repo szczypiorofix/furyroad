@@ -15,6 +15,7 @@ Latest build: [![CircleCI](https://circleci.com/gh/szczypiorofix/furyroad.svg?st
 ## Built With
 
 * ReactJS
+* Redux
 
 
 ## Used npm packages

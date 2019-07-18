@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 
 import './MainMenu.css';
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
-import { GameRootState } from '../../models';
+import { GameRootState, GameStats } from '../../models';
 import { getGameMode } from '../../redux/selectors';
-import { goToNewGame, goToJunkyard } from '../../redux/actions';
+import { goToNewGame, goToJunkyard, goToSettings, continueGame, resetStatsToValue } from '../../redux/actions';
 import { MainMenuProps } from './MainMenuModel';
+import { LOCAL_STORAGE_SAVED_STATE_NAME } from '../../redux/store';
+import initialState from '../../redux/initialstate';
 
 
 
@@ -16,6 +18,13 @@ export class MainMenu extends React.Component<MainMenuProps, {}> {
 
     render():JSX.Element {
         
+        if (localStorage.getItem(LOCAL_STORAGE_SAVED_STATE_NAME)) {
+            console.log("STATE LOADED");
+            this.canContinue = true;
+        } else {
+            console.log("NO STATE");
+        }
+
         return (
             <React.Fragment>
                 <div className="mainmenu-bg">
@@ -25,22 +34,25 @@ export class MainMenu extends React.Component<MainMenuProps, {}> {
                             <MainMenuButton 
                                 title="Kontynuuj"
                                 active={ this.canContinue }
-                                onClick={ () => console.log("CONTINUE!") }
+                                onClick={ () => this.props.continueGame() }
                             />
                             <MainMenuButton
                                 title="Nowa gra"
-                                active={true}
-                                onClick={ () => this.props.startNewGame() }
+                                active={ true }
+                                onClick={ () => {
+                                    this.props.resetStatsToValue(initialState.gamestats);
+                                    this.props.startNewGame();
+                                } }
                             />
                             <MainMenuButton
                                 title="Śmietnisko"
-                                active={true}
+                                active={ true }
                                 onClick={ () => this.props.gotoJunkyard() }
                             />
                             <MainMenuButton
                                 title="Ustawienia"
-                                active={true}
-                                onClick={ () => console.log("SETTINGS!") }
+                                active={ true }
+                                onClick={ () => this.props.gotoSettings() }
                             />
                         </div>
                     </div>                    
@@ -57,6 +69,10 @@ const mapStateToProps = (state:GameRootState) => ({
 const mapDispatchToProps = (dispatch:any) => ({
     startNewGame: () => dispatch(goToNewGame()),
     gotoJunkyard: () => dispatch(goToJunkyard()),
+    gotoSettings: () => dispatch(goToSettings()),
+    continueGame: () => dispatch(continueGame()),
+
+    resetStatsToValue: (initial: GameStats) => dispatch(resetStatsToValue(initial)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainMenu);

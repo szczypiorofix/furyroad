@@ -1,22 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import './Junkyard.css';
+import './Settings.css';
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
-import { JunkyardProps } from './JunkyardModel';
+import { SettingsProps } from './SettingsModel';
 import { getGameMode } from '../../redux/selectors';
 import { GameRootState } from '../../models';
 import { goToMainMenu } from '../../redux/actions';
 
 
-export class Junkyard extends React.Component<JunkyardProps, {}> {
+export class Settings extends React.Component<SettingsProps, {}> {
 
     render():JSX.Element {
         
         return (
             <React.Fragment>
-                <h2 className="junkyard-title">THIS IS JUNKYARD MENU</h2>
-                <h3>Śmietnisko - to tutaj składowane są bezużyteczne, martwe roboty</h3>
+                <h2 className="settings-title">SETTINGS MENU</h2>
+                <h3>Ustawienia ...</h3>
                 <MainMenuButton 
                     title="MENU GŁÓWNE"
                     active={ true }
@@ -35,4 +35,4 @@ const mapDispatchToProps = (dispatch:any) => ({
     gotoMainMenu: () => dispatch(goToMainMenu()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Junkyard);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

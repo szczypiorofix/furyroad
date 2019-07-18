@@ -12,6 +12,10 @@ const mainMenuButtonClickedReducer: Reducer<MainMenuState, MainMenuModeAction> =
             return { mode: MainGameStateTypes.JUNKYARD };
         case MainMenuMode.MMM_MAINMENU:
             return { mode: MainGameStateTypes.MAIN_MENU };
+        case MainMenuMode.MMM_SETTINGS:
+            return { mode: MainGameStateTypes.SETTINGS };
+        case MainMenuMode.MMM_CONTINUE:
+            return { mode: MainGameStateTypes.CONTINUE };
         default:
             return state;
     }

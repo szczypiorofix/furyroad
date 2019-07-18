@@ -1,10 +1,12 @@
 import { action } from 'typesafe-actions'
 
-import { StatToModify } from '../../models';
+import { StatToModify, GameStats } from '../../models';
+
 
 
 export enum GameMode {
     GAME_MODSTAT  = "MOD_STAT",
+    GAME_RESETSTAT = "RESET_STATS"
 }
 
 export interface GameModStat {
@@ -12,6 +14,13 @@ export interface GameModStat {
     payload: StatToModify
 }
 
-export type GameModeAction = GameModStat;
+export interface ResetGameStats {
+    readonly type: GameMode.GAME_RESETSTAT;
+}
+
+
+export type GameModeAction = GameModStat | ResetGameStats;
 
 export const modStat = (stat:StatToModify) => action(GameMode.GAME_MODSTAT, stat);
+
+export const resetStatsToValue = (initial: GameStats) => action(GameMode.GAME_RESETSTAT, initial)

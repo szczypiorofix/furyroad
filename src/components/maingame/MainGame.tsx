@@ -7,6 +7,7 @@ import { GameRootState, GameStatsEnum, StatToModify } from '../../models';
 import { getGameMode, getGameStats } from '../../redux/selectors';
 import { goToMainMenu, modStat } from '../../redux/actions';
 import { MainGameProps } from './MainGameModel';
+import { saveGameState } from '../../redux/store';
 
 
 export class MainGame extends React.Component<MainGameProps, {}> {
@@ -18,7 +19,10 @@ export class MainGame extends React.Component<MainGameProps, {}> {
                     <MainMenuButton
                         title="ZAPIS I WYJŚCIE"
                         active={ true }
-                        onClick={ () => this.props.gotoMainMenu() }
+                        onClick={ () => {
+                            saveGameState(this.props.stats)
+                            this.props.gotoMainMenu()
+                        } }
                     />
                     <h1 className="maingame-title">FURY ROAD</h1>
                     <div className="main-view-container">

@@ -6,13 +6,74 @@ import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
 import { GameRootState, GameStatsEnum, StatToModify } from '../../models';
 import { getGameMode, getGameStats } from '../../redux/selectors';
 import { goToMainMenu, modStat } from '../../redux/actions';
-import { MainGameProps } from './MainGameModel';
+import { MainGameProps, MainGameState, initialGameEvent } from './MainGameModel';
 import { saveGameState } from '../../redux/store';
+import { GameEvents, GameEvent } from './gameevents/GameEvents';
 
 
-export class MainGame extends React.Component<MainGameProps, {}> {
+
+
+export class MainGame extends React.Component<MainGameProps, MainGameState> {
+
+    timer:any;
+    eventsMaxCount: number = 0;
+    eventStep: number = 0;
+
+    
+
+    resetEventStep() {
+        return Math.floor(Math.random() * 3) + 2;
+    }
+
+    callForEvent() {
+
+        this.eventStep--;
+        
+        if (this.eventStep <= 0) {
+            
+            let randomEventNumber: number = 0;
+            let randomEventChance: number = 0;
+
+            do {
+                randomEventNumber = Math.floor(Math.random() * this.eventsMaxCount);
+                randomEventChance = Math.floor(Math.random() * 100);
+            } while(randomEventChance >= GameEvents[randomEventNumber].chance);
+            // console.log("EVENT witch chance: ["+randomEventChance+"/"+GameEvents[randomEventNumber].chance+"] : "+ GameEvents[randomEventNumber].name);
+            
+            this.state.historyOfEvents.push(GameEvents[randomEventNumber]);
+            this.setState(
+                {
+                    currentEvent: GameEvents[randomEventNumber],
+                    historyOfEvents: this.state.historyOfEvents
+                }
+            );
+            this.updateScroll();
+            this.eventStep = this.resetEventStep();
+        }
+    }
+
+    componentDidMount() {
+        this.setState({currentEvent: initialGameEvent, historyOfEvents: []});
+
+        this.eventStep = 0;
+        this.eventsMaxCount = GameEvents.length;
+        this.timer = setInterval( () => this.callForEvent(), 1000);
+    }
+
+    componentWillUnmount() {
+        this.eventStep = 0;
+        this.eventsMaxCount = 0;
+        clearInterval(this.timer);
+    }
+
+    updateScroll() {
+        var element = document.getElementById("eventsHistory");
+        if (element)
+            element.scrollTop = element.scrollHeight;
+    }
 
     render():JSX.Element {
+        if (this.state)
         return (
             <React.Fragment>
                 <div className="main-game-div">
@@ -54,7 +115,16 @@ export class MainGame extends React.Component<MainGameProps, {}> {
                         </div>
                         <div className="main-view-middle">
                             <div className="events-panel">
-                                <p>Eventy</p>
+                                <p>Wydażenia:</p>
+                                <div className="history-events-container">
+                                    <ul id="eventsHistory" className="history-events">
+                                        
+                                        { this.state.historyOfEvents.map(function(item:GameEvent, i:number) {
+                                            return <li key={i}>{ item.name }: { item.text }</li>
+                                            })
+                                        }
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div className="main-view-right">
@@ -65,7 +135,8 @@ export class MainGame extends React.Component<MainGameProps, {}> {
                     </div>
                 </div>
             </React.Fragment>
-        )
+        );
+        else return <div>...</div>
     }
 }
 

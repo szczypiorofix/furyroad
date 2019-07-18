@@ -16,7 +16,6 @@ export interface GameModStat {
 
 export interface ResetGameStats {
     readonly type: GameMode.GAME_RESETSTAT;
-    payload: StatToModify
 }
 
 

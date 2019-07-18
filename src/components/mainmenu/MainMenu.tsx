@@ -7,7 +7,7 @@ import { GameRootState, GameStats } from '../../models';
 import { getGameMode } from '../../redux/selectors';
 import { goToNewGame, goToJunkyard, goToSettings, continueGame, resetStatsToValue } from '../../redux/actions';
 import { MainMenuProps } from './MainMenuModel';
-import { loadState } from '../../redux/store';
+import { LOCAL_STORAGE_SAVED_STATE_NAME } from '../../redux/store';
 import initialState from '../../redux/initialstate';
 
 
@@ -18,7 +18,7 @@ export class MainMenu extends React.Component<MainMenuProps, {}> {
 
     render():JSX.Element {
         
-        if (loadState()) {
+        if (localStorage.getItem(LOCAL_STORAGE_SAVED_STATE_NAME)) {
             console.log("STATE LOADED");
             this.canContinue = true;
         } else {
@@ -38,7 +38,7 @@ export class MainMenu extends React.Component<MainMenuProps, {}> {
                             />
                             <MainMenuButton
                                 title="Nowa gra"
-                                active={true}
+                                active={ true }
                                 onClick={ () => {
                                     this.props.resetStatsToValue(initialState.gamestats);
                                     this.props.startNewGame();
@@ -46,12 +46,12 @@ export class MainMenu extends React.Component<MainMenuProps, {}> {
                             />
                             <MainMenuButton
                                 title="Śmietnisko"
-                                active={true}
+                                active={ true }
                                 onClick={ () => this.props.gotoJunkyard() }
                             />
                             <MainMenuButton
                                 title="Ustawienia"
-                                active={true}
+                                active={ true }
                                 onClick={ () => this.props.gotoSettings() }
                             />
                         </div>

@@ -19,9 +19,11 @@ function configureStore(): Store<GameRootState> {
     return store;
 }
 
+export const LOCAL_STORAGE_SAVED_STATE_NAME = 'gameSavedState';
+
 export const loadState = (): GameStats | undefined => {
     try {
-        const serializedState = localStorage.getItem('gameSavedState');
+        const serializedState = localStorage.getItem(LOCAL_STORAGE_SAVED_STATE_NAME);
         if (serializedState !== null) {
             console.log("Reading localStorage...");
             return JSON.parse(serializedState);

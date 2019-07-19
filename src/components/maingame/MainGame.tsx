@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import './MainGame.css';
+
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
 import { GameRootState, GameStatsEnum, StatToModify } from '../../models';
-import { getGameMode, getGameStats } from '../../redux/selectors';
+import { getGameMode, getGameStats, getGameEvents } from '../../redux/selectors';
 import { goToMainMenu, modStat } from '../../redux/actions';
-import { MainGameProps, MainGameState, initialGameEvent } from './MainGameModel';
+import { MainGameProps, MainGameState } from './MainGameModel';
 import { saveGameState } from '../../redux/store';
-import { GameEvents, GameEvent } from './gameevents/GameEvents';
-
+import { GameEvents, GameEvent, initialGameEvent, historyEventsMaxList } from './gameevents/GameEvents';
 
 
 
@@ -34,6 +34,11 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
             } while(randomEventChance >= GameEvents[randomEventNumber].chance);
             // console.log("EVENT witch chance: ["+randomEventChance+"/"+GameEvents[randomEventNumber].chance+"] : "+ GameEvents[randomEventNumber].name);
             
+
+            if (this.state.historyOfEvents.length > historyEventsMaxList) {
+                this.state.historyOfEvents.shift();
+            }
+
             this.state.historyOfEvents.push(GameEvents[randomEventNumber]);
             this.setState({
                 currentEvent: GameEvents[randomEventNumber],
@@ -46,7 +51,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
 
 
     componentDidMount() {
-        this.setState({currentEvent: initialGameEvent, historyOfEvents: []});
+        this.setState({currentEvent: initialGameEvent, historyOfEvents: this.props.getGameEvents});
 
         this.eventStep = 0;
         this.eventsMaxCount = GameEvents.length;
@@ -78,7 +83,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                             title="ZAPIS I WYJŚCIE"
                             active={ true }
                             onClick={ () => {
-                                saveGameState(this.props.stats)
+                                saveGameState({gamestats:  this.props.stats, gameeventshistory: this.state.historyOfEvents} )
                                 this.props.gotoMainMenu()
                             } }
                         />
@@ -140,7 +145,8 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
 
 const mapStateToProps = (state:GameRootState) => ({
     mainState:  getGameMode(state),
-    stats: getGameStats(state)
+    stats: getGameStats(state),
+    getGameEvents: getGameEvents(state)
 });
 
 

@@ -7,6 +7,15 @@ export enum EventTypes {
     TERRAIN
 }
 
+export const initialGameEvent:GameEvent = {
+    type: EventTypes.START_GAME,
+    name: "Game start",
+    chance: 100,
+    text: "Starting game..."
+}
+
+export const historyEventsMaxList: number = 20;
+
 export interface GameEvent {
     type:    EventTypes,
     name:    string,
@@ -63,7 +72,7 @@ export const GameEvents:GameEvent[] = [
         type: EventTypes.FIGHT,
         chance: 20,
         name: "Gang Czach",
-        text: "Dopadła Cię gang Czach. Musisz się bronić."
+        text: "Dopadł Cię gang Czach. Musisz się bronić."
     },
     {
         type: EventTypes.FIGHT,

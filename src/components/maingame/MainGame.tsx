@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import './MainGame.css';
+
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
 import { GameRootState, GameStatsEnum, StatToModify } from '../../models';
-import { getGameMode, getGameStats } from '../../redux/selectors';
+import { getGameMode, getGameStats, getGameEvents } from '../../redux/selectors';
 import { goToMainMenu, modStat } from '../../redux/actions';
-import { MainGameProps, MainGameState, initialGameEvent } from './MainGameModel';
+import { MainGameProps, MainGameState } from './MainGameModel';
 import { saveGameState } from '../../redux/store';
-import { GameEvents, GameEvent } from './gameevents/GameEvents';
-
+import { GameEvents, GameEvent, initialGameEvent, historyEventsMaxList } from './gameevents/GameEvents';
 
 
 
@@ -18,12 +18,6 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
     timer:any;
     eventsMaxCount: number = 0;
     eventStep: number = 0;
-
-    
-
-    resetEventStep() {
-        return Math.floor(Math.random() * 3) + 2;
-    }
 
     callForEvent() {
 
@@ -40,25 +34,30 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
             } while(randomEventChance >= GameEvents[randomEventNumber].chance);
             // console.log("EVENT witch chance: ["+randomEventChance+"/"+GameEvents[randomEventNumber].chance+"] : "+ GameEvents[randomEventNumber].name);
             
+
+            if (this.state.historyOfEvents.length > historyEventsMaxList) {
+                this.state.historyOfEvents.shift();
+            }
+
             this.state.historyOfEvents.push(GameEvents[randomEventNumber]);
-            this.setState(
-                {
-                    currentEvent: GameEvents[randomEventNumber],
-                    historyOfEvents: this.state.historyOfEvents
-                }
-            );
+            this.setState({
+                currentEvent: GameEvents[randomEventNumber],
+                historyOfEvents: this.state.historyOfEvents
+            });
             this.updateScroll();
-            this.eventStep = this.resetEventStep();
+            this.eventStep = Math.floor(Math.random() * 3) + 2;
         }
     }
 
+
     componentDidMount() {
-        this.setState({currentEvent: initialGameEvent, historyOfEvents: []});
+        this.setState({currentEvent: initialGameEvent, historyOfEvents: this.props.getGameEvents});
 
         this.eventStep = 0;
         this.eventsMaxCount = GameEvents.length;
         this.timer = setInterval( () => this.callForEvent(), 1000);
     }
+
 
     componentWillUnmount() {
         this.eventStep = 0;
@@ -66,26 +65,30 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
         clearInterval(this.timer);
     }
 
+
     updateScroll() {
         var element = document.getElementById("eventsHistory");
         if (element)
             element.scrollTop = element.scrollHeight;
     }
 
+
     render():JSX.Element {
         if (this.state)
         return (
             <React.Fragment>
                 <div className="main-game-div">
-                    <MainMenuButton
-                        title="ZAPIS I WYJŚCIE"
-                        active={ true }
-                        onClick={ () => {
-                            saveGameState(this.props.stats)
-                            this.props.gotoMainMenu()
-                        } }
-                    />
-                    <h1 className="maingame-title">FURY ROAD</h1>
+                    <div className="main-game-header">
+                        <MainMenuButton
+                            title="ZAPIS I WYJŚCIE"
+                            active={ true }
+                            onClick={ () => {
+                                saveGameState({gamestats:  this.props.stats, gameeventshistory: this.state.historyOfEvents} )
+                                this.props.gotoMainMenu()
+                            } }
+                        />
+                        <span className="maingame-title">FURY ROAD</span>
+                    </div>
                     <div className="main-view-container">
                         <div className="main-view-left">
                             <div className="statistics-panel">
@@ -115,10 +118,9 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                         </div>
                         <div className="main-view-middle">
                             <div className="events-panel">
-                                <p>Wydażenia:</p>
+                                <span>Wydażenia:</span>
                                 <div className="history-events-container">
                                     <ul id="eventsHistory" className="history-events">
-                                        
                                         { this.state.historyOfEvents.map(function(item:GameEvent, i:number) {
                                             return <li key={i}>{ item.name }: { item.text }</li>
                                             })
@@ -129,7 +131,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                         </div>
                         <div className="main-view-right">
                             <div className="upgrades-panel">
-                                <p>Upgrades</p>
+                                <span>Upgrades</span>
                             </div>
                         </div>
                     </div>
@@ -140,14 +142,18 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
     }
 }
 
+
 const mapStateToProps = (state:GameRootState) => ({
     mainState:  getGameMode(state),
-    stats: getGameStats(state)
- });
- 
+    stats: getGameStats(state),
+    getGameEvents: getGameEvents(state)
+});
+
+
 const mapDispatchToProps = (dispatch:any) => ({
     gotoMainMenu: () => dispatch(goToMainMenu()),
     modStat: (stat: StatToModify) => dispatch(modStat(stat)),
 });
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainGame);

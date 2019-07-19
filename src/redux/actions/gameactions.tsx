@@ -1,6 +1,7 @@
 import { action } from 'typesafe-actions'
 
-import { StatToModify, GameStats } from '../../models';
+import { StatToModify } from '../../models';
+import { SavedState } from '../../models';
 
 
 
@@ -23,4 +24,4 @@ export type GameModeAction = GameModStat | ResetGameStats;
 
 export const modStat = (stat:StatToModify) => action(GameMode.GAME_MODSTAT, stat);
 
-export const resetStatsToValue = (initial: GameStats) => action(GameMode.GAME_RESETSTAT, initial)
+export const resetSavedState = (initial: SavedState) => action(GameMode.GAME_RESETSTAT, initial)

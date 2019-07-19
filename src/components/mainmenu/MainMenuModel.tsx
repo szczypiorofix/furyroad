@@ -1,4 +1,5 @@
 import { MainMenuState, GameStats } from '../../models';
+import { SavedState } from '../../models';
 
 export interface MainMenuProps {
     gameMode: MainMenuState,
@@ -8,5 +9,5 @@ export interface MainMenuProps {
     gotoSettings: () => void,
     continueGame: () => void
 
-    resetStatsToValue: (initial: GameStats) => void
+    resetSavedState: (initial: SavedState) => void
 }

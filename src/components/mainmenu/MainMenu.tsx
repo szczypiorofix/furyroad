@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 
 import './MainMenu.css';
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
-import { GameRootState, GameStats } from '../../models';
+import { GameRootState, SavedState } from '../../models';
 import { getGameMode } from '../../redux/selectors';
-import { goToNewGame, goToJunkyard, goToSettings, continueGame, resetStatsToValue } from '../../redux/actions';
+import { goToNewGame, goToJunkyard, goToSettings, continueGame, resetSavedState } from '../../redux/actions';
 import { MainMenuProps } from './MainMenuModel';
 import { LOCAL_STORAGE_SAVED_STATE_NAME } from '../../redux/store';
 import initialState from '../../redux/initialstate';
@@ -40,7 +40,7 @@ export class MainMenu extends React.Component<MainMenuProps, {}> {
                                 title="Nowa gra"
                                 active={ true }
                                 onClick={ () => {
-                                    this.props.resetStatsToValue(initialState.gamestats);
+                                    this.props.resetSavedState(initialState.savedstate);
                                     this.props.startNewGame();
                                 } }
                             />
@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch:any) => ({
     gotoSettings: () => dispatch(goToSettings()),
     continueGame: () => dispatch(continueGame()),
 
-    resetStatsToValue: (initial: GameStats) => dispatch(resetStatsToValue(initial)),
+    resetSavedState: (initial: SavedState) => dispatch(resetSavedState(initial)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainMenu);

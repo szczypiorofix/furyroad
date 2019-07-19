@@ -1,3 +1,4 @@
+import { GameEvent } from "../components/maingame/gameevents";
 
 export enum MainGameStateTypes {
     MAIN_MENU = "MAIN_MENU",
@@ -16,7 +17,7 @@ export interface GameStats {
     [key: string]: number,
     fuel: number,
     water: number,
-    food: number
+    food: number    
 }
 
 export interface StatToModify {
@@ -28,7 +29,12 @@ export interface MainMenuState {
     mode: MainGameStateTypes
 }
 
+export interface SavedState {
+    gamestats: GameStats;
+    gameeventshistory: GameEvent[]
+}
+
 export interface GameRootState {
     mainmenustate: MainMenuState;
-    gamestats: GameStats;
+    savedstate: SavedState;
 }

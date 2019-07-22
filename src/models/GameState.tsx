@@ -10,14 +10,29 @@ export enum MainGameStateTypes {
 }
 
 export enum GameStatsEnum {
-    FUEL="fuel", WATER="water", FOOD="food"
+    FUEL="fuel",
+    WATER="water",
+    FOOD="food",
+    SCRAP="scrap",
+    CARHEALTH="carHealth",
+    CARMAXHEALTH="carMaxHealth",
+    CARTEMPERATURE="carTemperature",
+    CARMAXTEMPERATURE="carMaxTemperature",
+    DISTANCEDRIVEN="distanceDriven"
 }
 
 export interface GameStats {
-    [key: string]: number,
-    fuel: number,
-    water: number,
-    food: number    
+    [key: string]:      number,
+    fuel:               number,
+    maxFuel:            number,
+    water:              number,
+    food:               number,
+    scrap:              number,
+    carHealth:          number,
+    carMaxHealth:       number,
+    carTemperature:     number,
+    carMaxTemperature:  number,
+    distanceDriven:     number
 }
 
 export interface StatToModify {

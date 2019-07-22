@@ -5,6 +5,7 @@ import MainMenu from '../mainmenu/MainMenu';
 import MainGame from '../maingame/MainGame';
 import Junkyard from '../junkyard/Junkyard';
 import Settings from '../settings/Settings';
+import Endgame  from '../endgame/Endgame';
 
 import { getGameMode } from '../../redux/selectors';
 import { GameProps } from './GameModel';
@@ -25,6 +26,8 @@ export class Game extends React.Component<GameProps, {}> {
                 return <Settings />
             case MainGameStateTypes.CONTINUE:
                 return <MainGame />
+            case MainGameStateTypes.ENDGAME:
+                return <Endgame />
             default:
                 return <MainMenu />
         }

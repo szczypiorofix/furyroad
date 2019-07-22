@@ -6,7 +6,8 @@ export enum MainMenuMode {
     MMM_NEWGAME     = "MMM_NEWGAME",
     MMM_SETTINGS    = "MMM_SETTINGS",
     MMM_JUNKYARD    = "MMM_JUNKYARD",
-    MMM_MAINMENU    = "MMM_MAINMENU"
+    MMM_MAINMENU    = "MMM_MAINMENU",
+    MMM_ENDGAME     = "MMM_ENDGAME"
 }
 
 export interface MainMenuModeNewGame {
@@ -21,6 +22,10 @@ export interface MainMenuModeMainMenu {
     readonly type: MainMenuMode.MMM_MAINMENU;
 }
 
+export interface MainMenuModeEndGame {
+    readonly type: MainMenuMode.MMM_ENDGAME;
+}
+
 export interface MainMenuModeSettings {
     readonly type: MainMenuMode.MMM_SETTINGS;
 }
@@ -29,7 +34,7 @@ export interface MainMenuModeContinue {
     readonly type: MainMenuMode.MMM_CONTINUE;
 }
 
-export type MainMenuModeAction = MainMenuModeNewGame | MainMenuModeJunkyad | MainMenuModeMainMenu | MainMenuModeSettings | MainMenuModeContinue;
+export type MainMenuModeAction = MainMenuModeNewGame | MainMenuModeJunkyad | MainMenuModeMainMenu | MainMenuModeSettings | MainMenuModeContinue | MainMenuModeEndGame;
 
 
 
@@ -38,6 +43,8 @@ export const goToNewGame = () => action(MainMenuMode.MMM_NEWGAME, 0);
 export const goToJunkyard = () => action(MainMenuMode.MMM_JUNKYARD, 0);
 
 export const goToMainMenu = () => action(MainMenuMode.MMM_MAINMENU, 0);
+
+export const goToEndGame = () => action(MainMenuMode.MMM_ENDGAME, 0);
 
 export const goToSettings = () => action(MainMenuMode.MMM_SETTINGS, 0);
 

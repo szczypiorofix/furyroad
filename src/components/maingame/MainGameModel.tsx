@@ -13,5 +13,7 @@ export interface MainGameProps {
     getGameEvents: GameEvent[],
 
     gotoMainMenu: () => void,
-    modStat:  (stat: StatToModify) => void
+    goToEndGame: () => void,
+    modStat: (stat: StatToModify) => void,
+    setStat: (stat: StatToModify) => void,
 }

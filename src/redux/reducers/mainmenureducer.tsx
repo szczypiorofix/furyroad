@@ -16,6 +16,8 @@ const mainMenuButtonClickedReducer: Reducer<MainMenuState, MainMenuModeAction> =
             return { mode: MainGameStateTypes.SETTINGS };
         case MainMenuMode.MMM_CONTINUE:
             return { mode: MainGameStateTypes.CONTINUE };
+        case MainMenuMode.MMM_ENDGAME:
+            return { mode: MainGameStateTypes.ENDGAME };
         default:
             return state;
     }

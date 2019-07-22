@@ -15,13 +15,15 @@ export class Settings extends React.Component<SettingsProps, {}> {
         
         return (
             <React.Fragment>
-                <h2 className="settings-title">SETTINGS MENU</h2>
-                <h3>Ustawienia ...</h3>
-                <MainMenuButton 
-                    title="MENU GŁÓWNE"
-                    active={ true }
-                    onClick={ () => this.props.gotoMainMenu() }
-                />
+                <div className="setting-menu">
+                    <MainMenuButton 
+                        title="MENU GŁÓWNE"
+                        active={ true }
+                        onClick={ () => this.props.gotoMainMenu() }
+                    />
+                    <h2 className="settings-title">SETTINGS MENU</h2>
+                    <h3>Ustawienia ...</h3>
+                </div>
             </React.Fragment>
         )
     }

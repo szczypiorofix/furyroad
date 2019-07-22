@@ -16,6 +16,15 @@ export class MainMenu extends React.Component<MainMenuProps, {}> {
 
     canContinue:boolean = false;
 
+    componentDidMount() {
+        // let gameMusic1 = new Audio('./music/music1.mp3'); 
+        // gameMusic1.addEventListener('ended', function() {
+        //     this.currentTime = 0;
+        //     // this.play();
+        // }, false);
+        // gameMusic1.play();   
+    }
+
     render():JSX.Element {
         
         if (localStorage.getItem(LOCAL_STORAGE_SAVED_STATE_NAME)) {

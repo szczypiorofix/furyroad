@@ -189,12 +189,6 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                                 active={ true }
                                 onClick={ () => this.props.goToEndGame() }
                             />
-                            {/* <MainMenuButton
-                                title="+ 10 FUEL"
-                                active={ true }
-                                onClick={ () => this.props.modStat({attribute: GameStatsEnum.FUEL, value: 10}) }
-                            />
-                            */}
                         </div>
                         <div className="main-view-middle">
                             <div className="events-panel">

@@ -17,7 +17,10 @@ const initialState: GameRootState = {
             carMaxHealth: 100,
             carTemperature: 70,
             carMaxTemperature: 120,
-            distanceDriven: 0
+            distanceDriven: 0,
+            carFuelUsage: 1.0,
+            carSpeed: 90.0,
+            carMaxSpeed: 1.0
         },
         gameeventshistory: []
     }

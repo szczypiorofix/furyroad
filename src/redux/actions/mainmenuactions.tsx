@@ -1,51 +1,51 @@
 import { action } from 'typesafe-actions'
 
 
-export enum MainMenuMode {
-    MMM_CONTINUE    = "MMM_CONTINUE",
-    MMM_NEWGAME     = "MMM_NEWGAME",
-    MMM_SETTINGS    = "MMM_SETTINGS",
-    MMM_JUNKYARD    = "MMM_JUNKYARD",
-    MMM_MAINMENU    = "MMM_MAINMENU",
-    MMM_ENDGAME     = "MMM_ENDGAME"
+export enum MainMenuActions {
+    MM_CONTINUE    = "MM_CONTINUE",
+    MM_NEWGAME     = "MM_NEWGAME",
+    MM_SETTINGS    = "MM_SETTINGS",
+    MM_JUNKYARD    = "MM_JUNKYARD",
+    MM_MAINMENU    = "MM_MAINMENU",
+    MM_ENDGAME     = "MM_ENDGAME"
 }
 
-export interface MainMenuModeNewGame {
-    readonly type: MainMenuMode.MMM_NEWGAME;
+export interface MainMenuActionNewGame {
+    readonly type: MainMenuActions.MM_NEWGAME;
 }
 
-export interface MainMenuModeJunkyad {
-    readonly type: MainMenuMode.MMM_JUNKYARD;
+export interface MainMenuActionJunkyad {
+    readonly type: MainMenuActions.MM_JUNKYARD;
 }
 
-export interface MainMenuModeMainMenu {
-    readonly type: MainMenuMode.MMM_MAINMENU;
+export interface MainMenuActionMainMenu {
+    readonly type: MainMenuActions.MM_MAINMENU;
 }
 
-export interface MainMenuModeEndGame {
-    readonly type: MainMenuMode.MMM_ENDGAME;
+export interface MainMenuActionEndGame {
+    readonly type: MainMenuActions.MM_ENDGAME;
 }
 
-export interface MainMenuModeSettings {
-    readonly type: MainMenuMode.MMM_SETTINGS;
+export interface MainMenuActionSettings {
+    readonly type: MainMenuActions.MM_SETTINGS;
 }
 
-export interface MainMenuModeContinue {
-    readonly type: MainMenuMode.MMM_CONTINUE;
+export interface MainMenuActionContinue {
+    readonly type: MainMenuActions.MM_CONTINUE;
 }
 
-export type MainMenuModeAction = MainMenuModeNewGame | MainMenuModeJunkyad | MainMenuModeMainMenu | MainMenuModeSettings | MainMenuModeContinue | MainMenuModeEndGame;
+export type MainMenuAction = MainMenuActionNewGame | MainMenuActionJunkyad | MainMenuActionMainMenu | MainMenuActionSettings | MainMenuActionContinue | MainMenuActionEndGame;
 
 
 
-export const goToNewGame = () => action(MainMenuMode.MMM_NEWGAME, 0);
+export const goToNewGame = () => action(MainMenuActions.MM_NEWGAME, 0);
 
-export const goToJunkyard = () => action(MainMenuMode.MMM_JUNKYARD, 0);
+export const goToJunkyard = () => action(MainMenuActions.MM_JUNKYARD, 0);
 
-export const goToMainMenu = () => action(MainMenuMode.MMM_MAINMENU, 0);
+export const goToMainMenu = () => action(MainMenuActions.MM_MAINMENU, 0);
 
-export const goToEndGame = () => action(MainMenuMode.MMM_ENDGAME, 0);
+export const goToEndGame = () => action(MainMenuActions.MM_ENDGAME, 0);
 
-export const goToSettings = () => action(MainMenuMode.MMM_SETTINGS, 0);
+export const goToSettings = () => action(MainMenuActions.MM_SETTINGS, 0);
 
-export const continueGame = () => action(MainMenuMode.MMM_CONTINUE, 0);
+export const continueGame = () => action(MainMenuActions.MM_CONTINUE, 0);

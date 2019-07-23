@@ -32,7 +32,11 @@ export interface GameStats {
     carMaxHealth:       number,
     carTemperature:     number,
     carMaxTemperature:  number,
-    distanceDriven:     number
+    distanceDriven:     number,
+    carSpeed:           number,
+    carMaxSpeed:        number,
+    carFuelUsage:       number,
+    
 }
 
 export interface StatToModify {

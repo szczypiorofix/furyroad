@@ -9,7 +9,7 @@ import { getGameMode, getGameStats, getGameEvents } from '../../redux/selectors'
 import { goToMainMenu, modStat, setStat, goToEndGame } from '../../redux/actions';
 import { MainGameProps, MainGameState } from './MainGameModel';
 import { saveGameState, LOCAL_STORAGE_SAVED_STATE_NAME } from '../../redux/store';
-import { GameEvents, GameEvent, initialGameEvent, historyEventsMaxList, LootToFound } from './gameevents/GameEvents';
+import { GameEvents, GameEvent, initialGameEvent, historyEventsMaxList, EventResults } from './gameevents/GameEvents';
 
 // import { TileSet } from '../../graphics';
 
@@ -27,65 +27,90 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
         
         if (this.eventStep <= 0) {
             
-            let randomEventNumber: number = 0;
+            let drawnEventNumber: number = 0;
             let randomEventChance: number = 0;
 
             do {
-                randomEventNumber = Math.floor(Math.random() * this.eventsMaxCount);
+                drawnEventNumber = Math.floor(Math.random() * this.eventsMaxCount);
                 randomEventChance = Math.floor(Math.random() * 100);
-            } while(randomEventChance >= GameEvents[randomEventNumber].chance);
-            // console.log("EVENT witch chance: ["+randomEventChance+"/"+GameEvents[randomEventNumber].chance+"] : "+ GameEvents[randomEventNumber].name);
+            } while(randomEventChance >= GameEvents[drawnEventNumber].chance);
+            // console.log("EVENT witch chance: ["+randomEventChance+"/"+GameEvents[drawnEventNumber].chance+"] : "+ GameEvents[drawnEventNumber].name);
             
 
             if (this.state.historyOfEvents.length > historyEventsMaxList) {
                 this.state.historyOfEvents.shift();
             }
 
-            this.state.historyOfEvents.push(GameEvents[randomEventNumber]);
+            this.state.historyOfEvents.push(GameEvents[drawnEventNumber]);
             this.setState({
-                currentEvent: GameEvents[randomEventNumber],
+                currentEvent: GameEvents[drawnEventNumber],
                 historyOfEvents: this.state.historyOfEvents
             });
             this.updateScroll();
             this.eventStep = Math.floor(Math.random() * 3) + 2;
 
-            switch(GameEvents[randomEventNumber].found) {
-                case LootToFound.FOOD:
-                    this.props.modStat({attribute: GameStatsEnum.FOOD, value: Math.floor(Math.random() * 16) + 4});
-                    break;
-                case LootToFound.WATER:
-                    this.props.modStat({attribute: GameStatsEnum.WATER, value: Math.floor(Math.random() * 16) + 4});
-                    break;
-                case LootToFound.SCRAP:
-                    this.props.modStat({attribute: GameStatsEnum.SCRAP, value: Math.floor(Math.random() * 56) + 4});
-                    break;
-                case LootToFound.FUEL:
-                    this.props.modStat({attribute: GameStatsEnum.FUEL, value: Math.floor(Math.random() * 22) + 8})
-                    if (this.props.stats.fuel > this.props.stats.maxFuel) {
-                        console.log("ZA DUŻO PALIWA !!!");
-                        this.props.setStat({attribute: GameStatsEnum.FUEL, value: this.props.stats.maxFuel});
-                    }
-                        
-                    break;
-                case LootToFound.WATER_FOOD:
-                    this.props.modStat({attribute: GameStatsEnum.WATER, value: Math.floor(Math.random() * 16) + 4});
-                    this.props.modStat({attribute: GameStatsEnum.FOOD, value: Math.floor(Math.random() * 16) + 4})
-                    break;
-                case LootToFound.WATER_FOOD_SCRAP:
-                    this.props.modStat({attribute: GameStatsEnum.SCRAP, value: Math.floor(Math.random() * 56) + 4});
-                    this.props.modStat({attribute: GameStatsEnum.WATER, value: Math.floor(Math.random() * 16) + 4});
-                    this.props.modStat({attribute: GameStatsEnum.FOOD, value: Math.floor(Math.random() * 16) + 4})
-                    break;
-                case LootToFound.CAR_HEALTH_LOOSE:
-                    this.props.modStat({attribute: GameStatsEnum.CARHEALTH, value: -5});
-                    break;
-                default:
-                    break;
+
+            for (let i:number = 0; i < GameEvents[drawnEventNumber].result.succ.length; i++) {
+                switch(GameEvents[drawnEventNumber].result.succ[i].res) {
+                    case EventResults.FOUND_FOOD:
+                        console.log(GameEvents[drawnEventNumber].name+ " ADDED FOOD");
+                        this.props.modStat({attribute: GameStatsEnum.FOOD, value: GameEvents[drawnEventNumber].result.succ[i].value});
+                        break;
+                    case EventResults.FOUND_FUEL:
+                        console.log(GameEvents[drawnEventNumber].name+ " ADDED FUEL");
+                        this.props.modStat({attribute: GameStatsEnum.FUEL, value: GameEvents[drawnEventNumber].result.succ[i].value});
+                        break;
+                    case EventResults.FOUND_SCRAP:
+                        console.log(GameEvents[drawnEventNumber].name+ " ADDED SCRAP");
+                        this.props.modStat({attribute: GameStatsEnum.SCRAP, value: GameEvents[drawnEventNumber].result.succ[i].value});
+                        break;
+                    case EventResults.FOUND_WATER:
+                        console.log(GameEvents[drawnEventNumber].name+ " ADDED WATER");
+                        this.props.modStat({attribute: GameStatsEnum.WATER, value: GameEvents[drawnEventNumber].result.succ[i].value});
+                        break;
+                    default:
+                        break;
+                }
             }
+            // switch(GameEvents[drawnEventNumber].result.succ) {
+            //     case EventResults.FOUND_FOOD:
+
+                    // break;
+                // case LootToFound.FOOD:
+                //     this.props.modStat({attribute: GameStatsEnum.FOOD, value: Math.floor(Math.random() * 16) + 4});
+                //     break;
+                // case LootToFound.WATER:
+                //     this.props.modStat({attribute: GameStatsEnum.WATER, value: Math.floor(Math.random() * 16) + 4});
+                //     break;
+                // case LootToFound.SCRAP:
+                //     this.props.modStat({attribute: GameStatsEnum.SCRAP, value: Math.floor(Math.random() * 56) + 4});
+                //     break;
+                // case LootToFound.FUEL:
+                //     this.props.modStat({attribute: GameStatsEnum.FUEL, value: Math.floor(Math.random() * 22) + 8})
+                //     if (this.props.stats.fuel > this.props.stats.maxFuel) {
+                //         console.log("ZA DUŻO PALIWA !!!");
+                //         this.props.setStat({attribute: GameStatsEnum.FUEL, value: this.props.stats.maxFuel});
+                //     }
+                //     break;
+                // case LootToFound.WATER_FOOD:
+                //     this.props.modStat({attribute: GameStatsEnum.WATER, value: Math.floor(Math.random() * 16) + 4});
+                //     this.props.modStat({attribute: GameStatsEnum.FOOD, value: Math.floor(Math.random() * 16) + 4})
+                //     break;
+                // case LootToFound.WATER_FOOD_SCRAP:
+                //     this.props.modStat({attribute: GameStatsEnum.SCRAP, value: Math.floor(Math.random() * 56) + 4});
+                //     this.props.modStat({attribute: GameStatsEnum.WATER, value: Math.floor(Math.random() * 16) + 4});
+                //     this.props.modStat({attribute: GameStatsEnum.FOOD, value: Math.floor(Math.random() * 16) + 4})
+                //     break;
+                // case LootToFound.CAR_HEALTH_LOOSE:
+                //     this.props.modStat({attribute: GameStatsEnum.CARHEALTH, value: -5});
+                //     break;
+            //     default:
+            //         break;
+            // }
         }
 
         // ZUŻYCIE PALIWA:
-        this.props.modStat({attribute: GameStatsEnum.FUEL, value: -0.5});
+        this.props.modStat({attribute: GameStatsEnum.FUEL, value: -this.props.stats.carFuelUsage});
 
         // ZUŻYCIE JEDZENIA:
         this.props.modStat({attribute: GameStatsEnum.FOOD, value: -0.25});
@@ -98,7 +123,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
         this.props.modStat({attribute: GameStatsEnum.CARTEMPERATURE, value: 2});
 
         // OBLICACZNIE DYSTANSU
-        this.props.modStat({attribute: GameStatsEnum.DISTANCEDRIVEN, value: 1});
+        this.props.modStat({attribute: GameStatsEnum.DISTANCEDRIVEN, value: (this.props.stats.carSpeed / 3600) });
 
 
         if (this.props.stats.fuel <= 0 || this.props.stats.carHealth <= 0 || this.props.stats.food <= 0 || this.props.stats.water <= 0) {
@@ -113,7 +138,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
 
         this.eventStep = 0;
         this.eventsMaxCount = GameEvents.length;
-        this.timer = setInterval( () => this.callForEvent(), 500);
+        this.timer = setInterval( () => this.callForEvent(), 1000);
     }
 
 
@@ -165,9 +190,13 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                         <div className="main-view-left">
                             <span>STATYSTYKI:</span>
                             <div className="statistics-panel">
-                            <div className="stats-part">
+                                <div className="stats-part">
                                     <span> DYSTANS :</span>
-                                    <span> { this.props.stats.distanceDriven.toFixed(2) } km</span>
+                                    <span> { this.props.stats.distanceDriven.toFixed(3) } km</span>
+                                </div>
+                                <div className="stats-part">
+                                    <span> PRĘDKOŚĆ :</span>
+                                    <span> { this.props.stats.carSpeed.toFixed(2) } km/h</span>
                                 </div>
                                 <div className="stats-part">
                                     <span> PALIWO :</span>
@@ -191,7 +220,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                                 </div>
                                 <div className="stats-part">
                                     <span> TEMPERATURA :</span>
-                                    <span> { this.props.stats.carTemperature } stopni</span>
+                                    <span> { this.props.stats.carTemperature } &#x2103;</span>
                                 </div>
                                 
                             </div>

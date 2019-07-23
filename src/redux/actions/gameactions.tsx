@@ -5,31 +5,31 @@ import { SavedState } from '../../models';
 
 
 
-export enum GameMode {
+export enum GameStatsActions {
     GAME_MODSTAT  = "MOD_STAT",
     GAME_SETSTAT  = "SET_STAT",
-    GAME_RESETSTAT = "RESET_STATS"
+    GAME_RESETSTATS = "RESET_STATS"
 }
 
-export interface ModGameStat {
-    readonly type: GameMode.GAME_MODSTAT;
+export interface GameStatsActionModStat {
+    readonly type: GameStatsActions.GAME_MODSTAT;
     payload: StatToModify
 }
 
-export interface SetGameStat {
-    readonly type: GameMode.GAME_SETSTAT;
+export interface GameStatsActionSetStat {
+    readonly type: GameStatsActions.GAME_SETSTAT;
     payload: StatToModify
 }
 
-export interface ResetGameStats {
-    readonly type: GameMode.GAME_RESETSTAT;
+export interface GameStatsActionResetStat {
+    readonly type: GameStatsActions.GAME_RESETSTATS;
 }
 
 
-export type GameModeAction = ModGameStat | SetGameStat | ResetGameStats;
+export type GameModeAction = GameStatsActionModStat | GameStatsActionSetStat | GameStatsActionResetStat;
 
-export const modStat = (stat:StatToModify) => action(GameMode.GAME_MODSTAT, stat);
+export const modStat = (stat:StatToModify) => action(GameStatsActions.GAME_MODSTAT, stat);
 
-export const setStat = (stat:StatToModify) => action(GameMode.GAME_SETSTAT, stat);
+export const setStat = (stat:StatToModify) => action(GameStatsActions.GAME_SETSTAT, stat);
 
-export const resetSavedState = (initial: SavedState) => action(GameMode.GAME_RESETSTAT, initial)
+export const resetSavedState = (initial: SavedState) => action(GameStatsActions.GAME_RESETSTATS, initial)

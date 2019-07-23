@@ -1,11 +1,11 @@
 import { Reducer } from 'redux';
-import { ResetGameStats, GameMode } from '../actions';
+import { GameStatsActionResetStat, GameStatsActions } from '../actions';
 import { GameEvent } from '../../components/maingame/gameevents';
 
 
-const gameEventsReducer: Reducer<GameEvent[], ResetGameStats> = ( state: GameEvent[] = [], action: ResetGameStats): GameEvent[] => {
+const gameEventsReducer: Reducer<GameEvent[], GameStatsActionResetStat> = ( state: GameEvent[] = [], action: GameStatsActionResetStat): GameEvent[] => {
     switch (action.type) {
-        case GameMode.GAME_RESETSTAT:
+        case GameStatsActions.GAME_RESETSTATS:
             return [];
     }
     return state;

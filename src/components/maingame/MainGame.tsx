@@ -44,7 +44,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                 currentEvent: GameEvents[drawnEventNumber],
                 historyOfEvents: this.state.historyOfEvents
             });
-            
+
             this.updateScroll();
             this.eventStep = Math.floor(Math.random() * 3) + 2;
 
@@ -109,6 +109,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
     }
 
 
+    // Update the events panel to the bottom
     updateScroll() {
         var element = document.getElementById("eventsHistory");
         if (element)

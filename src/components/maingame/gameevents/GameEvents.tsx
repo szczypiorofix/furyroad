@@ -7,17 +7,23 @@ export enum EventTypes {
     TERRAIN
 }
 
-export enum LootToFound {
-    WATER,
-    FOOD,
-    SCRAP,
-    FUEL,
-    WATER_FOOD,
-    WATER_SCRAP,
-    WATER_FOOD_SCRAP,
-    FOOD_SCRAP,
-    CAR_HEALTH_LOOSE,
-    NONE
+export enum EventResults {
+    NONE,
+    FOUND_WATER,
+    FOUND_FOOD,
+    FOUND_SCRAP,
+    FOUND_FUEL,
+    ADD_CAR_HEALTH,
+    LOOSE_WATER,
+    LOOSE_FOOD,
+    LOOSE_SCRAP,
+    LOOSE_FUEL,
+    LOOSE_CAR_HEALTH
+}
+
+interface ResultOfEvent {
+    res:    EventResults,
+    value:  number
 }
 
 export const initialGameEvent:GameEvent = {
@@ -25,17 +31,21 @@ export const initialGameEvent:GameEvent = {
     name: "Game start",
     chance: 100,
     text: "Starting game...",
-    found: LootToFound.NONE
+    attackRate: 0,
+    defenseRate: 0,
+    result: { succ: [ {res: EventResults.NONE, value: 0 }], fail: [{res: EventResults.NONE, value: 0 }] }
 }
 
 export const historyEventsMaxList: number = 20;
 
 export interface GameEvent {
-    type:    EventTypes,
-    name:    string,
-    chance:  number, // x / 100 to appear
-    text:    string,
-    found: LootToFound
+    type:           EventTypes,
+    name:           string,
+    chance:         number, // x / 100 to appear
+    text:           string,
+    attackRate:     number,
+    defenseRate:    number,
+    result:         { succ: ResultOfEvent[], fail: ResultOfEvent[] }
 }
 
 export const GameEvents:GameEvent[] = [
@@ -44,28 +54,48 @@ export const GameEvents:GameEvent[] = [
         chance: 60,
         name: "Piaszczysta droga",
         text: "Wkraczasz na piaszczystą drogę",
-        found: LootToFound.NONE
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.NONE, value: 0 }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
     },
     {
         type: EventTypes.TERRAIN,
         chance: 50,
         name: "Twarda ubita droga",
         text: "Wkraczasz na ubitą drogę",
-        found: LootToFound.NONE
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.NONE, value: 0 }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
     },
     {
         type: EventTypes.TERRAIN,
         chance: 30,
         name: "Błotnista droga",
         text: "Wkraczasz na błotnistą drogę",
-        found: LootToFound.NONE
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.NONE, value: 0 }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
     },
     {
         type: EventTypes.TERRAIN,
         chance: 20,
         name: "Kamienista droga",
         text: "Wkraczasz na kamienistą drogę",
-        found: LootToFound.NONE
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.NONE, value: 0 }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
     },
 
 
@@ -74,49 +104,84 @@ export const GameEvents:GameEvent[] = [
         chance: 40,
         name: "Walka z bandytami",
         text: "Zauważasz grupę bandytów którzy Cię atakują",
-        found: LootToFound.NONE
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.FOUND_FUEL, value: Math.round((Math.random() * 10) + 5) }, {res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 18) + 2) } ],
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 15) + 5) }]
+        }
     },
     {
         type: EventTypes.FIGHT,
         chance: 30,
         name: "Sfora zdziczałych psów",
         text: "Dopadła Cię sfora zdziczałych psów, musisz się bronić",
-        found: LootToFound.NONE
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.NONE, value: 0 }],
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 5) + 5) }]
+        }
     },
     {
         type: EventTypes.FIGHT,
         chance: 25,
         name: "Sępy",
         text: "Dopadła Cię stado wygłodniałych sępów",
-        found: LootToFound.NONE
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.NONE, value: 0 }],
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 5) + 5) }]
+        }
     },
     {
         type: EventTypes.FIGHT,
         chance: 20,
         name: "Gang Czach",
         text: "Dopadł Cię gang Czach. Musisz się bronić.",
-        found: LootToFound.FUEL
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.FOUND_FUEL, value: Math.round((Math.random() * 8) + 2) }, {res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 18) + 2) }],
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 10) + 5) }]
+        }
     },
     {
         type: EventTypes.FIGHT,
         chance: 34,
         name: "Bandyci",
         text: "Dopadli Cię bandyci.",
-        found: LootToFound.FUEL
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.FOUND_FUEL, value: Math.round((Math.random() * 8) + 2) }, {res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 18) + 2) }, {res: EventResults.FOUND_WATER, value: Math.round((Math.random() * 6) + 2) }],
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 10) + 5) }]
+        }
     },
     {
         type: EventTypes.FIGHT,
         chance: 30,
         name: "Gang Kopaczy",
         text: "Dopadł Cię gang Kopaczy.",
-        found: LootToFound.FUEL
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.FOUND_FUEL, value: Math.round((Math.random() * 8) + 2) }, {res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 18) + 2) }, {res: EventResults.FOUND_WATER, value: Math.round((Math.random() * 12) + 2) }, {res: EventResults.FOUND_FOOD, value: Math.round((Math.random() * 12) + 2) }],
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 10) + 5) }]
+        }
     },
     {
         type: EventTypes.FIGHT,
         chance: 10,
         name: "Immortan Joe",
         text: "Ściga Cię sam Immortan Joe! Broń się!",
-        found: LootToFound.FUEL
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.FOUND_FUEL, value: Math.round((Math.random() * 8) + 2) }, {res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 18) + 2) }, {res: EventResults.FOUND_WATER, value: Math.round((Math.random() * 12) + 2) }, {res: EventResults.FOUND_FOOD, value: Math.round((Math.random() * 12) + 2) }],
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 10) + 5) }]
+        }
     },
 
     {
@@ -124,48 +189,83 @@ export const GameEvents:GameEvent[] = [
         chance: 80,
         name: "Dziura w jezdni",
         text: "Interceptor wpada w dziurę na drodzę i ulega lekkim uszkodzeniom",
-        found: LootToFound.CAR_HEALTH_LOOSE
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 8) + 2) }],
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 8) + 2) }]
+        }
     },
     {
         type: EventTypes.ENCOUNTER,
         chance: 20,
         name: "Wędrowiec",
         text: "Spotykasz dziwnego wędrowca.",
-        found: LootToFound.WATER_FOOD
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.FOUND_WATER, value: Math.round((Math.random() * 8) + 2) }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
     },
     {
         type: EventTypes.ENCOUNTER,
         chance: 5,
         name: "Ranczo Skywalkerów",
         text: "Ranczo Skywalkerów? WTF ??!!",
-        found: LootToFound.WATER_FOOD
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.FOUND_WATER, value: Math.round((Math.random() * 8) + 2) }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
     },
     {
         type: EventTypes.ENCOUNTER,
         chance: 5,
         name: "Statek UFO",
         text: "Znajdujesz statek UFO.",
-        found: LootToFound.WATER_FOOD_SCRAP
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 16) + 2) }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
     },
     {
         type: EventTypes.ENCOUNTER,
         chance: 40,
         name: "Znajdujesz złom",
         text: "Znajdujesz trochę złomu.",
-        found: LootToFound.SCRAP
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 28) + 2) }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
     },
     {
         type: EventTypes.ENCOUNTER,
         chance: 40,
         name: "Znajdujesz wodę",
         text: "Znajdujesz trochę wody.",
-        found: LootToFound.WATER
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.FOUND_WATER, value: Math.round((Math.random() * 18) + 2) }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
     },
     {
         type: EventTypes.ENCOUNTER,
         chance: 40,
         name: "Znajdujesz jedzenie",
         text: "Znajdujesz trochę jedzenia.",
-        found: LootToFound.FOOD
+        attackRate: 0,
+        defenseRate: 0,
+        result: {
+            succ: [{res: EventResults.FOUND_FOOD, value: Math.round((Math.random() * 18) + 2) }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
     },
 ];

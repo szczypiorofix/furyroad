@@ -65,57 +65,10 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                         console.log(GameEvents[drawnEventNumber].name+ " ADDED FOOD");
                         this.props.modStat({attribute: GameStatsEnum.FOOD, value: GameEvents[drawnEventNumber].result.succ[i].value});
                         break;
-                    case EventResults.FOUND_FUEL:
-                        console.log(GameEvents[drawnEventNumber].name+ " ADDED FUEL");
-                        this.props.modStat({attribute: GameStatsEnum.FUEL, value: GameEvents[drawnEventNumber].result.succ[i].value});
-                        break;
-                    case EventResults.FOUND_SCRAP:
-                        console.log(GameEvents[drawnEventNumber].name+ " ADDED SCRAP");
-                        this.props.modStat({attribute: GameStatsEnum.SCRAP, value: GameEvents[drawnEventNumber].result.succ[i].value});
-                        break;
-                    case EventResults.FOUND_WATER:
-                        console.log(GameEvents[drawnEventNumber].name+ " ADDED WATER");
-                        this.props.modStat({attribute: GameStatsEnum.WATER, value: GameEvents[drawnEventNumber].result.succ[i].value});
-                        break;
                     default:
                         break;
                 }
             }
-            // switch(GameEvents[drawnEventNumber].result.succ) {
-            //     case EventResults.FOUND_FOOD:
-
-                    // break;
-                // case LootToFound.FOOD:
-                //     this.props.modStat({attribute: GameStatsEnum.FOOD, value: Math.floor(Math.random() * 16) + 4});
-                //     break;
-                // case LootToFound.WATER:
-                //     this.props.modStat({attribute: GameStatsEnum.WATER, value: Math.floor(Math.random() * 16) + 4});
-                //     break;
-                // case LootToFound.SCRAP:
-                //     this.props.modStat({attribute: GameStatsEnum.SCRAP, value: Math.floor(Math.random() * 56) + 4});
-                //     break;
-                // case LootToFound.FUEL:
-                //     this.props.modStat({attribute: GameStatsEnum.FUEL, value: Math.floor(Math.random() * 22) + 8})
-                //     if (this.props.stats.fuel > this.props.stats.maxFuel) {
-                //         console.log("ZA DUŻO PALIWA !!!");
-                //         this.props.setStat({attribute: GameStatsEnum.FUEL, value: this.props.stats.maxFuel});
-                //     }
-                //     break;
-                // case LootToFound.WATER_FOOD:
-                //     this.props.modStat({attribute: GameStatsEnum.WATER, value: Math.floor(Math.random() * 16) + 4});
-                //     this.props.modStat({attribute: GameStatsEnum.FOOD, value: Math.floor(Math.random() * 16) + 4})
-                //     break;
-                // case LootToFound.WATER_FOOD_SCRAP:
-                //     this.props.modStat({attribute: GameStatsEnum.SCRAP, value: Math.floor(Math.random() * 56) + 4});
-                //     this.props.modStat({attribute: GameStatsEnum.WATER, value: Math.floor(Math.random() * 16) + 4});
-                //     this.props.modStat({attribute: GameStatsEnum.FOOD, value: Math.floor(Math.random() * 16) + 4})
-                //     break;
-                // case LootToFound.CAR_HEALTH_LOOSE:
-                //     this.props.modStat({attribute: GameStatsEnum.CARHEALTH, value: -5});
-                //     break;
-            //     default:
-            //         break;
-            // }
         }
 
         // ZUŻYCIE PALIWA:

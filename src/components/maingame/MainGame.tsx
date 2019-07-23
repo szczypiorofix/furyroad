@@ -53,6 +53,15 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
             for (let i:number = 0; i < GameEvents[drawnEventNumber].result.succ.length; i++) {
                 switch(GameEvents[drawnEventNumber].result.succ[i].res) {
                     case EventResults.FOUND_FOOD:
+                        this.props.modStat({attribute: GameStatsEnum.FOOD, value: GameEvents[drawnEventNumber].result.succ[i].value});
+                        break;
+                    case EventResults.FOUND_FUEL:
+                        this.props.modStat({attribute: GameStatsEnum.FUEL, value: GameEvents[drawnEventNumber].result.succ[i].value});
+                        break;
+                    case EventResults.FOUND_SCRAP:
+                        this.props.modStat({attribute: GameStatsEnum.SCRAP, value: GameEvents[drawnEventNumber].result.succ[i].value});
+                        break;
+                    case EventResults.FOUND_WATER:
                         console.log(GameEvents[drawnEventNumber].name+ " ADDED FOOD");
                         this.props.modStat({attribute: GameStatsEnum.FOOD, value: GameEvents[drawnEventNumber].result.succ[i].value});
                         break;

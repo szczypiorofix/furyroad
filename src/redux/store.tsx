@@ -3,8 +3,6 @@ import { createLogger } from 'redux-logger';
 import myCombinedReducers from './reducers';
 import initialState from './initialstate';
 import { GameRootState, SavedState, MainGameStateTypes } from '../models';
-// import { GameEvent } from '../components/maingame/gameevents';
-
 
 
 let middleware: any[] = [];
@@ -12,8 +10,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     const logger = createLogger({
         diff: true,
     });
-    // middleware = [...middleware, logger];
-    middleware = [...middleware];
+    middleware = [...middleware, logger];
 }
 
 

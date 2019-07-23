@@ -33,9 +33,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
             do {
                 drawnEventNumber = Math.floor(Math.random() * this.eventsMaxCount);
                 randomEventChance = Math.floor(Math.random() * 100);
-            } while(randomEventChance >= GameEvents[drawnEventNumber].chance);
-            // console.log("EVENT witch chance: ["+randomEventChance+"/"+GameEvents[drawnEventNumber].chance+"] : "+ GameEvents[drawnEventNumber].name);
-            
+            } while(randomEventChance >= GameEvents[drawnEventNumber].chance);            
 
             if (this.state.historyOfEvents.length > historyEventsMaxList) {
                 this.state.historyOfEvents.shift();
@@ -46,6 +44,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                 currentEvent: GameEvents[drawnEventNumber],
                 historyOfEvents: this.state.historyOfEvents
             });
+            
             this.updateScroll();
             this.eventStep = Math.floor(Math.random() * 3) + 2;
 
@@ -81,7 +80,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
 
         // OBSŁUGA TEMPERATURY
         if (this.props.stats.carTemperature < 90)
-        this.props.modStat({attribute: GameStatsEnum.CARTEMPERATURE, value: 2});
+            this.props.modStat({attribute: GameStatsEnum.CARTEMPERATURE, value: 2});
 
         // OBLICACZNIE DYSTANSU
         this.props.modStat({attribute: GameStatsEnum.DISTANCEDRIVEN, value: (this.props.stats.carSpeed / 3600) });

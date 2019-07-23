@@ -62,7 +62,6 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                         this.props.modStat({attribute: GameStatsEnum.SCRAP, value: GameEvents[drawnEventNumber].result.succ[i].value});
                         break;
                     case EventResults.FOUND_WATER:
-                        console.log(GameEvents[drawnEventNumber].name+ " ADDED FOOD");
                         this.props.modStat({attribute: GameStatsEnum.FOOD, value: GameEvents[drawnEventNumber].result.succ[i].value});
                         break;
                     default:

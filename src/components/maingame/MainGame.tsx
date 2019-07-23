@@ -116,11 +116,13 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
             element.scrollTop = element.scrollHeight;
     }
 
+
     componentWillReceiveProps(nextProps:MainGameProps){
         if (nextProps.getGameEvents !== this.props.getGameEvents) {
           this.setState({ historyOfEvents : nextProps.getGameEvents })
         }
     }
+
 
     render():JSX.Element {
         if (this.state)
@@ -136,10 +138,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                                 this.props.gotoMainMenu()
                             } }
                         />
-                        <span className="maingame-title">FURY ROAD</span>
-                        
-                        {/* <img src="./images/furyroad.png" alt="Interceptor" /> */}
-                        
+                        <span className="maingame-title">FURY ROAD</span>                        
                         <div className="imageFuel">
                             <div className="imageFuelIndicator" style={{transform: "rotate("+ Math.floor( ( (this.props.stats.fuel * 180) / this.props.stats.maxFuel) - 90) +"deg)" }}></div>
                         </div>
@@ -190,26 +189,6 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                                 active={ true }
                                 onClick={ () => this.props.goToEndGame() }
                             />
-                            {/* <MainMenuButton
-                                title="+ 10 FUEL"
-                                active={ true }
-                                onClick={ () => this.props.modStat({attribute: GameStatsEnum.FUEL, value: 10}) }
-                            />
-                            <MainMenuButton
-                                title="- 10 FUEL"
-                                active={ true }
-                                onClick={ () => this.props.modStat({attribute: GameStatsEnum.FUEL, value: -10}) }
-                            />
-                            <MainMenuButton
-                                title="+ 10 WATER"
-                                active={ true }
-                                onClick={ () => this.props.modStat({attribute: GameStatsEnum.WATER, value: 10}) }
-                            />
-                            <MainMenuButton
-                                title="- 10 WATER"
-                                active={ true }
-                                onClick={ () => this.props.modStat({attribute: GameStatsEnum.WATER, value: -10}) }
-                            /> */}
                         </div>
                         <div className="main-view-middle">
                             <div className="events-panel">

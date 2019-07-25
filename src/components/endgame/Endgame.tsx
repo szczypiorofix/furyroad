@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import './Endgame.css';
+import './Endgame.scss';
 
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
 import { EndGameProps } from './EndgameModel';

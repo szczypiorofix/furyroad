@@ -2,14 +2,16 @@
 
 @import url('https://fonts.googleapis.com/css?family=Exo+2&display=swap&subset=latin-ext');
 
-@import 'normalize.less';
-@import 'Settings.less';
+@import 'variables';
+
 
 * {
     box-sizing: border-box;
+    -moz-osx-font-smoothing: auto;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    image-rendering: pixelated;
 }
+
 
 html, body {
     margin: 0;
@@ -17,6 +19,6 @@ html, body {
     width: 100%;
     height: auto;
     font-family: 'Noto Sans', sans-serif;
-    background-color: @backgroundColor;
-    color: @textMainColor;
+    background-color: $color11;
+    color: $color01;
 }

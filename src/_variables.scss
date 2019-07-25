@@ -1,0 +1,46 @@
+$color01: #f4faaf;
+$color02: #e3d88f;
+$color03: #ccb690;
+$color04: #74aec6;
+$color05: #ae8d78;
+$color06: #8c7d66;
+$color07: #6d7073;
+$color08: #287051;
+$color09: #635751;
+$color10: #61444a;
+$color11: #3a383c;
+
+
+
+@mixin desktop {
+    @media only screen and (min-width: 1280px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (min-width: 600px) and (max-width: 1279px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media only screen and (max-width: 599px) {
+        @content;
+    }
+}
+
+ 
+
+@mixin boxShadow($h) {
+    box-shadow: $h;
+    -webkit-box-shadow: $h;
+    -moz-box-shadow: $h;
+    -ms-box-shadow: $h;
+}
+
+@mixin rotate($h) {
+    -webkit-transform: rotate($h);
+    transform: rotate($h);
+    -moz-transform: rotate($h)
+}

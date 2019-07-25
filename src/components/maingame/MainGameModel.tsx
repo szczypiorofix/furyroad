@@ -2,6 +2,8 @@ import { MainMenuState, GameStats, StatToModify } from '../../models';
 import { GameEvent } from './gameevents';
 
 export interface MainGameState {
+    paused: boolean;
+    drawnEventNumber: number;
     currentEvent: GameEvent;
     historyOfEvents: GameEvent[];
 }

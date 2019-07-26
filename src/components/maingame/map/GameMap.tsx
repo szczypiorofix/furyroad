@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './GameMap.css';
+import './GameMap.scss';
 
 import { GameMapModel } from './GameMapModel';
 

@@ -1,17 +1,16 @@
-@import '../../Settings.less';
-
+@import '../../variables';
 
 
 div.setting-menu {
-    background-color: @color2;
-    color: @color4;
+    background-color: $color_dark_brown;
+    color: $color_blue;
     
     h2, h3 {
         text-align: center;
     }
 
     h2.settings-title {
-        color: salmon;
+        color: $color_light_brown;
     }
 
     button {

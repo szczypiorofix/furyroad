@@ -20,7 +20,9 @@ const initialState: GameRootState = {
             distanceDriven: 0,
             carFuelUsage: 1.0,
             carSpeed: 90.0,
-            carMaxSpeed: 1.0
+            carMaxSpeed: 1.0,
+            attactRate: 2,
+            defenseRate: 2
         },
         gameeventshistory: []
     }

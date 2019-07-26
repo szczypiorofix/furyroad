@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import './MainGame.css';
+import './MainGame.scss';
 
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
 import { GameRootState, StatToModify, GameStatsEnum } from '../../models';
@@ -9,9 +9,8 @@ import { getGameMode, getGameStats, getGameEvents } from '../../redux/selectors'
 import { goToMainMenu, modStat, setStat, goToEndGame } from '../../redux/actions';
 import { MainGameProps, MainGameState } from './MainGameModel';
 import { saveGameState, LOCAL_STORAGE_SAVED_STATE_NAME } from '../../redux/store';
-import { GameEvents, GameEvent, initialGameEvent, historyEventsMaxList, EventResults } from './gameevents/GameEvents';
-
-// import { TileSet } from '../../graphics';
+import { GameEvents, GameEvent, initialGameEvent, historyEventsMaxList, EventResults, EventTypes } from './gameevents/GameEvents';
+import GameMap from './map/GameMap';
 
 
 
@@ -21,80 +20,171 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
     eventsMaxCount: number = 0;
     eventStep: number = 0;
 
+    yesButtonChosen = () => {
+
+        switch (this.state.currentEvent.type) {
+            case EventTypes.FIGHT:
+                if (this.state.currentEvent.attackRate > this.props.stats.defenseRate) {
+                    console.log(this.state.currentEvent.name +": "+this.state.currentEvent.attackRate+" vs. "+this.props.stats.defenseRate);
+                    console.log("Walczyłeś i przegrałeś");
+
+                    let failEvent:GameEvent;
+                    failEvent = {
+                        chance: 100,
+                        attackRate: 0,
+                        defenseRate: 0,
+                        name: "Przegrałeś !!!",
+                        text: "Przegrałeś z wrogiem: " + this.state.currentEvent.name,
+                        options: { yesbutton: "", nobutton: ""},
+                        result: { succ: [], fail: [] },
+                        type: EventTypes.INFO
+                    }
+
+                    if (this.state.historyOfEvents.length > historyEventsMaxList) {
+                        this.state.historyOfEvents.shift();
+                    }
+                    this.state.historyOfEvents.push(failEvent);
+                    this.setState({
+                        currentEvent: GameEvents[this.state.drawnEventNumber],
+                        historyOfEvents: this.state.historyOfEvents
+                    });
+
+                } else {
+                    console.log(this.state.currentEvent.name +": "+this.state.currentEvent.attackRate+" vs. "+this.props.stats.defenseRate);
+                    console.log("Wygrałeś !!");
+
+                    for (let i:number = 0; i < GameEvents[this.state.drawnEventNumber].result.succ.length; i++) {
+                        switch(GameEvents[this.state.drawnEventNumber].result.succ[i].res) {
+                            case EventResults.FOUND_FOOD:
+                                this.props.modStat({attribute: GameStatsEnum.FOOD, value: GameEvents[this.state.drawnEventNumber].result.succ[i].value});
+                                break;
+                            case EventResults.FOUND_FUEL:
+                                this.props.modStat({attribute: GameStatsEnum.FUEL, value: GameEvents[this.state.drawnEventNumber].result.succ[i].value});
+                                break;
+                            case EventResults.FOUND_SCRAP:
+                                this.props.modStat({attribute: GameStatsEnum.SCRAP, value: GameEvents[this.state.drawnEventNumber].result.succ[i].value});
+                                break;
+                            case EventResults.FOUND_WATER:
+                                this.props.modStat({attribute: GameStatsEnum.FOOD, value: GameEvents[this.state.drawnEventNumber].result.succ[i].value});
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    let victoryEvent:GameEvent;
+                    victoryEvent = {
+                        chance: 100,
+                        attackRate: 0,
+                        defenseRate: 0,
+                        name: "Wygrałeś !!!",
+                        text: "Wygrałeś z wrogiem: " + this.state.currentEvent.name,
+                        options: { yesbutton: "", nobutton: ""},
+                        result: { succ: [], fail: [] },
+                        type: EventTypes.INFO
+                    }
+
+                    if (this.state.historyOfEvents.length > historyEventsMaxList) {
+                        this.state.historyOfEvents.shift();
+                    }
+                    this.state.historyOfEvents.push(victoryEvent);
+                    this.setState({
+                        currentEvent: GameEvents[this.state.drawnEventNumber],
+                        historyOfEvents: this.state.historyOfEvents
+                    });
+                }
+                break;
+            case EventTypes.ENCOUNTER:
+                break;
+            case EventTypes.VILLAGE:
+                break;
+            default:
+                break;
+        }
+
+        this.setState({...this.state, paused: false, drawnEventNumber: -1});
+
+        this.updateScroll();
+    }
+
+
+    noButtonChosen = () => {
+        this.setState({...this.state, paused: false, drawnEventNumber: -1});
+        if (this.state.currentEvent.type === EventTypes.FIGHT)
+            console.log("Ucieczka....");
+
+        this.updateScroll();
+    }
+
+
     callForEvent() {
 
-        this.eventStep--;
+        // Paused
+        if (!this.state.paused) {
+
+            // Unpaused
+            this.eventStep--;
         
-        if (this.eventStep <= 0) {
-            
-            let drawnEventNumber: number = 0;
-            let randomEventChance: number = 0;
+            if (this.eventStep <= 0) {
+                
+                let randomEventChance: number = 0;
 
-            do {
-                drawnEventNumber = Math.floor(Math.random() * this.eventsMaxCount);
-                randomEventChance = Math.floor(Math.random() * 100);
-            } while(randomEventChance >= GameEvents[drawnEventNumber].chance);            
+                do {
+                    this.setState( {...this.state, drawnEventNumber: Math.floor(Math.random() * this.eventsMaxCount) } )
+                    randomEventChance = Math.floor(Math.random() * 100);
+                } while(randomEventChance >= GameEvents[this.state.drawnEventNumber].chance);            
 
-            if (this.state.historyOfEvents.length > historyEventsMaxList) {
-                this.state.historyOfEvents.shift();
-            }
+                if (this.state.historyOfEvents.length > historyEventsMaxList) {
+                    this.state.historyOfEvents.shift();
+                }
 
-            this.state.historyOfEvents.push(GameEvents[drawnEventNumber]);
-            this.setState({
-                currentEvent: GameEvents[drawnEventNumber],
-                historyOfEvents: this.state.historyOfEvents
-            });
+                this.state.historyOfEvents.push(GameEvents[this.state.drawnEventNumber]);
+                this.setState({
+                    currentEvent: GameEvents[this.state.drawnEventNumber],
+                    historyOfEvents: this.state.historyOfEvents
+                });
 
-            this.updateScroll();
-            this.eventStep = Math.floor(Math.random() * 3) + 2;
+                this.updateScroll();
+                this.eventStep = Math.floor(Math.random() * 3) + 2;
 
-
-            for (let i:number = 0; i < GameEvents[drawnEventNumber].result.succ.length; i++) {
-                switch(GameEvents[drawnEventNumber].result.succ[i].res) {
-                    case EventResults.FOUND_FOOD:
-                        this.props.modStat({attribute: GameStatsEnum.FOOD, value: GameEvents[drawnEventNumber].result.succ[i].value});
-                        break;
-                    case EventResults.FOUND_FUEL:
-                        this.props.modStat({attribute: GameStatsEnum.FUEL, value: GameEvents[drawnEventNumber].result.succ[i].value});
-                        break;
-                    case EventResults.FOUND_SCRAP:
-                        this.props.modStat({attribute: GameStatsEnum.SCRAP, value: GameEvents[drawnEventNumber].result.succ[i].value});
-                        break;
-                    case EventResults.FOUND_WATER:
-                        this.props.modStat({attribute: GameStatsEnum.FOOD, value: GameEvents[drawnEventNumber].result.succ[i].value});
-                        break;
-                    default:
-                        break;
+                if (GameEvents[this.state.drawnEventNumber].type !== EventTypes.TERRAIN) {
+                    this.setState({...this.state, paused: true});
                 }
             }
+
+            // ZUŻYCIE PALIWA:
+            this.props.modStat({attribute: GameStatsEnum.FUEL, value: -this.props.stats.carFuelUsage});
+
+            // ZUŻYCIE JEDZENIA:
+            this.props.modStat({attribute: GameStatsEnum.FOOD, value: -0.25});
+
+            // ZUŻYCIE WODY:
+            this.props.modStat({attribute: GameStatsEnum.WATER, value: -0.25});
+
+            // OBSŁUGA TEMPERATURY
+            if (this.props.stats.carTemperature < 90)
+                this.props.modStat({attribute: GameStatsEnum.CARTEMPERATURE, value: 2});
+
+            // OBLICACZNIE DYSTANSU
+            this.props.modStat({attribute: GameStatsEnum.DISTANCEDRIVEN, value: (this.props.stats.carSpeed / 3600) });
+
+
+            if (this.props.stats.fuel <= 0 || this.props.stats.carHealth <= 0 || this.props.stats.food <= 0 || this.props.stats.water <= 0) {
+                localStorage.removeItem(LOCAL_STORAGE_SAVED_STATE_NAME);
+                this.props.goToEndGame()
+            }
         }
 
-        // ZUŻYCIE PALIWA:
-        this.props.modStat({attribute: GameStatsEnum.FUEL, value: -this.props.stats.carFuelUsage});
-
-        // ZUŻYCIE JEDZENIA:
-        this.props.modStat({attribute: GameStatsEnum.FOOD, value: -0.25});
-
-        // ZUŻYCIE WODY:
-        this.props.modStat({attribute: GameStatsEnum.WATER, value: -0.25});
-
-        // OBSŁUGA TEMPERATURY
-        if (this.props.stats.carTemperature < 90)
-            this.props.modStat({attribute: GameStatsEnum.CARTEMPERATURE, value: 2});
-
-        // OBLICACZNIE DYSTANSU
-        this.props.modStat({attribute: GameStatsEnum.DISTANCEDRIVEN, value: (this.props.stats.carSpeed / 3600) });
-
-
-        if (this.props.stats.fuel <= 0 || this.props.stats.carHealth <= 0 || this.props.stats.food <= 0 || this.props.stats.water <= 0) {
-            localStorage.removeItem(LOCAL_STORAGE_SAVED_STATE_NAME);
-            this.props.goToEndGame()
-        }
     }
 
 
     componentDidMount() {
-        this.setState({currentEvent: initialGameEvent, historyOfEvents: this.props.getGameEvents});
+        this.setState({
+            currentEvent: initialGameEvent,
+            historyOfEvents: this.props.getGameEvents,
+            paused: false,
+            drawnEventNumber: -1
+        });
 
         this.eventStep = 0;
         this.eventsMaxCount = GameEvents.length;
@@ -146,6 +236,9 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                             <div className="imageCarTemperatureIndicator" style={{transform: "rotate("+( ( (this.props.stats.carTemperature * 180) / this.props.stats.carMaxTemperature) - 90) +"deg)" }}></div>
                         </div>
                     </div>
+
+                    <GameMap />
+
                     <div className="main-view-container">
                         <div className="main-view-left">
                             <span>STATYSTYKI:</span>
@@ -182,6 +275,14 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                                     <span> TEMPERATURA :</span>
                                     <span> { this.props.stats.carTemperature } &#x2103;</span>
                                 </div>
+                                <div className="stats-part">
+                                    <span> ATAK :</span>
+                                    <span> { this.props.stats.attactRate } </span>
+                                </div>
+                                <div className="stats-part">
+                                    <span> OBRONA :</span>
+                                    <span> { this.props.stats.defenseRate } </span>
+                                </div>
                                 
                             </div>
                             <MainMenuButton
@@ -202,10 +303,33 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                                     </ul>
                                 </div>
                             </div>
+
+                            <div className="events-button-div">
+                                <MainMenuButton
+                                    title={ this.state.drawnEventNumber >= 4 ? GameEvents[this.state.drawnEventNumber].options.yesbutton : "" }
+                                    active={ this.state.drawnEventNumber >= 4 }
+                                    onClick={ this.yesButtonChosen }
+                                />
+
+                                <MainMenuButton
+                                    title={ this.state.drawnEventNumber >= 4 ? GameEvents[this.state.drawnEventNumber].options.nobutton : "" }
+                                    active={ this.state.drawnEventNumber >= 4 }
+                                    onClick={ this.noButtonChosen }
+                                />
+                            </div>
+
                         </div>
                         <div className="main-view-right">
                             <div className="upgrades-panel">
-                                <span>Upgrades</span>
+                                <span>Upgrades:</span>
+                            </div>
+                            <div className="map-button-panel">
+                                <MainMenuButton
+                                    title={ "Mapa" }
+                                    active={ true }
+                                    onClick={ () => {} }
+                                />
+
                             </div>
                         </div>
                     </div>

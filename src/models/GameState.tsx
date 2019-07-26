@@ -18,7 +18,9 @@ export enum GameStatsEnum {
     CARMAXHEALTH="carMaxHealth",
     CARTEMPERATURE="carTemperature",
     CARMAXTEMPERATURE="carMaxTemperature",
-    DISTANCEDRIVEN="distanceDriven"
+    DISTANCEDRIVEN="distanceDriven",
+    ATTACTRATE="attactRate",
+    DEFENSERATE="defenseRate"
 }
 
 export interface GameStats {
@@ -36,7 +38,8 @@ export interface GameStats {
     carSpeed:           number,
     carMaxSpeed:        number,
     carFuelUsage:       number,
-    
+    attactRate:         number,
+    defenseRate:        number
 }
 
 export interface StatToModify {

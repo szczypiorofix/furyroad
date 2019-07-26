@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import './Junkyard.css';
+import './Junkyard.scss';
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
 import { JunkyardProps } from './JunkyardModel';
 import { getGameMode } from '../../redux/selectors';

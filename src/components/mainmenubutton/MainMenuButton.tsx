@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './MainMenuButton.css';
+import './MainMenuButton.scss';
 import { MainMenuButtonModel } from '../../models';
 
 

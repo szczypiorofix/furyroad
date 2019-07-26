@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import './MainMenu.css';
+import './MainMenu.scss';
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
 import { GameRootState, SavedState } from '../../models';
 import { getGameMode } from '../../redux/selectors';

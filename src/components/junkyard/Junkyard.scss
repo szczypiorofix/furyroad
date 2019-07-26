@@ -1,8 +1,8 @@
-@import '../../Settings.less';
+@import '../../variables';
 
 div.junkyard-menu {
-    background-color: @color2;
-    color: @color4;
+    background-color: $color02;
+    color: $color04;
     
     h1, h2, h3 {
         text-align: center;

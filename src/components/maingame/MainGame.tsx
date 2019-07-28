@@ -28,13 +28,35 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                     console.log(this.state.currentEvent.name +": "+this.state.currentEvent.attackRate+" vs. "+this.props.stats.defenseRate);
                     console.log("Walczyłeś i przegrałeś");
 
+                    let looseCarHealthAmount:number = 0;
+                    let looseFuelAmount:number = 0;
+
+                    for (let i:number = 0; i < this.state.currentEvent.result.fail.length; i++) {
+                        switch(this.state.currentEvent.result.fail[i].res) {
+                            case EventResults.LOOSE_CAR_HEALTH:
+                                let looseCarHealthFactor:number = this.state.currentEvent.result.fail[i].value;
+                                console.log("Wylosowano carHealth: "+looseCarHealthFactor);
+                                this.props.modStat({attribute: GameStatsEnum.CARHEALTH, value: looseCarHealthFactor});
+                                looseCarHealthAmount += looseCarHealthFactor;
+                                break;
+                            case EventResults.LOOSE_FUEL:
+                                let looseFuelFactor:number = this.state.currentEvent.result.fail[i].value;
+                                console.log("Wylosowano fuel: "+looseFuelFactor);
+                                this.props.modStat({attribute: GameStatsEnum.FUEL, value: looseFuelFactor});
+                                looseFuelAmount += looseFuelFactor;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
                     let failEvent:GameEvent;
                     failEvent = {
                         chance: 100,
                         attackRate: 0,
                         defenseRate: 0,
                         name: "Przegrałeś !!!",
-                        text: "Przegrałeś z wrogiem: " + this.state.currentEvent.name,
+                        text: (looseCarHealthAmount < 0 ? "Uszkodziłeś samochód: "+(-looseCarHealthAmount)+". " : "") + (looseFuelAmount < 0 ? "Tracisz "+(-looseFuelAmount)+" paliwa." : ""),
                         options: { yesbutton: "", nobutton: ""},
                         result: { succ: [], fail: [] },
                         type: EventTypes.INFO
@@ -72,8 +94,8 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                         }
                     }
 
-                    let victoryEvent:GameEvent;
-                    victoryEvent = {
+                    let fleeEvent:GameEvent;
+                    fleeEvent = {
                         chance: 100,
                         attackRate: 0,
                         defenseRate: 0,
@@ -87,7 +109,8 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                     if (this.state.historyOfEvents.length > historyEventsMaxList) {
                         this.state.historyOfEvents.shift();
                     }
-                    this.state.historyOfEvents.push(victoryEvent);
+                    this.state.historyOfEvents.push(fleeEvent);
+                    
                     this.setState({
                         currentEvent: GameEvents[this.state.drawnEventNumber],
                         historyOfEvents: this.state.historyOfEvents
@@ -110,8 +133,49 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
 
     noButtonChosen = () => {
         this.setState({...this.state, paused: false, drawnEventNumber: -1});
-        if (this.state.currentEvent.type === EventTypes.FIGHT)
-            console.log("Ucieczka....");
+        if (this.state.currentEvent.type === EventTypes.FIGHT) {
+
+            // for (let i:number = 0; i < GameEvents[this.state.drawnEventNumber].result.succ.length; i++) {
+            //     switch(GameEvents[this.state.drawnEventNumber].result.succ[i].res) {
+            //         case EventResults.FOUND_FOOD:
+            //             this.props.modStat({attribute: GameStatsEnum.FOOD, value: GameEvents[this.state.drawnEventNumber].result.succ[i].value});
+            //             break;
+            //         case EventResults.FOUND_FUEL:
+            //             this.props.modStat({attribute: GameStatsEnum.FUEL, value: GameEvents[this.state.drawnEventNumber].result.succ[i].value});
+            //             break;
+            //         case EventResults.FOUND_SCRAP:
+            //             this.props.modStat({attribute: GameStatsEnum.SCRAP, value: GameEvents[this.state.drawnEventNumber].result.succ[i].value});
+            //             break;
+            //         case EventResults.FOUND_WATER:
+            //             this.props.modStat({attribute: GameStatsEnum.FOOD, value: GameEvents[this.state.drawnEventNumber].result.succ[i].value});
+            //             break;
+            //         default:
+            //             break;
+            //     }
+            // }
+
+            // let fleeEvent:GameEvent;
+            // fleeEvent = {
+            //     chance: 100,
+            //     attackRate: 0,
+            //     defenseRate: 0,
+            //     name: "Uciekasz !!!",
+            //     text: "Tracisz  " + this.state.currentEvent.name,
+            //     options: { yesbutton: "", nobutton: ""},
+            //     result: { succ: [], fail: [] },
+            //     type: EventTypes.INFO
+            // }
+
+            // if (this.state.historyOfEvents.length > historyEventsMaxList) {
+            //     this.state.historyOfEvents.shift();
+            // }
+            // this.state.historyOfEvents.push(fleeEvent);
+            
+            // this.setState({
+            //     currentEvent: GameEvents[this.state.drawnEventNumber],
+            //     historyOfEvents: this.state.historyOfEvents
+            // });
+        }
 
         this.updateScroll();
     }
@@ -297,7 +361,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                                 <div className="history-events-container">
                                     <ul id="eventsHistory" className="history-events">
                                         { this.state.historyOfEvents.map(function(item:GameEvent, i:number) {
-                                            return <li key={i}>{ item.name }: { item.text }</li>
+                                            return <li key={i}>{ item.name } { item.text }</li>
                                             })
                                         }
                                     </ul>

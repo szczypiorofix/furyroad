@@ -4,9 +4,9 @@ button {
     font-size: 18px;
     font-weight: 400;
     padding: 8px;
-    background-color: $color_medium_brown;
-    color: $color_dark_sand;
-    border: 5px solid $color_sand;
+    background-color: $color_dark_gray;
+    color: $color_sand;
+    border: 5px solid $color_dark_crimson;
     outline: none;
     min-width: 220px;
     width: 220px;
@@ -16,7 +16,7 @@ button {
     // text-shadow: 1px 1px 1px @color02;
     transition: all 0.2s;
     &:hover {
-        background-color: $color_dark_sand;
+        background-color: darken($color_dark_gray, 5%);
         transform: translateY(1px);
     }
     &:active {

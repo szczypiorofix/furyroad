@@ -4,7 +4,7 @@
 div.main-game-div {
     
     background-color: $color_dark_gray;
-    color: $color_dark_sand;
+    color: $color_sand;
     position: relative;
     
     div.main-game-header {
@@ -124,10 +124,10 @@ div.main-game-div {
                 
                 ul.history-events {
                     border: 1px solid blue;
-                    max-height: 300px;
+                    max-height: 340px;
                     overflow-y: auto;
                     overflow-x: hidden;
-                    min-height: 300px;
+                    min-height: 340px;
                     list-style: none;
                     padding-left: 0;
                     

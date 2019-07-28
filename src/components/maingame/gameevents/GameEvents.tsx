@@ -110,20 +110,6 @@ export const GameEvents:GameEvent[] = [
         }
     },
 
-
-    {
-        type: EventTypes.FIGHT,
-        chance: 40,
-        name: "Walka z bandytami",
-        text: "Zauważasz grupę bandytów którzy Cię atakują",
-        attackRate: 4,
-        defenseRate: 3,
-        options: {yesbutton: "Walcz!", nobutton: "Uciekaj"},
-        result: {
-            succ: [{res: EventResults.FOUND_FUEL, value: Math.round((Math.random() * 10) + 5) }, {res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 18) + 2) } ],
-            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 15) + 5) }]
-        }
-    },
     {
         type: EventTypes.FIGHT,
         chance: 30,
@@ -134,7 +120,7 @@ export const GameEvents:GameEvent[] = [
         options: {yesbutton: "Walcz!", nobutton: "Uciekaj"},
         result: {
             succ: [{res: EventResults.NONE, value: 0 }],
-            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 5) + 5) }]
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: - Math.round((Math.random() * 5) + 5) }]
         }
     },
     {
@@ -144,10 +130,10 @@ export const GameEvents:GameEvent[] = [
         text: "Dopadła Cię stado wygłodniałych sępów",
         attackRate: 1,
         defenseRate: 0,
-        options: {yesbutton: "Walcz!", nobutton: "Uciekaj"},
+        options: {yesbutton: "Walcz! (Atak 1)", nobutton: "Uciekaj"},
         result: {
             succ: [{res: EventResults.NONE, value: 0 }],
-            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 5) + 5) }]
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: - Math.round((Math.random() * 5) + 5) }]
         }
     },
     {
@@ -157,23 +143,23 @@ export const GameEvents:GameEvent[] = [
         text: "Dopadł Cię gang Czach. Musisz się bronić.",
         attackRate: 4,
         defenseRate: 2,
-        options: {yesbutton: "Walcz!", nobutton: "Uciekaj"},
+        options: {yesbutton: "Walcz! (Atak 4)", nobutton: "Uciekaj"},
         result: {
             succ: [{res: EventResults.FOUND_FUEL, value: Math.round((Math.random() * 8) + 2) }, {res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 18) + 2) }],
-            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 10) + 5) }]
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: - Math.round((Math.random() * 10) + 5) }]
         }
     },
     {
         type: EventTypes.FIGHT,
-        chance: 34,
+        chance: 35,
         name: "Bandyci",
         text: "Dopadli Cię bandyci.",
         attackRate: 3,
         defenseRate: 2,
-        options: {yesbutton: "Walcz!", nobutton: "Uciekaj"},
+        options: {yesbutton: "Walcz! (Atak 3)", nobutton: "Uciekaj"},
         result: {
             succ: [{res: EventResults.FOUND_FUEL, value: Math.round((Math.random() * 8) + 2) }, {res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 18) + 2) }, {res: EventResults.FOUND_WATER, value: Math.round((Math.random() * 6) + 2) }],
-            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 10) + 5) }]
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: - Math.round((Math.random() * 10) + 5) }, {res: EventResults.LOOSE_FUEL, value: - Math.round((Math.random() * 5) + 5) }]
         }
     },
     {
@@ -183,10 +169,10 @@ export const GameEvents:GameEvent[] = [
         text: "Dopadł Cię gang Kopaczy.",
         attackRate: 5,
         defenseRate: 4,
-        options: {yesbutton: "Walcz!", nobutton: "Uciekaj"},
+        options: {yesbutton: "Walcz! (Atak 5)", nobutton: "Uciekaj"},
         result: {
             succ: [{res: EventResults.FOUND_FUEL, value: Math.round((Math.random() * 8) + 2) }, {res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 18) + 2) }, {res: EventResults.FOUND_WATER, value: Math.round((Math.random() * 12) + 2) }, {res: EventResults.FOUND_FOOD, value: Math.round((Math.random() * 12) + 2) }],
-            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 10) + 5) }]
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: - Math.round((Math.random() * 10) + 5) }]
         }
     },
     {
@@ -196,10 +182,10 @@ export const GameEvents:GameEvent[] = [
         text: "Ściga Cię sam Immortan Joe! Broń się!",
         attackRate: 6,
         defenseRate: 6,
-        options: {yesbutton: "Walcz!", nobutton: "Uciekaj"},
+        options: {yesbutton: "Walcz! (Atak 6)", nobutton: "Uciekaj"},
         result: {
             succ: [{res: EventResults.FOUND_FUEL, value: Math.round((Math.random() * 8) + 2) }, {res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 18) + 2) }, {res: EventResults.FOUND_WATER, value: Math.round((Math.random() * 12) + 2) }, {res: EventResults.FOUND_FOOD, value: Math.round((Math.random() * 12) + 2) }],
-            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 10) + 5) }]
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: - Math.round((Math.random() * 10) + 5) }]
         }
     },
 
@@ -210,10 +196,10 @@ export const GameEvents:GameEvent[] = [
         text: "Interceptor wpada w dziurę na drodzę i ulega lekkim uszkodzeniom",
         attackRate: 0,
         defenseRate: 0,
-        options: {yesbutton: "Omiń", nobutton: "Przejedź"},
+        options: {yesbutton: "Postaraj się ominąć", nobutton: "Przejedź"},
         result: {
-            succ: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 8) + 2) }],
-            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 8) + 2) }]
+            succ: [],
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: - Math.round((Math.random() * 8) + 2) }]
         }
     },
     {

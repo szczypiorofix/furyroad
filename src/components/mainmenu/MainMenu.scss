@@ -5,8 +5,8 @@ div.mainmenu-bg {
     margin: 0;
     padding: 0;
     position: relative;
-    background-color: $color05;
-    color: $color05;
+    background-color: $color_medium_brown;
+    color: $color_sand;
     overflow: hidden;
     z-index: 0;
     width: 100%;
@@ -22,8 +22,8 @@ div.mainmenu-bg {
             text-align: center;
             margin: 125px 0px 10px 0px;
             font-size: 64px;
-            color: $color10;
-            text-shadow: 2px 1px 3px $color05;
+            color: $color_dark_brown;
+            text-shadow: 2px 1px 3px $color_medium_brown;
         }
         
         div.buttons-div {

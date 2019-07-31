@@ -5,7 +5,7 @@ var fs = require('fs');
 // var favicon = require('serve-favicon');
 
 
-var songName0 = 'build/music/music1.mp3';
+var songName0 = 'public/music/music1.mp3';
 var songFile0 = fs.statSync(songName0);
 
 
@@ -18,7 +18,7 @@ var songFile0 = fs.statSync(songName0);
 // app.use(favicon(path.join(__dirname, 'public/icons', 'favicon.ico')));
 
 app.get('/', function(request, response) {
-    response.sendFile(__dirname + '/build/index.html');
+    response.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/max', (request, response, nest) => {

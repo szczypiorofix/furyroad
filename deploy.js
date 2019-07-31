@@ -8,9 +8,8 @@ var config = {
     port: 21,
     localRoot: __dirname,
     remoteRoot: "/public_nodejs",
-    deleteRemote: true,
+    deleteRemote: false,
     include: ['app.js', 'build/*'],
-    exclude: ['package.json', 'package-lock.json', 'node_modules/**']
 }
     
 ftpDeploy.deploy(config, function(err, res) {

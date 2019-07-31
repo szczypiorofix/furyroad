@@ -1,19 +1,37 @@
 var FtpDeploy = require('ftp-deploy');
 var ftpDeploy = new FtpDeploy();
  
-var config = {
+// Server app deploy config
+var serverAppConfig = {
     user: process.env.FTPUSER,
     password: process.env.FTPPASS,
     host: process.env.FTPHOST,
     port: 21,
     localRoot: __dirname,
     remoteRoot: "/public_nodejs",
-    deleteRemote: true,
-    include: ['app.js', 'build/*'],
-    exclude: ['package.json', 'package-lock.json', 'node_modules/**']
+    deleteRemote: false,
+    include: ['app.js']
 }
     
-ftpDeploy.deploy(config, function(err, res) {
+ftpDeploy.deploy(serverAppConfig, function(err, res) {
     if (err) console.log(err)
-    else console.log('Upload done: '+res);
+    else console.log('Upload server app: done: '+res);
+});
+
+
+// React app deploy config
+var reactAppConfig = {
+    user: process.env.FTPUSER,
+    password: process.env.FTPPASS,
+    host: process.env.FTPHOST,
+    port: 21,
+    localRoot: __dirname + "/build/",
+    remoteRoot: "/public_nodejs/public",
+    deleteRemote: true,
+    include: ['*']
+}
+    
+ftpDeploy.deploy(reactAppConfig, function(err, res) {
+    if (err) console.log(err)
+    else console.log('Upload React app: done: '+res);
 });

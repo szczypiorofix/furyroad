@@ -6,10 +6,11 @@ var config = {
     password: process.env.FTPPASS,
     host: process.env.FTPHOST,
     port: 21,
-    localRoot: __dirname + "/build/",
-    remoteRoot: "/public_html",
+    localRoot: __dirname,
+    remoteRoot: "/public_nodejs",
     deleteRemote: true,
-    include: ['*']
+    include: ['app.js', 'build/*'],
+    exclude: ['package.json', 'package-lock.json', 'node_modules/**']
 }
     
 ftpDeploy.deploy(config, function(err, res) {

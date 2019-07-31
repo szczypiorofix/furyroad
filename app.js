@@ -5,7 +5,7 @@ var fs = require('fs');
 // var favicon = require('serve-favicon');
 
 
-var songName0 = 'music1.mp3';
+var songName0 = 'public/music/music1.mp3';
 var songFile0 = fs.statSync(songName0);
 
 

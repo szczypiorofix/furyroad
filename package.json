@@ -1,7 +1,9 @@
 {
   "name": "furyroad",
-  "version": "0.1.0",
+  "description": "Fury Road - a post-apocalyptic game.",
+  "version": "0.1.1",
   "private": true,
+  "proxy": "http://localhost:2999/",
   "dependencies": {
     "@types/jest": "^24.0.15",
     "@types/node": "^12.6.8",
@@ -16,7 +18,10 @@
     "react-scripts": "3.0.1",
     "redux-logger": "^3.0.6",
     "typesafe-actions": "^4.4.2",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "express": "^4.17.1",
+    "serve-favicon": "^2.5.0",
+    "socket.io": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

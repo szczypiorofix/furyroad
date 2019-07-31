@@ -5,7 +5,7 @@ A post-apocalyptic drive-through-wasteland game.
 
 ## Status
 Latest build: [![CircleCI](https://circleci.com/gh/szczypiorofix/furyroad.svg?style=svg)](https://circleci.com/gh/szczypiorofix/furyroad)
-![Version](https://img.shields.io/badge/version-0.1.0-blue.svg "Version icon")
+![Version](https://img.shields.io/badge/version-0.1.02-blue.svg "Version icon")
 
 ## Website
 

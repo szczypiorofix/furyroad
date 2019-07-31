@@ -219,7 +219,7 @@ export const GameEvents:GameEvent[] = [
         type: EventTypes.ENCOUNTER,
         chance: 5,
         name: "Ranczo Skywalkerów",
-        text: "Ranczo Skywalkerów? WTF ??!!",
+        text: "Trafiasz na opuszczone od wieków ranczo Skywalkerów",
         attackRate: 0,
         defenseRate: 0,
         options: {yesbutton: "Sprawdź", nobutton: "Jedź dalej"},

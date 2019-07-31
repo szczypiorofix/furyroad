@@ -7,17 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.02] - 2019-07-31
+### Added
+- Added NodeJS + Express as a backend of the application.
+- Music is now streamed to the user.
 
-## [0.1.1] - 2019-07-26
+### Changed
+- Changed location of music file.
+- Changed description in Skywalker Ranch event.
+
+## [0.1.01] - 2019-07-26
 ### Added
 - Choices made while game events has some effects.
 - Added support of SCSS
 
 ### Changed
-- Changed color palette
+- Changed color palette.
 
 ### Removed
-- Removed LESS support
+- Removed LESS support.
 
 
 ## [0.1.0] - 2019-07-23
@@ -26,4 +34,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added CHANGELOG.MD file for changelog.
 
 ### Changed
-- changed application version in README.MD file from 0.05 to 0.1.0
+- changed application version in README.MD file from 0.05 to 0.1.0.

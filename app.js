@@ -1,27 +1,18 @@
 var app = require('express')();
 var http = require('http').createServer(app);
-// var io = require('socket.io')(http);
 var fs = require('fs');
-// var favicon = require('serve-favicon');
 
 
 var songName0 = 'public/music/music1.mp3';
 var songFile0 = fs.statSync(songName0);
 
 
-// app.use('/', express.static(path.join(__dirname + '/public')));
-// app.use('/', express.static(path.join(__dirname + '/public/icons')));
-// app.use('/', express.static(path.join(__dirname + '/public/static/css')));
-// app.use('/', express.static(path.join(__dirname + '/public/static/js')));
-// app.use('/', express.static(path.join(__dirname + '/public/images')));
 
-// app.use(favicon(path.join(__dirname, 'public/icons', 'favicon.ico')));
-
-app.get('/', function(request, response) {
+app.get('/', function(request, response, next) {
     response.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/max', (request, response, nest) => {
+app.get('/max', (request, response, next) => {
     response.set('Content-Type', 'application/json');
     response.send('{"message":"He\'s just a raggedy man!" }');
 });
@@ -41,4 +32,3 @@ app.get('/song', function(request, response, next) {
 });
 
 http.listen(80, 'localhost');
-

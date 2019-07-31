@@ -13,12 +13,6 @@ var serverAppConfig = {
     include: ['app.js']
 }
     
-ftpDeploy.deploy(serverAppConfig, function(err, res) {
-    if (err) console.log(err)
-    else console.log('Upload server app: done: '+res);
-});
-
-
 // React app deploy config
 var reactAppConfig = {
     user: process.env.FTPUSER,
@@ -30,8 +24,23 @@ var reactAppConfig = {
     deleteRemote: true,
     include: ['*']
 }
-    
-ftpDeploy.deploy(reactAppConfig, function(err, res) {
-    if (err) console.log(err)
-    else console.log('Upload React app: done: '+res);
+
+
+ftpDeploy.on('uploaded', function(data) {
+    console.log(data);
+});
+
+
+Promise.all(
+    ftpDeploy.deploy(serverAppConfig, function(err, res) {
+        if (err) console.log(err)
+        else console.log('Upload server app: done: '+res);
+    }),
+    ftpDeploy.deploy(reactAppConfig, function(err, res) {
+        if (err) console.log(err)
+        else console.log('Upload React app: done: '+res);
+    })
+).then(resp => {
+    console.log(resp[0]);
+    console.log(resp[1]);
 });

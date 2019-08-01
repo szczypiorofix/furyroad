@@ -7,7 +7,7 @@ import Junkyard from '../junkyard/Junkyard';
 import Settings from '../settings/Settings';
 import Endgame  from '../endgame/Endgame';
 
-import { getGameMode } from '../../redux/selectors';
+import { getGameMode, getGameSettings } from '../../redux/selectors';
 import { GameProps } from './GameModel';
 import { GameRootState, MainGameStateTypes } from '../../models';
 
@@ -35,7 +35,8 @@ export class Game extends React.Component<GameProps, {}> {
 }
 
 const mapStateToProps = (state: GameRootState) => ({
-    gameMode:  getGameMode(state)
+    gameMode:  getGameMode(state),
+    gameSettings: getGameSettings(state)
  });
  
 const mapDispatchToProps = (dispatch:any) => ({

@@ -54,12 +54,19 @@ export interface MainMenuState {
     mode: MainGameStateTypes
 }
 
+export interface GameSettings {
+    musicOn: boolean,
+    musicVolume: number,
+    canContinue: boolean
+}
+
 export interface SavedState {
-    gamestats: GameStats;
-    gameeventshistory: GameEvent[]
+    gamestats: GameStats,
+    gameeventshistory: GameEvent[],
+    gamesettings: GameSettings
 }
 
 export interface GameRootState {
-    mainmenustate: MainMenuState;
-    savedstate: SavedState;
+    mainmenustate: MainMenuState,
+    savedstate: SavedState
 }

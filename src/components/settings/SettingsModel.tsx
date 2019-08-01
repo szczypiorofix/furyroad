@@ -1,6 +1,12 @@
-import { MainMenuState } from '../../models';
+import { MainMenuState, GameSettings, SavedState } from '../../models';
 
 export interface SettingsProps {
+    gameMode: MainMenuState,
+    gameSettings: GameSettings,
+    savedState: SavedState,
+
     gotoMainMenu: () => void,
-    gameMode: MainMenuState
+    toggleMusic: (v:boolean) => void,
+    resetSavedState: (state:SavedState) => void,
+    toggleContinueGame: (v:boolean) => void
 }

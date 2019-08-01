@@ -4,12 +4,17 @@ import { connect } from 'react-redux';
 import './Settings.scss';
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
 import { SettingsProps } from './SettingsModel';
-import { getGameMode } from '../../redux/selectors';
-import { GameRootState } from '../../models';
-import { goToMainMenu } from '../../redux/actions';
+import { getGameMode, getGameSettings, getSavedState } from '../../redux/selectors';
+import { GameRootState, SavedState } from '../../models';
+import { goToMainMenu, toggleMusic, resetSavedState, toggleContinueGame } from '../../redux/actions';
+import initialState from '../../redux/initialstate';
 
 
 export class Settings extends React.Component<SettingsProps, {}> {
+
+    toggleMusic() {
+        this.props.toggleMusic(!this.props.gameSettings.musicOn);
+    }
 
     render():JSX.Element {
         
@@ -21,8 +26,14 @@ export class Settings extends React.Component<SettingsProps, {}> {
                         active={ true }
                         onClick={ () => this.props.gotoMainMenu() }
                     />
-                    <h2 className="settings-title">SETTINGS MENU</h2>
-                    <h3>Ustawienia ...</h3>
+                    <h2 className="settings-title">USTAWIENIA</h2>
+                    <div className={this.props.gameSettings.musicOn ? "musicicon on" : "musicicon off"}
+                        onClick={() => this.toggleMusic()}>
+                    </div>
+                    <button className="resetAll" onClick={() => {
+                        this.props.resetSavedState(initialState.savedstate);
+                        this.props.toggleContinueGame(false);
+                    } }>RESET</button>
                 </div>
             </React.Fragment>
         )
@@ -30,11 +41,16 @@ export class Settings extends React.Component<SettingsProps, {}> {
 }
 
 const mapStateToProps = (state:GameRootState) => ({
-    gameMode:  getGameMode(state)
+    gameMode:       getGameMode(state),
+    gameSettings:   getGameSettings(state),
+    savedState:     getSavedState(state)
  });
  
 const mapDispatchToProps = (dispatch:any) => ({
     gotoMainMenu: () => dispatch(goToMainMenu()),
+    toggleMusic: (v:boolean) => dispatch(toggleMusic(v)),
+    resetSavedState: (state: SavedState) => dispatch(resetSavedState(state)),
+    toggleContinueGame: (v:boolean) => dispatch(toggleContinueGame(v))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

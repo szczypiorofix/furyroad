@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.03] - 2019-08-01
+### Added
+- Music settings: on/off in Settings menu.
+- Reset stats & events button in Settings menu.
+- game settings is now put in redux store object.
+
+### Changed
+- 'canContinue' setting is now set in redux store instead of local variable in the Settings component.
+
+
 ## [0.1.02] - 2019-07-31
 ### Added
 - Added NodeJS + Express as a backend of the application.

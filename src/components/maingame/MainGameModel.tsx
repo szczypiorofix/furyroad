@@ -1,4 +1,4 @@
-import { MainMenuState, GameStats, StatToModify } from '../../models';
+import { MainMenuState, GameStats, StatToModify, GameSettings } from '../../models';
 import { GameEvent } from './gameevents';
 
 export interface MainGameState {
@@ -13,9 +13,11 @@ export interface MainGameProps {
     mainState: MainMenuState,
     stats: GameStats,
     getGameEvents: GameEvent[],
+    gameSettings: GameSettings,
 
     gotoMainMenu: () => void,
     goToEndGame: () => void,
     modStat: (stat: StatToModify) => void,
     setStat: (stat: StatToModify) => void,
+    toggleContinueGame: (v:boolean) => void
 }

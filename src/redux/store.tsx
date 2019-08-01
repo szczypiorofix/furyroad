@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, Store } from 'redux';
-// import { createLogger } from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import myCombinedReducers from './reducers';
 import initialState from './initialstate';
 import { GameRootState, SavedState, MainGameStateTypes } from '../models';
@@ -7,17 +7,22 @@ import { GameRootState, SavedState, MainGameStateTypes } from '../models';
 
 let middleware: any[] = [];
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    // const logger = createLogger({
-    //     diff: true
-    // });
+    const logger = createLogger({
+        diff: true
+    });
     middleware = [...middleware
-        // , logger
+        ,logger
     ];
 }
 
 
 function configureStore(): Store<GameRootState> {    
-    const store = createStore< GameRootState, any, any, any>(myCombinedReducers, { savedstate:loadState(), mainmenustate: { mode: MainGameStateTypes.MAIN_MENU } }, applyMiddleware(...middleware));
+    const store = createStore< GameRootState, any, any, any>(myCombinedReducers, {
+        savedstate:loadState(),
+        mainmenustate: {
+            mode: MainGameStateTypes.MAIN_MENU
+        }
+    }, applyMiddleware(...middleware));
     return store;
 }
 
@@ -50,8 +55,7 @@ export const saveGameState = (savedState: SavedState) => {
     }
 };
 
-
 const store = configureStore();
-
+store.subscribe(() => saveGameState(store.getState().savedstate));
 
 export default store;

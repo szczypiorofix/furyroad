@@ -27,7 +27,12 @@ const initialState: GameRootState = {
             hoursPassed: 0,
             score: 0
         },
-        gameeventshistory: []
+        gameeventshistory: [],
+        gamesettings: {
+            musicOn: false,
+            musicVolume: 50,
+            canContinue: false
+        },
     }
 }
 

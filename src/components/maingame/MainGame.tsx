@@ -5,10 +5,10 @@ import './MainGame.scss';
 
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
 import { GameRootState, StatToModify, GameStatsEnum } from '../../models';
-import { getGameMode, getGameStats, getGameEvents } from '../../redux/selectors';
-import { goToMainMenu, modStat, setStat, goToEndGame } from '../../redux/actions';
+import { getGameMode, getGameStats, getGameEvents, getGameSettings } from '../../redux/selectors';
+import { goToMainMenu, modStat, setStat, goToEndGame, toggleContinueGame } from '../../redux/actions';
 import { MainGameProps, MainGameState } from './MainGameModel';
-import { saveGameState, LOCAL_STORAGE_SAVED_STATE_NAME } from '../../redux/store';
+import { LOCAL_STORAGE_SAVED_STATE_NAME } from '../../redux/store';
 import { GameEvents, GameEvent, initialGameEvent, historyEventsMaxList, EventResults, EventTypes } from './gameevents/GameEvents';
 import GameMap from './map/GameMap';
 
@@ -288,7 +288,7 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
                             title="ZAPIS I WYJŚCIE"
                             active={ true }
                             onClick={ () => {
-                                saveGameState({gamestats:  this.props.stats, gameeventshistory: this.state.historyOfEvents} )
+                                this.props.toggleContinueGame(true);
                                 this.props.gotoMainMenu()
                             } }
                         />
@@ -408,7 +408,8 @@ export class MainGame extends React.Component<MainGameProps, MainGameState> {
 const mapStateToProps = (state:GameRootState) => ({
     mainState:  getGameMode(state),
     stats: getGameStats(state),
-    getGameEvents: getGameEvents(state)
+    getGameEvents: getGameEvents(state),
+    gameSettings: getGameSettings(state)
 });
 
 
@@ -416,7 +417,8 @@ const mapDispatchToProps = (dispatch:any) => ({
     gotoMainMenu: () => dispatch(goToMainMenu()),
     goToEndGame: () => dispatch(goToEndGame()),
     modStat: (stat: StatToModify) => dispatch(modStat(stat)),
-    setStat: (stat: StatToModify) => dispatch(setStat(stat))
+    setStat: (stat: StatToModify) => dispatch(setStat(stat)),
+    toggleContinueGame: (v:boolean) => dispatch(toggleContinueGame(v))
 });
 
 

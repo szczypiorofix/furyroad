@@ -5,14 +5,27 @@ import './Endgame.scss';
 
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
 import { EndGameProps } from './EndgameModel';
-import { GameRootState } from '../../models';
-import { getGameMode, getGameStats } from '../../redux/selectors';
-import { goToMainMenu } from '../../redux/actions';
+import { GameRootState, SavedState } from '../../models';
+import { getGameMode, getGameStats, getGameSettings } from '../../redux/selectors';
+import { goToMainMenu, resetSavedState, toggleContinueGame } from '../../redux/actions';
+import initialState from '../../redux/initialstate';
 
 
 export class Endgame extends React.Component<EndGameProps, {}> {
-    
+
+
+    componentDidMount() {
+        
+        console.log(this.props);
+        if (this.props.gameSettings.canContinue) {
+            console.log("Can continue");
+            this.props.toggleContinueGame(false);
+        }
+
+    }
+
     render():JSX.Element {
+
         let distanceState:string = "Przejechałeś dystans "+this.props.stats.distanceDriven.toFixed(2)+" km.";
         let fuelState:string = this.props.stats.fuel <= 0 ? "Skończyło ci się paliwo." : "Zostało ci "+this.props.stats.fuel.toFixed(2)+" L paliwa.";
         let waterState:string = this.props.stats.water <= 0 ? "Skończyła ci się woda pitna." : "Zostało ci "+this.props.stats.water.toFixed(2)+" jednostek wody.";
@@ -25,7 +38,10 @@ export class Endgame extends React.Component<EndGameProps, {}> {
                     <MainMenuButton
                         title="MENU GŁÓWNE"
                         active={ true }
-                        onClick={ () => this.props.gotoMainMenu() }
+                        onClick={ () => {
+                            this.props.resetSavedState(initialState.savedstate);
+                            this.props.gotoMainMenu();
+                        } }
                     />
                     <h1>KONIEC GRY !!!</h1>
                     <p>{distanceState}</p>
@@ -43,12 +59,15 @@ export class Endgame extends React.Component<EndGameProps, {}> {
 
 const mapStateToProps = (state:GameRootState) => ({
     mainState:  getGameMode(state),
-    stats: getGameStats(state)
+    stats: getGameStats(state),
+    gameSettings: getGameSettings(state)
 });
 
 
 const mapDispatchToProps = (dispatch:any) => ({
-    gotoMainMenu: () => dispatch(goToMainMenu())
+    gotoMainMenu: () => dispatch(goToMainMenu()),
+    resetSavedState: (state:SavedState) => dispatch(resetSavedState(state)),
+    toggleContinueGame: (v:boolean) => dispatch(toggleContinueGame(v))
 });
 
 

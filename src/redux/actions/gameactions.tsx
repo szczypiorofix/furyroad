@@ -8,7 +8,7 @@ import { SavedState } from '../../models';
 export enum GameStatsActions {
     GAME_MODSTAT  = "MOD_STAT",
     GAME_SETSTAT  = "SET_STAT",
-    GAME_RESETSTATS = "RESET_STATS"
+    GAME_RESETSTATS = "RESET_STATS",
 }
 
 export interface GameStatsActionModStat {
@@ -26,7 +26,7 @@ export interface GameStatsActionResetStat {
 }
 
 
-export type GameModeAction = GameStatsActionModStat | GameStatsActionSetStat | GameStatsActionResetStat;
+export type GameStatsAction = GameStatsActionModStat | GameStatsActionSetStat | GameStatsActionResetStat;
 
 export const modStat = (stat:StatToModify) => action(GameStatsActions.GAME_MODSTAT, stat);
 

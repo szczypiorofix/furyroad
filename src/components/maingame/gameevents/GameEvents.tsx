@@ -217,9 +217,9 @@ export const GameEvents:GameEvent[] = [
     },
     {
         type: EventTypes.ENCOUNTER,
-        chance: 5,
-        name: "Ranczo Skywalkerów",
-        text: "Trafiasz na opuszczone od wieków ranczo Skywalkerów",
+        chance: 15,
+        name: "Wywrócona cysterna",
+        text: "Trafiasz na wywróconą na drodze cysternę",
         attackRate: 0,
         defenseRate: 0,
         options: {yesbutton: "Sprawdź", nobutton: "Jedź dalej"},
@@ -230,14 +230,53 @@ export const GameEvents:GameEvent[] = [
     },
     {
         type: EventTypes.ENCOUNTER,
-        chance: 5,
-        name: "Statek UFO",
-        text: "Znajdujesz statek UFO.",
+        chance: 15,
+        name: "Stara farma",
+        text: "Znajdujesz nieopodal starą farmę. Wygląda na opuszczoną.",
         attackRate: 0,
         defenseRate: 0,
         options: {yesbutton: "Sprawdź", nobutton: "Jedź dalej"},
         result: {
             succ: [{res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 16) + 2) }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
+    },
+    {
+        type: EventTypes.ENCOUNTER,
+        chance: 15,
+        name: "Wrak samochodu",
+        text: "Trafiasz na wrak samochodu. Może znajdziesz coś ciekawego.",
+        attackRate: 0,
+        defenseRate: 0,
+        options: {yesbutton: "Sprawdź", nobutton: "Jedź dalej"},
+        result: {
+            succ: [{res: EventResults.FOUND_SCRAP, value: Math.round((Math.random() * 16) + 2) }],
+            fail: [{res: EventResults.NONE, value: 0 }]
+        }
+    },
+    {
+        type: EventTypes.ENCOUNTER,
+        chance: 15,
+        name: "Burza piaskowa",
+        text: "Nieopodal rozpętała się burza pisakowa.",
+        attackRate: 0,
+        defenseRate: 0,
+        options: {yesbutton: "Poszukaj schronienia", nobutton: "Jedź dalej"},
+        result: {
+            succ: [{res: EventResults.NONE, value: 0 }],
+            fail: [{res: EventResults.LOOSE_CAR_HEALTH, value: Math.round((Math.random() * 25) + 5) }]
+        }
+    },
+    {
+        type: EventTypes.ENCOUNTER,
+        chance: 15,
+        name: "Wiatraki",
+        text: "Napotykasz farmę wiatraków. Wygląda na to, że dawno tu nikogo nie było.",
+        attackRate: 0,
+        defenseRate: 0,
+        options: {yesbutton: "Sprawdź", nobutton: "Jedź dalej"},
+        result: {
+            succ: [{res: EventResults.NONE, value: 0 }],
             fail: [{res: EventResults.NONE, value: 0 }]
         }
     }

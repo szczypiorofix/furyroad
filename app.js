@@ -12,18 +12,8 @@ app.get('/', function(request, response, next) {
     response.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/max', (request, response, next) => {
-    response.set('Content-Type', 'application/json');
-    response.send('{"message":"He\'s just a raggedy man!" }');
-});
-
-app.get('/masterblaster', (request, response, next) => {
-    response.set('Content-Type', 'application/json');
-    response.send('{"message":"Who run Bartertown?" }');
-});
-
-
 app.get('/song', function(request, response, next) {
+    console.log("Connection established with: "+request.ip);
     response.writeHead(200, {
         'Content-Type': 'audio/mpeg',
         'Content-Length': songFile0.size

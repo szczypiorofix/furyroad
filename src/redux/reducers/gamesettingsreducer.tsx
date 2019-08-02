@@ -9,6 +9,8 @@ const gameSettingsReducer: Reducer<GameSettings, GameSettingsAction> = ( state: 
             return {...state, musicOn:  action.payload}
         case GameSettingsActions.CONTINUE_GAME_TOGGLE:
             return {...state, canContinue: action.payload}
+        case GameSettingsActions.SET_MUSIC_VOLUME:
+            return {...state, musicVolume: action.payload}
         default:
             return state;
     }

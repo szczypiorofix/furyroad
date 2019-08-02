@@ -8,5 +8,6 @@ export interface SettingsProps {
     gotoMainMenu: () => void,
     toggleMusic: (v:boolean) => void,
     resetSavedState: (state:SavedState) => void,
-    toggleContinueGame: (v:boolean) => void
+    toggleContinueGame: (v:boolean) => void,
+    setMusicVolume: (v:number) => void
 }

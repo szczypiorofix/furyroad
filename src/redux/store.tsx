@@ -20,7 +20,7 @@ function configureStore(): Store<GameRootState> {
     const store = createStore< GameRootState, any, any, any>(myCombinedReducers, {
         savedstate:loadState(),
         mainmenustate: {
-            mode: MainGameStateTypes.MAIN_MENU
+            mode: MainGameStateTypes.SPLASHSCREEN
         }
     }, applyMiddleware(...middleware));
     return store;

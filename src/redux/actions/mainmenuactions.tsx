@@ -2,12 +2,13 @@ import { action } from 'typesafe-actions'
 
 
 export enum MainMenuActions {
-    MM_CONTINUE    = "MM_CONTINUE",
-    MM_NEWGAME     = "MM_NEWGAME",
-    MM_SETTINGS    = "MM_SETTINGS",
-    MM_JUNKYARD    = "MM_JUNKYARD",
-    MM_MAINMENU    = "MM_MAINMENU",
-    MM_ENDGAME     = "MM_ENDGAME"
+    MM_CONTINUE         = "MM_CONTINUE",
+    MM_NEWGAME          = "MM_NEWGAME",
+    MM_SETTINGS         = "MM_SETTINGS",
+    MM_JUNKYARD         = "MM_JUNKYARD",
+    MM_MAINMENU         = "MM_MAINMENU",
+    MM_ENDGAME          = "MM_ENDGAME",
+    MM_SPLASHSCREEN     = "MM_SPLASHSCREEN"
 }
 
 export interface MainMenuActionNewGame {
@@ -34,7 +35,11 @@ export interface MainMenuActionContinue {
     readonly type: MainMenuActions.MM_CONTINUE;
 }
 
-export type MainMenuAction = MainMenuActionNewGame | MainMenuActionJunkyad | MainMenuActionMainMenu | MainMenuActionSettings | MainMenuActionContinue | MainMenuActionEndGame;
+export interface MainMenuActionSplashScreen {
+    readonly type: MainMenuActions.MM_SPLASHSCREEN;
+}
+
+export type MainMenuAction = MainMenuActionNewGame | MainMenuActionJunkyad | MainMenuActionMainMenu | MainMenuActionSettings | MainMenuActionContinue | MainMenuActionEndGame | MainMenuActionSplashScreen;
 
 
 

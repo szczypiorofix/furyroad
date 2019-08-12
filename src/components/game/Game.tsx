@@ -7,10 +7,12 @@ import Junkyard from '../junkyard/Junkyard';
 import Settings from '../settings/Settings';
 import Endgame  from '../endgame/Endgame';
 import MusicBox from '../musicbox/MusicBox';
+import SplashScreen from '../splashscreen/SplashScreen';
 
 import { getGameMode, getGameSettings } from '../../redux/selectors';
 import { GameProps } from './GameModel';
 import { GameRootState, MainGameStateTypes } from '../../models';
+
 
 
 export class Game extends React.Component<GameProps, {}> {
@@ -49,11 +51,7 @@ export class Game extends React.Component<GameProps, {}> {
                             <Endgame />
                         </React.Fragment>;
             default:
-                return  <React.Fragment>
-                            <MusicBox />
-                            <MainMenu />
-                        </React.Fragment>;
-        
+                return <SplashScreen />;        
         }
     }
 }

@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && tsc ./app.ts",
+    "build": "react-scripts build && tsc ./public/app.ts",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "tsc": "tsc",

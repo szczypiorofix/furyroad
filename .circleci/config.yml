@@ -8,7 +8,6 @@ jobs:
        - run: npm install
        - run: npm run build
        - run: git log --oneline --decorate > build/changelog.txt
-       - run: tsc app.ts
        - run: node deploy_server.js
        - run: node deploy_app.js
 

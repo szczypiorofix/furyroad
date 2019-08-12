@@ -24,12 +24,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && tsc ./public/app.ts",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tsc": "tsc",
-    "dev": "ts-node-dev --respawn --transpileOnly ./src/app.ts",
-    "prod": "tsc && nodemon ./src/app.js"
+    "tsc": "tsc"
   },
   "eslintConfig": {
     "extends": "react-app"

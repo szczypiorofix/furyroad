@@ -11,8 +11,8 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "dev": "ts-node-dev --respawn --transpileOnly ../app.ts",
-    "prod": "tsc && nodemon ../app.js"
+    "dev": "ts-node-dev --respawn --transpileOnly ./app.ts",
+    "prod": "tsc && nodemon ./app.js"
   },
   "eslintConfig": {
     "extends": "react-app"

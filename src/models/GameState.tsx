@@ -6,7 +6,8 @@ export enum MainGameStateTypes {
     NEW_GAME = "NEW_GAME",
     SETTINGS = "SETTINGS",
     JUNKYARD = "JUNKYARD",
-    ENDGAME = "ENDGAME"
+    ENDGAME = "ENDGAME",
+    SPLASHSCREEN = "SPLASHSCREEN"
 }
 
 export enum GameStatsEnum {

@@ -1,11 +1,15 @@
-var app = require('express')();
+import express from 'express';
+
+
+// Create a new express application instance
+const app: express.Application = express();
+
 var http = require('http').createServer(app);
 var fs = require('fs');
 
 
-var songName0 = 'public/music/music1.mp3';
+var songName0 = 'music/music1.mp3';
 var songFile0 = fs.statSync(songName0);
-
 
 
 app.get('/', function(request, response, next) {

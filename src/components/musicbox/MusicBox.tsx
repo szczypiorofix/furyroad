@@ -15,11 +15,10 @@ export class MusicBox extends React.Component<MusicBoxModel, {}> {
         this.currentMusic = React.createRef();
     }
 
-    componentDidMount() {      
+    componentDidMount() {
         if (this.currentMusic && this.currentMusic.current && this.props.gameSettings.musicOn && this.currentMusic.current.paused) {
-            this.currentMusic.current.play()
-            .then( () => this.currentMusic.current ? this.currentMusic.current.loop = true : console.error("Cannot set music loop!") )
-            .catch(err => console.error("An error occured: " +err));
+            this.currentMusic.current.play().catch(err => console.error("An error occured: " +err));
+            this.currentMusic.current.loop = true;
         }
     }
 
@@ -27,6 +26,7 @@ export class MusicBox extends React.Component<MusicBoxModel, {}> {
         if (this.props.gameSettings.musicOn && this.currentMusic.current) {
             this.currentMusic.current.volume = this.props.gameSettings.musicVolume / 100;
             this.currentMusic.current.play();
+            this.currentMusic.current.loop = true;
         }
         else if (this.currentMusic.current) this.currentMusic.current.pause()
 

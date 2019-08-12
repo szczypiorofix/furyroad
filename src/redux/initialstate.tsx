@@ -4,7 +4,7 @@ import { GameRootState, MainGameStateTypes } from '../models';
 
 const initialState: GameRootState = {
     mainmenustate: {
-        mode: MainGameStateTypes.MAIN_MENU
+        mode: MainGameStateTypes.SPLASHSCREEN
     },
     savedstate: {
         gamestats: {

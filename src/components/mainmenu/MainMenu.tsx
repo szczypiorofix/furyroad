@@ -27,7 +27,8 @@ export class MainMenu extends React.Component<MainMenuProps, {}> {
             }
         } else {
             console.log("NO STATE IN LOCALSTORAGE");
-            // this.props.resetSavedState(initialState.savedstate);
+            // OK jeszcze sprawdzanie wersji, jeśli starsza to resetSavedState
+            this.props.resetSavedState(initialState.savedstate);
         }
         
         return (

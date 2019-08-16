@@ -73,7 +73,7 @@ const db = new sqlite.Database(DBSOURCE, (error) => {
     }
 });
 
-const songName0 = "music/music1.mp3";
+const songName0 = "public/music/music1.mp3";
 const songFile0 = fs.statSync(songName0);
 
 function loggerMiddleware(request: Request, response: Response, next: NextFunction) {

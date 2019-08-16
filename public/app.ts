@@ -88,11 +88,9 @@ app.use(bodyParser.json());
 
 app.use("/api", router);
 
-app.get("/", (request: Request, response: Response, next: NextFunction) => {
-    // response.sendFile(__dirname + '/public/index.html');
-    response.send("DUPA, DUPA, CYCKI");
-    response.end();
-});
+// app.get("/", (request: Request, response: Response, next: NextFunction) => {
+//     // response.sendFile(__dirname + '/public/index.html');
+// });
 
 app.get("/user", (request: Request, response: Response, next: NextFunction) => {
     console.log(request.query);

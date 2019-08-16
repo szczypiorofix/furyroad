@@ -10,7 +10,8 @@ var reactAppConfig = {
     localRoot: __dirname + "/build/",
     remoteRoot: "/public_nodejs/public",
     deleteRemote: true,
-    include: ['*']
+    include: ['*'],
+    exclude: ['./public/app.ts']
 }
 
 

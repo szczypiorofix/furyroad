@@ -9,7 +9,7 @@ var serverAppConfig = {
     localRoot: __dirname,
     remoteRoot: "/public_nodejs",
     deleteRemote: false,
-    include: ['/app.js']
+    include: ['app.js']
 }
 
 

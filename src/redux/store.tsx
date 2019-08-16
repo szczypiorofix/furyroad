@@ -1,45 +1,23 @@
-import { createStore, applyMiddleware, Store } from 'redux';
+import { createStore, applyMiddleware, Store, Middleware, AnyAction } from 'redux';
 import { createLogger } from 'redux-logger';
 import myCombinedReducers from './reducers';
 import initialState from './initialstate';
 import { GameRootState, SavedState, MainGameStateTypes } from '../models';
 
 
-let middleware: any[] = [];
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    const logger = createLogger({
-        diff: true
-    });
-    middleware = [...middleware
-        ,logger
-    ];
-}
 
-
-function configureStore(): Store<GameRootState> {    
-    const store = createStore< GameRootState, any, any, any>(myCombinedReducers, {
-        savedstate:loadState(),
-        mainmenustate: {
-            mode: MainGameStateTypes.SPLASHSCREEN
-        }
-    }, applyMiddleware(...middleware));
-    return store;
-}
-
-
-export const LOCAL_STORAGE_SAVED_STATE_NAME = 'gameSavedState';
-
+export const LOCAL_STORAGE_SAVED_STATE_NAME:string = 'gameSavedState';
 
 export const loadState = (): SavedState | undefined => {
     try {
-        const serializedState = localStorage.getItem(LOCAL_STORAGE_SAVED_STATE_NAME);
+        const serializedState: string | null = localStorage.getItem(LOCAL_STORAGE_SAVED_STATE_NAME);
         if (serializedState !== null) {
             console.log("Reading localStorage...");
             return JSON.parse(serializedState);
         }
         else console.log("Storage == null");
     } catch (err) {
-        console.log('Storage error: '+err);
+        console.log('Storage error: ' + err);
         return initialState.savedstate;
     }
 };
@@ -55,7 +33,27 @@ export const saveGameState = (savedState: SavedState) => {
     }
 };
 
-const store = configureStore();
+function configureStore(mid: Middleware[]): Store<GameRootState, AnyAction> {    
+    const store:Store<GameRootState, AnyAction> = createStore< GameRootState, any, any, any>(myCombinedReducers, {
+        savedstate:loadState(),
+        mainmenustate: {
+            mode: MainGameStateTypes.SPLASHSCREEN
+        }
+    }, applyMiddleware(...mid));
+    return store;
+}
+
+let middleware: Middleware[] = [];
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    const logger = createLogger({
+        diff: true
+    });
+    middleware = [...middleware
+        ,logger
+    ];
+}
+
+const store: Store<GameRootState, AnyAction> = configureStore(middleware);
 store.subscribe(() => saveGameState(store.getState().savedstate));
 
 export default store;

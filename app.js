@@ -54,7 +54,7 @@ var db = new sqlite.Database(DBSOURCE, function (error) {
         // });
     }
 });
-var songName0 = "music/music1.mp3";
+var songName0 = "public/music/music1.mp3";
 var songFile0 = fs_1.default.statSync(songName0);
 function loggerMiddleware(request, response, next) {
     console.log(request.method + " " + request.path);
@@ -64,11 +64,9 @@ httpServer.listen(PORT, "localhost");
 app.use(loggerMiddleware);
 app.use(body_parser_1.default.json());
 app.use("/api", router);
-app.get("/", function (request, response, next) {
-    // response.sendFile(__dirname + '/public/index.html');
-    response.send("DUPA, DUPA, CYCKI");
-    response.end();
-});
+// app.get("/", (request: Request, response: Response, next: NextFunction) => {
+//     // response.sendFile(__dirname + '/public/index.html');
+// });
 app.get("/user", function (request, response, next) {
     console.log(request.query);
     response.send(request.query.user + ", " + request.query.id);

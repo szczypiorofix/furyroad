@@ -21,6 +21,12 @@
     "react-scripts": "^3.1.1",
     "redux-logger": "^3.0.6",
     "typesafe-actions": "^4.4.2",
+    "@types/md5": "^2.1.33",
+    "@types/sqlite3": "^3.1.5",
+    "body-parser": "^1.19.0",
+    "md5": "^2.2.1",
+    "sqlite3": "^4.1.0",
+    "ts-node-dev": "^1.0.0-pre.41",
     "typescript": "^3.5.3"
   },
   "scripts": {

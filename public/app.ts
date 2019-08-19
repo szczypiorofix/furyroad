@@ -6,29 +6,17 @@ import md5 from "md5";
 import sqlite3 from "sqlite3";
 // import { GameStats } from "../src/models";
 
-/**
- * Express app main object.
- */
 const app: Application = express();
-
-/**
- * Server port.
- */
 const PORT: number = 80;
-
-/**
- * HTTP server object.
- */
 const httpServer = http.createServer(app);
 
 const router = express.Router();
 
-// SQLITE
 const sqlite: sqlite3.sqlite3 = sqlite3.verbose();
-const DBSOURCE: string = "db.sqlite";
+const DBSOURCE: string = __dirname + "/build/db.sqlite";
 
 const sqlFileContent: string[] =
-    fs.readFileSync(__dirname + "/dbstructure.sql").toString().split(";").filter((el) => el.length !== 0);
+    fs.readFileSync(__dirname + "/build/dbstructure.sql").toString().split(";").filter((el) => el.length !== 0);
 
 interface IUser {
     id: number;
@@ -73,7 +61,9 @@ const db = new sqlite.Database(DBSOURCE, (error) => {
     }
 });
 
-const songName0 = "public/music/music1.mp3";
+app.use(express.static("build"));
+
+const songName0 = __dirname + "/build//music/music1.mp3";
 const songFile0 = fs.statSync(songName0);
 
 function loggerMiddleware(request: Request, response: Response, next: NextFunction) {
@@ -89,7 +79,7 @@ app.use(bodyParser.json());
 app.use("/api", router);
 
 // app.get("/", (request: Request, response: Response, next: NextFunction) => {
-//     // response.sendFile(__dirname + '/public/index.html');
+//     response.sendFile(__dirname + "/build/index.html");
 // });
 
 app.get("/user", (request: Request, response: Response, next: NextFunction) => {
@@ -154,7 +144,6 @@ router.all("/users", (request: Request, response: Response, next: NextFunction) 
           response.status(400).json({error: err.message});
           return;
         }
-        console.log(row[0].name);
         response.json({
             data: row,
             message: "success",

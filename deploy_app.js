@@ -11,7 +11,7 @@ var reactAppConfig = {
     remoteRoot: '/public_nodejs/build',
     deleteRemote: true,
     include: ['*'],
-    exclude: ['app.ts', 'dbstructure.sql']
+    exclude: ['app.ts']
 }
 
 

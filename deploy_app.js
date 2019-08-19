@@ -8,7 +8,7 @@ var reactAppConfig = {
     host: process.env.FTPHOST,
     port: 21,
     localRoot: __dirname + "/build/",
-    remoteRoot: '/public_nodejs/public',
+    remoteRoot: '/public_nodejs/build',
     deleteRemote: true,
     include: ['*'],
     exclude: ['app.ts', 'dbstructure.sql']

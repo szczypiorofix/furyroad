@@ -9,23 +9,13 @@ var fs_1 = __importDefault(require("fs"));
 var http_1 = __importDefault(require("http"));
 var sqlite3_1 = __importDefault(require("sqlite3"));
 // import { GameStats } from "../src/models";
-/**
- * Express app main object.
- */
 var app = express_1.default();
-/**
- * Server port.
- */
 var PORT = 80;
-/**
- * HTTP server object.
- */
 var httpServer = http_1.default.createServer(app);
 var router = express_1.default.Router();
-// SQLITE
 var sqlite = sqlite3_1.default.verbose();
-var DBSOURCE = "db.sqlite";
-var sqlFileContent = fs_1.default.readFileSync(__dirname + "/dbstructure.sql").toString().split(";").filter(function (el) { return el.length !== 0; });
+var DBSOURCE = __dirname + "/build/db.sqlite";
+var sqlFileContent = fs_1.default.readFileSync(__dirname + "/build/dbstructure.sql").toString().split(";").filter(function (el) { return el.length !== 0; });
 var db = new sqlite.Database(DBSOURCE, function (error) {
     if (error) {
         // Cannot open database
@@ -54,7 +44,8 @@ var db = new sqlite.Database(DBSOURCE, function (error) {
         // });
     }
 });
-var songName0 = "public/music/music1.mp3";
+app.use(express_1.default.static("build"));
+var songName0 = __dirname + "/build//music/music1.mp3";
 var songFile0 = fs_1.default.statSync(songName0);
 function loggerMiddleware(request, response, next) {
     console.log(request.method + " " + request.path);
@@ -65,7 +56,7 @@ app.use(loggerMiddleware);
 app.use(body_parser_1.default.json());
 app.use("/api", router);
 // app.get("/", (request: Request, response: Response, next: NextFunction) => {
-//     // response.sendFile(__dirname + '/public/index.html');
+//     response.sendFile(__dirname + "/build/index.html");
 // });
 app.get("/user", function (request, response, next) {
     console.log(request.query);
@@ -129,7 +120,6 @@ router.all("/users", function (request, response, next) {
             response.status(400).json({ error: err.message });
             return;
         }
-        console.log(row[0].name);
         response.json({
             data: row,
             message: "success",

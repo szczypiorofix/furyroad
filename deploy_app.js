@@ -7,11 +7,10 @@ var reactAppConfig = {
     password: process.env.FTPPASS,
     host: process.env.FTPHOST,
     port: 21,
-    localRoot: __dirname + "/build/",
-    remoteRoot: '/public_nodejs/build',
+    localRoot: __dirname + "/client/build/",
+    remoteRoot: '/public_nodejs/public',
     deleteRemote: true,
-    include: ['*'],
-    exclude: ['app.ts', 'dbstructure.sql']
+    include: ['*']
 }
 
 

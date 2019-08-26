@@ -7,11 +7,11 @@ var serverAppConfig = {
     password: process.env.FTPPASS,
     host: process.env.FTPHOST,
     port: 21,
-    localRoot: __dirname + "/server/",
+    localRoot: __dirname + "/server/app/",
     remoteRoot: "/public_nodejs",
     deleteRemote: false,
     include: ['*'],
-    exclude: ['/node_modules/**/', 'tslint.json', 'tsconfig.json', 'app.ts']
+    exclude: ['app.ts']
 }
 
 

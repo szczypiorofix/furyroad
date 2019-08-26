@@ -55,9 +55,6 @@ httpServer.listen(PORT, "localhost");
 app.use(loggerMiddleware);
 app.use(body_parser_1.default.json());
 app.use("/api", router);
-// app.get("/", (request: Request, response: Response, next: NextFunction) => {
-//     response.sendFile(__dirname + "/build/index.html");
-// });
 app.get("/user", function (request, response, next) {
     console.log(request.query);
     response.send(request.query.user + ", " + request.query.id);

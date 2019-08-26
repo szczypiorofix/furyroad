@@ -1,6 +1,7 @@
 var FtpDeploy = require('ftp-deploy');
 var ftpDeploy = new FtpDeploy();
- 
+
+// Server app deploy config
 var serverAppConfig = {
     user: process.env.FTPUSER,
     password: process.env.FTPPASS,
@@ -9,7 +10,8 @@ var serverAppConfig = {
     localRoot: __dirname + "/server/",
     remoteRoot: "/public_nodejs",
     deleteRemote: false,
-    include: ['*']
+    include: ['*'],
+    exclude: ['node_modules/**/*']
 }
 
 

@@ -1,7 +1,7 @@
 var FtpDeploy = require('ftp-deploy');
 var ftpDeploy = new FtpDeploy();
      
-// React app deploy config
+// Client app deploy config
 var reactAppConfig = {
     user: process.env.FTPUSER,
     password: process.env.FTPPASS,

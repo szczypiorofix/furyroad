@@ -10,9 +10,9 @@ jobs:
        - run: npm install --prefix ./server
        - run: npm run build --prefix ./client
        - run: git log --oneline --decorate > client/public/changelog.txt
+       - run: cp server/package.json sever/app/
        - run: node deploy_server.js
        - run: node deploy_app.js
-       - run: cp server/package.json sever/app
 
 workflows:
   version: 2

@@ -12,6 +12,7 @@ jobs:
        - run: git log --oneline --decorate > client/public/changelog.txt
        - run: node deploy_server.js
        - run: node deploy_app.js
+       - run: cp server/package.json sever/app
 
 workflows:
   version: 2

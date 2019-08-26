@@ -1,0 +1,58 @@
+@import '../../variables';
+
+
+div.setting-menu {
+    background-color: $color_dark_brown;
+    color: $color_blue;
+
+    h2, h3 {
+        text-align: center;
+    }
+
+    h2.settings-title {
+        color: $color_light_brown;
+    }
+
+    div.volume-control {
+        display: block;
+        text-align: center;
+        margin: 25px 0;
+    }
+
+    button {
+        margin-left: 10px;
+    }
+
+    button.resetAll {
+        margin: 10px auto;
+        width: 10%;
+        min-width: 10%;
+        margin-left: 45%;
+        margin-right: 30%
+    }
+
+    div.musicicon {
+        width: 64px;
+        height: 64px;
+        border: 2px solid $color_light_brown;
+        background-image: url('/images/musicon.png');
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 auto;
+
+        &:hover {
+            border: 2px solid $color_light_gray;
+        }
+
+        &.on {
+            background-image: url('/images/musicon.png');
+        }
+
+        &.off {
+            background-image: url('/images/musicoff.png');
+        }
+    }
+}
+

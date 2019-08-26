@@ -11,7 +11,7 @@ var serverAppConfig = {
     remoteRoot: "/public_nodejs",
     deleteRemote: false,
     include: ['*'],
-    exclude: ['node_modules/**/*']
+    exclude: ['node_modules/**', 'tslint.json', 'tsconfig.json']
 }
 
 

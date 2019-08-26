@@ -6,7 +6,9 @@ jobs:
      steps:
        - checkout
        - run: npm install
-       - run: npm run build
+       - run: npm install --prefix ./client
+       - run: npm install --prefix ./server
+       - run: npm run build --prefix ./client
        - run: git log --oneline --decorate > build/changelog.txt
        - run: node deploy_server.js
        - run: node deploy_app.js

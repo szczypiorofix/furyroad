@@ -21,7 +21,7 @@ const initialState: GameRootState = {
             carFuelUsage: 0.25,
             carSpeed: 90.0,
             carMaxSpeed: 1.0,
-            attactRate: 2,
+            attackRate: 2,
             defenseRate: 2,
             daysPassed: 0,
             hoursPassed: 0,

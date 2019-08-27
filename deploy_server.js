@@ -14,11 +14,9 @@ var serverAppConfig = {
     exclude: ['app.ts']
 }
 
-
 ftpDeploy.on('uploaded', function(data) {
     console.log(data);
 });
-
 
 ftpDeploy.deploy(serverAppConfig, function(err, res) {
     if (err) console.log(err)

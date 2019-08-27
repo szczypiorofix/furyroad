@@ -5,20 +5,20 @@
   "private": true,
   "proxy": "http://localhost:80/",
   "dependencies": {
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.2",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-redux": "^7.1.2",
+    "@types/redux-logger": "^3.0.7",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-redux": "^7.1.0",
+    "react-redux": "^7.1.1",
     "react-scripts": "^3.1.1",
     "redux-logger": "^3.0.6",
     "typesafe-actions": "^4.4.2",
-    "typescript": "^3.5.3",
-    "@types/jest": "^24.0.17",
-    "@types/node": "^12.7.2",
-    "@types/react": "^16.9.2",
-    "@types/react-dom": "^16.8.5",
-    "@types/react-redux": "^7.1.2",
-    "@types/redux-logger": "^3.0.7"
+    "typescript": "^3.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,6 +41,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

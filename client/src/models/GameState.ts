@@ -39,7 +39,7 @@ export interface GameStats {
     carSpeed:           number,
     carMaxSpeed:        number,
     carFuelUsage:       number,
-    attactRate:         number,
+    attackRate:         number,
     defenseRate:        number,
     hoursPassed:        number,
     daysPassed:         number,

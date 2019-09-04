@@ -1,6 +1,11 @@
+import { GameLogin } from "../../models";
 
 export interface SplashScreenProps {
-    gotoMainMenu: () => void
+    gotoMainMenu: () => void,
+    login: (gameLogin: GameLogin) => void,
+    logout: (gameLogin: GameLogin) => void,
+    setOffline: (v: boolean) => void,
+    getLogin: GameLogin
 }
 
 

@@ -58,13 +58,20 @@ export interface MainMenuState {
 export interface GameSettings {
     musicOn: boolean,
     musicVolume: number,
-    canContinue: boolean
+    canContinue: boolean,
+    offline: boolean,
+}
+
+export interface GameLogin {
+    email: string,
+    uuid: string,
 }
 
 export interface SavedState {
     gamestats: GameStats,
     gameeventshistory: GameEvent[],
-    gamesettings: GameSettings
+    gamesettings: GameSettings,
+    gamelogin: GameLogin,
 }
 
 export interface GameRootState {

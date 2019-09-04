@@ -31,8 +31,13 @@ const initialState: GameRootState = {
         gamesettings: {
             musicOn: false,
             musicVolume: 50,
-            canContinue: false
+            canContinue: false,
+            offline: true,
         },
+        gamelogin: {
+            email: "",
+            uuid: "",
+        }
     }
 }
 

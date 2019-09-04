@@ -18,6 +18,8 @@ const mainMenuButtonClickedReducer: Reducer<MainMenuState, MainMenuAction> = ( s
             return { mode: MainGameStateTypes.CONTINUE };
         case MainMenuActions.MM_ENDGAME:
             return { mode: MainGameStateTypes.ENDGAME };
+        case MainMenuActions.MM_SPLASHSCREEN:
+            return { mode: MainGameStateTypes.SPLASHSCREEN };
         default:
             return state;
     }

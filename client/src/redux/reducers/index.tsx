@@ -6,12 +6,14 @@ import mainmenureducer from './mainmenureducer';
 import gameStatsReducer from './gamestatsreducer';
 import gameEventsReducer from './gameventsreducer';
 import gameSettingsReducer from './gamesettingsreducer';
+import gameLoginReducer from './gameloginreducer';
 
 
 const savedStateCombinedReducers = combineReducers<SavedState>({
     gamestats: gameStatsReducer,
     gameeventshistory: gameEventsReducer,
-    gamesettings: gameSettingsReducer
+    gamesettings: gameSettingsReducer,
+    gamelogin: gameLoginReducer,
 });
 
 const myCombinedReducers = combineReducers<GameRootState>({

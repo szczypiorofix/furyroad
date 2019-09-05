@@ -10,5 +10,6 @@ export interface SplashScreenProps {
 
 
 export interface SplashScreenState {
-    loginPopupVisible:boolean
+    loginPopupVisible: boolean,
+    changeLogVisible: boolean,
 }

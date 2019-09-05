@@ -15,7 +15,7 @@ export class SplashScreen extends React.Component<SplashScreenProps, SplashScree
 
     private logginPopupDiv: React.RefObject<HTMLDivElement>;
 
-    state = { loginPopupVisible:false };
+    state = { loginPopupVisible:false, changeLogVisible: false };
 
     constructor(props:any) {
         super(props);
@@ -23,6 +23,7 @@ export class SplashScreen extends React.Component<SplashScreenProps, SplashScree
         
         if (this.logginPopupDiv.current)
             this.logginPopupDiv.current.id = "loginRegisterPopup";
+
     }
 
     componentDidMount() {
@@ -114,12 +115,22 @@ export class SplashScreen extends React.Component<SplashScreenProps, SplashScree
         );
     }
 
+    showChangelogInfo() {
+        let showChangeLogString: string = "none";
+        if (this.state && this.state.changeLogVisible)
+        showChangeLogString = this.state.changeLogVisible ? "block" : "none";
+        return (
+            <div style = {{display: showChangeLogString}}><p>Changelog info</p></div>
+        );
+    }
+
     render():JSX.Element {
         return (
             <React.Fragment>
                 <div className="splash-screen-main">
                     <h1>FURY ROAD...</h1>
                     {this.loginRegisterPopup()}
+                    {this.showChangelogInfo()}
                     
                     <div className="splash-buttons">
                         { this.props.getLogin.email === "" ? this.loginRegisterButton() : this.continueButton() }
@@ -135,7 +146,7 @@ export class SplashScreen extends React.Component<SplashScreenProps, SplashScree
                             title="#CHANGELOG"
                             active={ true }
                             onClick={ () => {
-                                console.log("Show changelog.");
+                                this.setState({changeLogVisible: !this.state.changeLogVisible })
                             }}
                         />
                     </div>

@@ -5,6 +5,9 @@ jobs:
        - image: circleci/node:latest
      steps:
        - checkout
+       - add_ssh_keys:
+          fingerprints:
+            - "a0:fb:df:cb:75:30:c4:23:68:91:1f:4c:e2:55:82:5c"
        - run: npm install
        - run: npm install --prefix ./client
        - run: npm install --prefix ./server
@@ -14,8 +17,7 @@ jobs:
        - run: cp server/package.json server/build/
        - run: node deploy_server.js
        - run: node deploy_app.js
-       - run: sudo apt-get update && sudo apt-get install -y sshpass
-       - run: sshpass -e ssh szczypiorofix@21.mydevil.net cd domains/furyroad.wroblewskipiotr.pl/public_nodejs/ && npm install && devil www restart furyroad.wroblewskipiotr.pl
+       - run: ssh $SSH_USER@$SSH_HOST "cd domains/furyroad.wroblewskipiotr.pl/public_nodejs/ && npm install && devil www restart furyroad.wroblewskipiotr.pl"
 workflows:
   version: 2
   deploy:

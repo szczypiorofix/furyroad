@@ -1,7 +1,7 @@
 version: 2
 jobs:
-  build:
-    docker:
+   build:
+     docker:
        - image: circleci/node:latest
      steps:
        - checkout
@@ -11,37 +11,16 @@ jobs:
        - run: npm run build --prefix ./client
        - run: npm run build --prefix ./server
        - run: git log --oneline --decorate > client/public/changelog.txt
-       - run: cp server/package.json server/build/       
-  deploy:
-    docker:
-      - image: circleci/node:latest
-    steps:
-    - checkout
-    - run: node deploy_server.js
-    - run: node deploy_app.js
-  finish:
-    docker:
-      - image: circleci/node:latest
-    steps:
-    - checkout
-    - run: ssh $SSH_USER@$SSH_HOST "cd domains/furyroad.wroblewskipiotr.pl/public_nodejs && npm install && devil www restart furyroad.wroblewskipiotr.pl"
-
+       - run: cp server/package.json server/build/
+       - run: node deploy_server.js
+       - run: node deploy_app.js
+       - run: ssh $SSH_USER@$SSH_HOST "cd domains/furyroad.wroblewskipiotr.pl/public_nodejs && npm install && devil www restart furyroad.wroblewskipiotr.pl"
 
 workflows:
   version: 2
   deploy:
     jobs:
       - build:
-          filters:
-            branches:
-              only:
-               - master
-      - deploy:
-          filters:
-            branches:
-              only:
-               - master
-      - finish:
           filters:
             branches:
               only:

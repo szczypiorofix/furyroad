@@ -4,12 +4,10 @@ import dotenv from "dotenv";
 import express, { Application, NextFunction, Request, Response } from "express";
 import fs from "fs";
 import http from "http";
-import { MongoError } from "mongodb";
-import mongoose from "mongoose";
 
 import { MongoHelper } from "./helpers";
 import { headerMiddleware, loggerMiddleware } from "./middleware";
-import { router } from "./routes";
+import { apiRouter } from "./routes";
 
 // ==========================================================================
 dotenv.config();
@@ -25,15 +23,6 @@ const httpServer = http.createServer(app);
 //     fs.readFileSync(__dirname + "/dbstructure.sql").toString().split(";").filter((el) => el.length !== 0);
 
 httpServer.listen(PORT, "localhost");
-// httpServer.on("listening", async () => {
-//     console.info(`Listening on port: ${PORT}.`);
-//     try {
-//         await MongoHelper.connect(mongodbname);
-//         console.info("Connected to Mongo.");
-//     } catch (err) {
-//         console.error(err);
-//     }
-// });
 
 httpServer.on("listening", () => {
     console.info(`Listening on port: ${PORT}.`);
@@ -49,9 +38,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/api", router);
-
-// ====================================== API ======================================
+app.use("/api", apiRouter);
 
 /**
  * GET /song - request for streaming music.
@@ -61,7 +48,7 @@ app.get("/song", (request: Request, response: Response, next: NextFunction) => {
     try {
         const songFile: fs.Stats = fs.statSync(songPath);
         if (songFile.isFile() && songFile.size > 0) {
-            console.log(`File ${songPath} is ok!`);
+            console.log(`Sending ${songPath} to client.`);
             response.writeHead(200, {
                 "Content-Length": songFile.size,
                 "Content-Type": "audio/mpeg",

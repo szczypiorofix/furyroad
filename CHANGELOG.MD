@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.04] - 2019-09-04
+### Added
+- Added MongoDB database support.
+- Splash screen with login/logout/play offline menu.
+
+### Changed
+- User data (savegame) are stored in database instead of browser's localStorage.
+
 ## [0.1.03] - 2019-08-01
 ### Added
 - Music settings: on/off in Settings menu.
@@ -28,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.01] - 2019-07-26
 ### Added
-- Choices made while game events has some effects.
+- Choices made in game has some effects.
 - Added support of SCSS
 
 ### Changed

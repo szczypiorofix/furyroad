@@ -9,6 +9,7 @@ jobs:
        - run: npm install --prefix ./client
        - run: npm install --prefix ./server
        - run: npm run build --prefix ./client
+       - run: npm run build --prefix ./server
        - run: git log --oneline --decorate > client/public/changelog.txt
        - run: cp server/package.json server/build/
        - run: node deploy_server.js

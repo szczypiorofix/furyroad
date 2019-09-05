@@ -53,8 +53,7 @@ export class SplashScreen extends React.Component<SplashScreenProps, SplashScree
             },
             body: JSON.stringify({
                 email: email,
-                password: pass,
-                newpassword: "dupa",
+                password: pass
             })
         }).then( (res) => res.json() ).then( (user: GameLogin) => {
             this.props.login(user);
@@ -132,7 +131,13 @@ export class SplashScreen extends React.Component<SplashScreenProps, SplashScree
                                 this.props.gotoMainMenu();
                             }}
                         />
-
+                        <MainMenuButton
+                            title="#CHANGELOG"
+                            active={ true }
+                            onClick={ () => {
+                                console.log("Show changelog.");
+                            }}
+                        />
                     </div>
                     
                 </div>

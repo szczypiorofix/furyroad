@@ -5,7 +5,7 @@ A post-apocalyptic drive-through-wasteland game.
 
 ## Status
 Latest build: [![CircleCI](https://circleci.com/gh/szczypiorofix/furyroad.svg?style=svg)](https://circleci.com/gh/szczypiorofix/furyroad)
-![Version](https://img.shields.io/badge/version-0.1.03-blue.svg "Version icon")
+![Version](https://img.shields.io/badge/version-0.1.04-blue.svg "Version icon")
 
 ## Website
 
@@ -16,6 +16,9 @@ Latest build: [![CircleCI](https://circleci.com/gh/szczypiorofix/furyroad.svg?st
 
 * ReactJS
 * Redux
+* Node
+* Express
+* Mongoose
 
 
 ## Used npm packages
@@ -25,6 +28,7 @@ Latest build: [![CircleCI](https://circleci.com/gh/szczypiorofix/furyroad.svg?st
 * react-scripts
 * redux-logger
 * typesafe-actions
+* uuid
 
 
 

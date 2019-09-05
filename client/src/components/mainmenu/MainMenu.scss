@@ -17,10 +17,23 @@ div.mainmenu-bg {
     background-size: cover;
 
     .mainmenu-content {
-
+        div.login-part {
+            margin: 8px;
+            display: inline-block;
+            z-index: 1;
+            border-radius: 2px;
+            span {
+                font-size: 16px;
+                font-weight: bold;
+            }
+            button {
+                font-size: 16px;
+                font-weight: bold;
+            }
+        }
         h1.mainmenu-gametitle {
             text-align: center;
-            margin: 125px 0px 10px 0px;
+            margin: 50px 0px 10px 0px;
             font-size: 64px;
             color: $color_very_dark_brown;
             text-shadow: 2px 1px 3px $color_dark_brown;

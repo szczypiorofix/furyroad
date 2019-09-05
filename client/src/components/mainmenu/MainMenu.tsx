@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 
 import './MainMenu.scss';
 import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
-import { GameRootState, SavedState } from '../../models';
-import { getGameMode, getGameSettings } from '../../redux/selectors';
-import { goToNewGame, goToJunkyard, goToSettings, continueGame, resetSavedState, toggleContinueGame } from '../../redux/actions';
+import { GameRootState, SavedState, GameLogin } from '../../models';
+import { getGameMode, getGameSettings, getLogin } from '../../redux/selectors';
+import { goToNewGame, goToJunkyard, goToSettings, continueGame, resetSavedState, toggleContinueGame, logout, goToSplashScreen } from '../../redux/actions';
 import { MainMenuProps } from './MainMenuModel';
 import { LOCAL_STORAGE_SAVED_STATE_NAME } from '../../redux/store';
 import initialState from '../../redux/initialstate';
@@ -35,6 +35,9 @@ export class MainMenu extends React.Component<MainMenuProps, {}> {
             <React.Fragment>
                 <div className="mainmenu-bg">
                     <div className="mainmenu-content">
+                        <div className="login-part">
+                            <button onClick={() => this.props.gotoSplashScreen()}>{this.props.getLogin.email} | Wyjdź</button>
+                        </div>
                         <h1 className="mainmenu-gametitle">FURY ROAD</h1>
                         <div className="buttons-div">
                             <MainMenuButton 
@@ -68,18 +71,20 @@ export class MainMenu extends React.Component<MainMenuProps, {}> {
     }
 }
 
-const mapStateToProps = (state:GameRootState) => ({
-    gameMode:  getGameMode(state),
-    gameSettings: getGameSettings(state)
+const mapStateToProps = (state: GameRootState) => ({
+    gameMode: getGameMode(state),
+    gameSettings: getGameSettings(state),
+    getLogin: getLogin(state),
  });
  
-const mapDispatchToProps = (dispatch:any) => ({
+const mapDispatchToProps = (dispatch: any) => ({
     startNewGame: () => dispatch(goToNewGame()),
     gotoJunkyard: () => dispatch(goToJunkyard()),
     gotoSettings: () => dispatch(goToSettings()),
     continueGame: () => dispatch(continueGame()),
     toggleContinueGame: (v:boolean) => dispatch(toggleContinueGame(v)),
-
+    gotoSplashScreen: () => dispatch(goToSplashScreen()),
+    logout: (gameLogin: GameLogin) => dispatch(logout(gameLogin)),
     resetSavedState: (initial: SavedState) => dispatch(resetSavedState(initial)),
 });
 

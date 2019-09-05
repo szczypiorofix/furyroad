@@ -54,3 +54,5 @@ export const goToEndGame = () => action(MainMenuActions.MM_ENDGAME, 0);
 export const goToSettings = () => action(MainMenuActions.MM_SETTINGS, 0);
 
 export const continueGame = () => action(MainMenuActions.MM_CONTINUE, 0);
+
+export const goToSplashScreen = () => action(MainMenuActions.MM_SPLASHSCREEN, 0);

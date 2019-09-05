@@ -17,8 +17,12 @@ html, body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
     font-family: 'Noto Sans', sans-serif;
     background-color: $color_dark_gray;
+    background-image: url('/images/wasteland.png');
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: cover;
     color: $color_sand;
 }

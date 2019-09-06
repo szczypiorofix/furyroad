@@ -1,21 +1,21 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
+import moment from "moment";
 
-import './SplashScreen.scss';
+import "./SplashScreen.scss";
 
-import { SplashScreenProps, SplashScreenState } from './SplashScreenModel';
-import { GameRootState, GameLogin } from '../../models';
-import { goToMainMenu, login, setOffline, logout } from '../../redux/actions';
-import { MainMenuButton } from '../mainmenubutton/MainMenuButton';
-import { getLogin } from '../../redux/selectors';
-
+import { SplashScreenProps, SplashScreenState, IChangeLogContent } from "./SplashScreenModel";
+import { GameRootState, GameLogin } from "../../models";
+import { goToMainMenu, login, setOffline, logout } from "../../redux/actions";
+import { MainMenuButton } from "../mainmenubutton/MainMenuButton";
+import { getLogin } from "../../redux/selectors";
 
 
 export class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState> {
 
     private logginPopupDiv: React.RefObject<HTMLDivElement>;
 
-    state = { loginPopupVisible:false, changeLogVisible: false };
+    state = { loginPopupVisible:false, changeLogVisible: false, changeLogContent: []};
 
     constructor(props:any) {
         super(props);
@@ -117,10 +117,25 @@ export class SplashScreen extends React.Component<SplashScreenProps, SplashScree
 
     showChangelogInfo() {
         let showChangeLogString: string = "none";
+        
+        let items: any;
+        if (this.state && this.state.changeLogContent) {
+            items = this.state.changeLogContent.map((item: IChangeLogContent, key) =>
+                <li key={item._id}>{ moment(item.date).format('YYYY-MM-DD - HH:mm') }: {item.text}</li>
+            );
+        };
+
         if (this.state && this.state.changeLogVisible)
         showChangeLogString = this.state.changeLogVisible ? "block" : "none";
         return (
-            <div style = {{display: showChangeLogString}}><p>Changelog info</p></div>
+            <div style = {{display: showChangeLogString}} className="changelogdiv">
+                <button onClick={() => this.setState({changeLogVisible: false})}>X</button>
+                <div className="changelog-content">
+                    <ul>
+                        {items}
+                    </ul>
+                </div>
+            </div>
         );
     }
 
@@ -146,6 +161,15 @@ export class SplashScreen extends React.Component<SplashScreenProps, SplashScree
                             title="#CHANGELOG"
                             active={ true }
                             onClick={ () => {
+                                fetch("/api/news", {
+                                    method: "GET",
+                                    headers:{
+                                        'Content-Type': 'application/json'
+                                    }
+                                }).then( (res) => res.json() ).then( 
+                                    (content: IChangeLogContent[]) => 
+                                    this.setState({changeLogContent: content})
+                                );
                                 this.setState({changeLogVisible: !this.state.changeLogVisible })
                             }}
                         />

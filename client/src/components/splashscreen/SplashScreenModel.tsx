@@ -8,8 +8,15 @@ export interface SplashScreenProps {
     getLogin: GameLogin
 }
 
+export interface IChangeLogContent {
+    _id: string;
+    date: number;
+    text: string;
+}
+
 
 export interface SplashScreenState {
     loginPopupVisible: boolean,
     changeLogVisible: boolean,
+    changeLogContent: IChangeLogContent[],
 }

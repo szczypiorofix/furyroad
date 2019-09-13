@@ -1,8 +1,8 @@
-import { GameRootState } from '../../models';
+import { IGameRootState } from "../../models";
 
-export const getGameRootState = (state:  GameRootState): GameRootState => state;
+export const getGameRootState = (state: IGameRootState): IGameRootState => state;
 
-export * from './gamestateselector';
-export * from './gamestatsselector';
-export * from './gamesettingsselector';
-export * from './gameloginselector';
+export * from "./gamestateselector";
+export * from "./gamestatsselector";
+export * from "./gamesettingsselector";
+export * from "./gameloginselector";

@@ -1,5 +1,5 @@
-import { GameSettings,  GameRootState, SavedState } from '../../models';
+import { IGameSettings, ISavedState } from "furyroad-interfaces";
+import { IGameRootState } from "../../models";
 
-
-export const getGameSettings = (state:  GameRootState): GameSettings => state.savedstate.gamesettings;
-export const getSavedState = (state: GameRootState): SavedState => state.savedstate; 
+export const getGameSettings = (state: IGameRootState): IGameSettings => state.savedstate.gamesettings;
+export const getSavedState = (state: IGameRootState): ISavedState => state.savedstate;

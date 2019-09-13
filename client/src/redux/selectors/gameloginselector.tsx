@@ -1,5 +1,6 @@
-import { GameRootState, GameLogin } from '../../models';
+import { IGameLogin } from "furyroad-interfaces";
+import { IGameRootState } from "../../models";
 
-export const getLogin = (state:  GameRootState): GameLogin => state.savedstate.gamelogin;
-export const getEmail = (state:  GameRootState): string => state.savedstate.gamelogin.email;
-export const getUUID = (state: GameRootState): string => state.savedstate.gamelogin.uuid;
+export const getLogin = (state: IGameRootState): IGameLogin => state.savedstate.gamelogin;
+export const getEmail = (state: IGameRootState): string => state.savedstate.gamelogin.email;
+export const getUUID = (state: IGameRootState): string => state.savedstate.gamelogin.uuid;

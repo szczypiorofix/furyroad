@@ -1,3 +1,3 @@
-export interface GameMapModel {
-    mapVisible: boolean;
+export interface IGameMapModel {
+  mapVisible: boolean;
 }

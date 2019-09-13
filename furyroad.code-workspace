@@ -6,7 +6,7 @@
 	],
 	"settings": {
 		"editor.fontFamily": "Noto Mono, monospace",
-		"editor.lineHeight": 16,
+		"editor.lineHeight": 17,
 		"editor.fontLigatures": true,
 		"editor.mouseWheelZoom": true,
 		"editor.cursorWidth": 7,

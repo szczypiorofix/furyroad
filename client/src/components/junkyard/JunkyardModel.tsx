@@ -1,6 +1,6 @@
-import { MainMenuState } from '../../models';
+import { IMainMenuState } from "../../models";
 
-export interface JunkyardProps {
-    gotoMainMenu: () => void,
-    gameMode: MainMenuState
+export interface IJunkyardProps {
+  gotoMainMenu: () => void;
+  gameMode: IMainMenuState;
 }

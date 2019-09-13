@@ -1,37 +1,37 @@
-import { action } from 'typesafe-actions'
-
-
+import { action } from "typesafe-actions";
 
 export enum GameSettingsActions {
-    MUSIC_TOGGLE  = "MUSIC_TOGGLE",
-    CONTINUE_GAME_TOGGLE = "CONTINUE_GAME_TOGGLE",
-    SET_MUSIC_VOLUME="SET_MUSIC_VOLUME",
-    SET_OFFLINE="SET_OFFLINE",
+  MUSIC_TOGGLE = "MUSIC_TOGGLE",
+  CONTINUE_GAME_TOGGLE = "CONTINUE_GAME_TOGGLE",
+  SET_MUSIC_VOLUME = "SET_MUSIC_VOLUME",
+  SET_OFFLINE = "SET_OFFLINE",
 }
 
-export interface GameSettingsActionMusicToggle {
-    readonly type: GameSettingsActions.MUSIC_TOGGLE;
-    payload: boolean
+export interface IGameSettingsActionMusicToggle {
+  readonly type: GameSettingsActions.MUSIC_TOGGLE;
+  payload: boolean;
 }
 
-export interface GameSettingsActionSetOffline {
-    readonly type: GameSettingsActions.SET_OFFLINE;
-    payload: boolean
+export interface IGameSettingsActionSetOffline {
+  readonly type: GameSettingsActions.SET_OFFLINE;
+  payload: boolean;
 }
 
-export interface GameSettingsActionContinueGameToggle {
-    readonly type: GameSettingsActions.CONTINUE_GAME_TOGGLE;
-    payload: boolean
+export interface IGameSettingsActionContinueGameToggle {
+  readonly type: GameSettingsActions.CONTINUE_GAME_TOGGLE;
+  payload: boolean;
 }
 
-export interface GameSettingsActionSetMusicVolume {
-    readonly type: GameSettingsActions.SET_MUSIC_VOLUME;
-    payload: number
+export interface IGameSettingsActionSetMusicVolume {
+  readonly type: GameSettingsActions.SET_MUSIC_VOLUME;
+  payload: number;
 }
 
-export type GameSettingsAction = GameSettingsActionMusicToggle | GameSettingsActionSetOffline | GameSettingsActionContinueGameToggle | GameSettingsActionSetMusicVolume;
-
-
+export type GameSettingsAction =
+  | IGameSettingsActionMusicToggle
+  | IGameSettingsActionSetOffline
+  | IGameSettingsActionContinueGameToggle
+  | IGameSettingsActionSetMusicVolume;
 
 export const toggleMusic = (v: boolean) => action(GameSettingsActions.MUSIC_TOGGLE, v);
 

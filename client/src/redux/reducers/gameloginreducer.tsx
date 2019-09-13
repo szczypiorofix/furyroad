@@ -1,17 +1,19 @@
-import { Reducer } from 'redux';
-import { GameLoginAction, GameLoginActions } from '../actions';
-import { GameLogin } from '../../models';
+import { IGameLogin } from "furyroad-interfaces";
+import { Reducer } from "redux";
+import { GameLoginAction, GameLoginActions } from "../actions";
 
-
-const gameLoginReducer: Reducer<GameLogin, GameLoginAction> = ( state: GameLogin = {email: "", uuid: ""}, action: GameLoginAction): GameLogin => {
-    switch(action.type) {
-        case GameLoginActions.LOGIN:
-            return {...state, email: action.payload.gameLogin.email, uuid: action.payload.gameLogin.uuid}
-        case GameLoginActions.LOGOUT:
-            return {...state, email: "", uuid: ""}
-        default:
-            return state;
-    }
-}
+const gameLoginReducer: Reducer<IGameLogin, GameLoginAction> = (
+  state: IGameLogin = { email: "", uuid: "", password: "" },
+  action: GameLoginAction,
+): IGameLogin => {
+  switch (action.type) {
+    case GameLoginActions.LOGIN:
+      return { ...state, email: action.payload.gameLogin.email, uuid: action.payload.gameLogin.uuid };
+    case GameLoginActions.LOGOUT:
+      return { ...state, email: "", uuid: "", password: "" };
+    default:
+      return state;
+  }
+};
 
 export default gameLoginReducer;

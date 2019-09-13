@@ -1,5 +1,5 @@
-export interface MainMenuButtonModel {
-    title:      string,
-    active:     boolean,
-    onClick:    () => void
+export interface IMainMenuButtonModel {
+  title: string;
+  active: boolean;
+  onClick: () => void;
 }

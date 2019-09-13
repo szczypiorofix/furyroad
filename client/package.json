@@ -6,11 +6,7 @@
   "proxy": "http://localhost:3030/",
   "dependencies": {
     "@types/jest": "^24.0.18",
-    "@types/node": "^12.7.4",
-    "@types/react": "^16.9.2",
-    "@types/react-dom": "^16.9.0",
-    "@types/react-redux": "^7.1.2",
-    "@types/redux-logger": "^3.0.7",
+    "furyroad-interfaces": "^0.1.14",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
@@ -18,14 +14,16 @@
     "react-redux": "^7.1.1",
     "react-scripts": "^3.1.1",
     "redux-logger": "^3.0.6",
-    "typesafe-actions": "^4.4.2",
-    "typescript": "^3.6.2"
+    "typesafe-actions": "^4.4.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format_ts": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format_tsx": "prettier --write \"src/**/*.tsx\" \"src/**/*.js\"",
+    "lint": "tslint --project ./tsconfig.json"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,5 +40,18 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "^12.7.5",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-redux": "^7.1.2",
+    "@types/redux-logger": "^3.0.7",
+    "@types/uuid": "^3.4.5",
+    "prettier": "^1.18.2",
+    "eslint": "^6.3.0",
+    "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.6.3",
+    "ts-node-dev": "^1.0.0-pre.41"
+  }
 }

@@ -1,23 +1,24 @@
-import { MainMenuState, GameStats, StatToModify, GameSettings } from '../../models';
-import { GameEvent } from './gameevents';
+import { IGameEvent, IGameLogin, IGameSettings, IGameStats, ISavedState, IStatToModify } from "furyroad-interfaces";
+import { IMainMenuState } from "../../models";
 
-export interface MainGameState {
-    paused: boolean;
-    drawnEventNumber: number;
-    currentEvent: GameEvent;
-    historyOfEvents: GameEvent[];
+export interface IMainGameState {
+  paused: boolean;
+  drawnEventNumber: number;
+  currentEvent: IGameEvent;
+  historyOfEvents: IGameEvent[];
 }
 
-export interface MainGameProps {
-    
-    mainState: MainMenuState,
-    stats: GameStats,
-    getGameEvents: GameEvent[],
-    gameSettings: GameSettings,
+export interface IMainGameProps {
+  mainState: IMainMenuState;
+  stats: IGameStats;
+  getGameEvents: IGameEvent[];
+  gameSettings: IGameSettings;
+  getLogin: IGameLogin;
 
-    gotoMainMenu: () => void,
-    goToEndGame: () => void,
-    modStat: (stat: StatToModify) => void,
-    setStat: (stat: StatToModify) => void,
-    toggleContinueGame: (v:boolean) => void
+  gotoMainMenu: () => void;
+  goToEndGame: () => void;
+  modStat: (stat: IStatToModify) => void;
+  setStat: (stat: IStatToModify) => void;
+  toggleContinueGame: (v: boolean) => void;
+  resetSavedState: (initial: ISavedState) => void;
 }

@@ -1,7 +1,6 @@
-import { GameStats, GameRootState } from '../../models';
-import { GameEvent } from '../../components/maingame/gameevents';
+import { IGameEvent, IGameStats } from "furyroad-interfaces";
+import { IGameRootState } from "../../models";
 
+export const getGameStats = (state: IGameRootState): IGameStats => state.savedstate.gamestats;
 
-export const getGameStats = (state: GameRootState): GameStats => state.savedstate.gamestats;
-
-export const getGameEvents = (state: GameRootState): GameEvent[] => state.savedstate.gameeventshistory;
+export const getGameEvents = (state: IGameRootState): IGameEvent[] => state.savedstate.gameeventshistory;

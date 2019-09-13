@@ -1,28 +1,24 @@
-import React from 'react';
+import React from "react";
 
-import './GameMap.scss';
+import "./GameMap.scss";
 
-import { GameMapModel } from './GameMapModel';
+import { IGameMapModel } from "./GameMapModel";
 
+class GameMap extends React.Component<{}, IGameMapModel> {
+  
+  public componentDidMount() {
+    this.setState({
+      mapVisible: false,
+    });
+  }
 
-
-class GameMap extends React.Component< {}, GameMapModel > {
-
-    componentWillMount() {
-        this.setState({
-            mapVisible: false
-        });
-    }
-
-    render() {
-        return (
-            <div className="main-view-map">
-                <img src="./images/map.png" alt="game map" />
-            </div>
-        );
-    }
-
+  public render() {
+    return (
+      <div className="main-view-map">
+        <img src="./images/map.png" alt="game map" />
+      </div>
+    );
+  }
 }
-
 
 export default GameMap;

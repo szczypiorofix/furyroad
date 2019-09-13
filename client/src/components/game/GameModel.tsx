@@ -1,5 +1,5 @@
-import { MainMenuState } from '../../models';
+import { IMainMenuState } from "../../models";
 
-export interface GameProps {
-    gameMode: MainMenuState
+export interface IGameProps {
+  gameMode: IMainMenuState;
 }

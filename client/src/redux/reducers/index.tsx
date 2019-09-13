@@ -1,24 +1,24 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from "redux";
 
-import { GameRootState, SavedState } from '../../models';
+import { ISavedState } from "furyroad-interfaces";
+import { IGameRootState } from "../../models";
 
-import mainmenureducer from './mainmenureducer';
-import gameStatsReducer from './gamestatsreducer';
-import gameEventsReducer from './gameventsreducer';
-import gameSettingsReducer from './gamesettingsreducer';
-import gameLoginReducer from './gameloginreducer';
+import gameLoginReducer from "./gameloginreducer";
+import gameSettingsReducer from "./gamesettingsreducer";
+import gameStatsReducer from "./gamestatsreducer";
+import gameEventsReducer from "./gameventsreducer";
+import mainmenureducer from "./mainmenureducer";
 
-
-const savedStateCombinedReducers = combineReducers<SavedState>({
-    gamestats: gameStatsReducer,
-    gameeventshistory: gameEventsReducer,
-    gamesettings: gameSettingsReducer,
-    gamelogin: gameLoginReducer,
+const savedStateCombinedReducers = combineReducers<ISavedState>({
+  gamestats: gameStatsReducer,
+  gameeventshistory: gameEventsReducer,
+  gamesettings: gameSettingsReducer,
+  gamelogin: gameLoginReducer,
 });
 
-const myCombinedReducers = combineReducers<GameRootState>({
-    mainmenustate: mainmenureducer,
-    savedstate: savedStateCombinedReducers
+const myCombinedReducers = combineReducers<IGameRootState>({
+  mainmenustate: mainmenureducer,
+  savedstate: savedStateCombinedReducers,
 });
 
 export default myCombinedReducers;

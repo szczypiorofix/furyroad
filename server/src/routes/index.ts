@@ -1,1 +1,3 @@
-export * from "./main.controller";
+export * from "./users.controller";
+export * from "./news.controller";
+export * from "./login.controller";

@@ -1,2 +1,2 @@
-export * from '../components/mainmenubutton/MainMenuButtonModel';
-export * from './GameState';
+export * from "../components/mainmenubutton/MainMenuButtonModel";
+export * from "./GameState";

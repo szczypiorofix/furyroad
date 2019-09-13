@@ -1,4 +1,3 @@
-import { MainMenuState,  GameRootState } from '../../models';
+import { IGameRootState, IMainMenuState } from "../../models";
 
-
-export const getGameMode = (state:  GameRootState): MainMenuState => state.mainmenustate;
+export const getGameMode = (state: IGameRootState): IMainMenuState => state.mainmenustate;

@@ -1,19 +1,24 @@
-import mongodb, { MongoClient } from "mongodb";
+import mongoose, { Connection } from "mongoose";
 
 export class MongoHelper {
+  public static connection: Connection;
 
-    public static client: mongodb.MongoClient;
+  public static connect() {
+    const mongodbname: string = process.env.MONGO_DB ? process.env.MONGO_DB : "";
 
-    public static connect(url: string) {
-        return new Promise( (resolve, reject) => {
-            mongodb.connect(url, { useNewUrlParser: true }, (err, client: MongoClient) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    MongoHelper.client = client;
-                    resolve(client);
-                }
-            });
-        });
-    }
+    return new Promise((resolve, reject) => {
+      mongoose
+        .connect(mongodbname, { 
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+          useFindAndModify: false })
+        .then(() => {
+          resolve(mongoose.connection);
+        })
+        .catch(err => console.error(err));
+      mongoose.connection.on("error", err => {
+        reject(err);
+      });
+    });
+  }
 }

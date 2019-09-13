@@ -1,2 +1,1 @@
-export * from "./iresponse.type";
-export * from "./user";
+export * from "./data.type";

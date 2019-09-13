@@ -1,13 +1,12 @@
-import { MainMenuState, GameStats, SavedState, GameSettings } from '../../models';
+import { IGameSettings, IGameStats, ISavedState } from "furyroad-interfaces";
+import { IMainMenuState } from "../../models";
 
+export interface IEndGameProps {
+  mainState: IMainMenuState;
+  stats: IGameStats;
+  gameSettings: IGameSettings;
 
-export interface EndGameProps {
-    
-    mainState: MainMenuState,
-    stats: GameStats,
-    gameSettings: GameSettings,
-
-    gotoMainMenu: () => void,
-    toggleContinueGame: (v:boolean) => void,
-    resetSavedState: (state:SavedState) => void
+  gotoMainMenu: () => void;
+  toggleContinueGame: (v: boolean) => void;
+  resetSavedState: (state: ISavedState) => void;
 }

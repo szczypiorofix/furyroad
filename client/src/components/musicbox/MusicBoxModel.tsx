@@ -1,6 +1,7 @@
-import { GameSettings, MainMenuState } from "../../models";
+import { IGameSettings } from "furyroad-interfaces";
+import { IMainMenuState } from "../../models";
 
-export interface MusicBoxModel {
-    gameMode: MainMenuState,
-    gameSettings: GameSettings
+export interface IMusicBoxModel {
+  gameMode: IMainMenuState;
+  gameSettings: IGameSettings;
 }

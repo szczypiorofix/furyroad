@@ -17,6 +17,12 @@ jobs:
        - run: cp server/package.json server/build/
        - run: node deploy_server.js
        - run: node deploy_app.js
+       - run:
+          name: Deploy Over SSH
+          command: |
+            ssh $SSH_USER@$SSH_HOST "ls"
+
+
 workflows:
   version: 2
   deploy:

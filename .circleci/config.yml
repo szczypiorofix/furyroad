@@ -7,7 +7,7 @@ jobs:
        - checkout
        - add_ssh_keys:
           fingerprints:
-            - "63:35:65:9c:29:05:3f:fd:de:b4:b5:44:08:61:ce:39"
+            - "96:ee:27:45:1b:05:d4:fe:a6:95:a8:4b:a9:f9:55:32"
        - run: npm install
        - run: npm install --prefix ./client
        - run: npm install --prefix ./server
@@ -17,6 +17,12 @@ jobs:
        - run: cp server/package.json server/build/
        - run: node deploy_server.js
        - run: node deploy_app.js
+       - run:
+          name: Deploy Over SSH
+          command: |
+            ssh $SSH_USER@$SSH_HOST "ls"
+
+
 workflows:
   version: 2
   deploy:

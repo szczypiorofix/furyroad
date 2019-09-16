@@ -47,11 +47,11 @@
     "@types/react-redux": "^7.1.2",
     "@types/redux-logger": "^3.0.7",
     "@types/uuid": "^3.4.5",
+    "eslint": "^6.4.0",
     "prettier": "^1.18.2",
-    "eslint": "^6.3.0",
+    "ts-node-dev": "^1.0.0-pre.41",
     "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.6.3",
-    "ts-node-dev": "^1.0.0-pre.41"
+    "typescript": "^3.6.3"
   }
 }

@@ -15,7 +15,7 @@ export class Junkyard extends React.Component<IJunkyardProps, {}> {
         <div className="junkyard-menu">
           <MainMenuButton title="MENU GŁÓWNE" active={true} onClick={() => this.props.gotoMainMenu()} />
           <h2 className="junkyard-title">THIS IS JUNKYARD MENU</h2>
-          <h3>Śmietnisko - to tutaj składowane są bezużyteczne, martwe roboty</h3>
+          <h3>Śmietnisko - to tutaj trafiają martwe roboty</h3>
         </div>
       </React.Fragment>
     );

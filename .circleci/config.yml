@@ -7,7 +7,7 @@ jobs:
        - checkout
        - add_ssh_keys:
           fingerprints:
-            - "96:ee:27:45:1b:05:d4:fe:a6:95:a8:4b:a9:f9:55:32"
+            - "10:d6:94:39:57:de:02:43:e2:57:69:d7:f8:6e:36:c6"
        - run: npm install
        - run: npm install --prefix ./client
        - run: npm install --prefix ./server
@@ -17,10 +17,7 @@ jobs:
        - run: cp server/package.json server/build/
        - run: node deploy_server.js
        - run: node deploy_app.js
-       - run:
-          name: Deploy Over SSH
-          command: |
-            ssh $SSH_USER@$SSH_HOST "ls"
+       - run: ssh $SSH_USER@$SSH_HOST "cd domains/furyroad.wroblewskipiotr.pl/public_nodejs/ && npm install"
 
 
 workflows:

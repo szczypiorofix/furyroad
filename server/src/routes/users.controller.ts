@@ -1,11 +1,11 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Request, Response, Router } from "express";
 import { defaultStats, IGameStats, ILoginResponseType, IResponseType } from "furyroad-interfaces";
 import uuidv1 from "uuid";
 import { MongoHelper } from "../helpers";
 import { User } from "../models";
 
 
-const usersRouter = express.Router();
+const usersRouter: Router = express.Router();
 
 /**
  * GET api/users - get all users from database

@@ -1,7 +1,7 @@
 {
   "name": "furyroad",
   "description": "Fury Road - a post-apocalyptic game.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "dependencies": {
     "ftp-deploy": "^2.3.3"

@@ -30,7 +30,6 @@ $color_dark_gray: #3a383c;
 }
 
  
-
 @mixin boxShadow($h) {
     box-shadow: $h;
     -webkit-box-shadow: $h;

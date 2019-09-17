@@ -1,9 +1,9 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Request, Response, Router } from "express";
 import { IResponseType } from "furyroad-interfaces";
 import { MongoHelper } from "../helpers";
 import { News } from "../models";
 
-const newsRouter = express.Router();
+const newsRouter: Router = express.Router();
 
 /**
  * GET api/news - get all news from database
@@ -11,7 +11,7 @@ const newsRouter = express.Router();
 newsRouter.get("/", (request: Request, response: Response, next: NextFunction) => {
   MongoHelper.connect()
     .then(() => {
-      News.find({}, "date text", (err, results) => {
+      News.find({}, "date text", {sort: { date: -1}}, (err, results) => {
         if (err) {
           const responseToClient: IResponseType = {
             data: [],
@@ -64,7 +64,7 @@ newsRouter.post("/", (request: Request, response: Response, next: NextFunction) 
       const responseToClient: IResponseType = {
         data: [],
         error: undefined,
-        msg: "Success - a user has been added to the database.",
+        msg: "Success - new information has been added to news database.",
         statusCode: 200,
       };
       const date = new Date();

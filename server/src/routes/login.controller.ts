@@ -1,9 +1,9 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Request, Response, Router } from "express";
 import { ILoginResponseType } from "furyroad-interfaces";
 import { MongoHelper } from "../helpers";
 import { User } from "../models";
 
-const loginRouter = express.Router();
+const loginRouter: Router = express.Router();
 
 /**
  * POST api/login - login

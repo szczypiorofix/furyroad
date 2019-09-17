@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.05] - 2019-09-17
+### Added
+- Deploy automation: installing modules and restarting production server.
+- Added Changelog as a news-like system that can be accessed from main menu of the game
+
+### Changed
+- Fixed login to game
+
+
 ## [0.1.04] - 2019-09-04
 ### Added
 - Added MongoDB database support.

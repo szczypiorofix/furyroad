@@ -11,6 +11,7 @@ export class MainMenuButton extends React.Component<IMainMenuButtonModel, {}> {
         onClick={() => this.props.onClick()}
       >
         {this.props.title}
+        {this.props.children}
       </button>
     );
   }

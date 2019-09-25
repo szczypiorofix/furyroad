@@ -1,13 +1,15 @@
+import { faArrowAltCircleLeft, faMap } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { connect } from "react-redux";
 
 import "./MainGame.scss";
 
-import { EventResults, EventTypes, GameStatsEnum, IGameEvent, IResponseType, ISavedState, IStatToModify } from "furyroad-interfaces";
+import { EventResults, EventTypes, GameStatsEnum, IGameEvent, ISavedState, IStatToModify } from "furyroad-interfaces";
 import { IGameRootState } from "../../models";
 import { goToEndGame, goToMainMenu, modStat, resetSavedState, setStat, toggleContinueGame } from "../../redux/actions";
 import { getGameEvents, getGameMode, getGameSettings, getGameStats, getLogin } from "../../redux/selectors";
-import { LOCAL_STORAGE_SAVED_STATE_NAME } from "../../redux/store";
+import { saveGameState } from "../../redux/store";
 import { MainMenuButton } from "../mainmenubutton/MainMenuButton";
 import { GameEvents, historyEventsMaxList, initialGameEvent } from "./gameevents/GameEvents";
 import { IMainGameProps, IMainGameState } from "./MainGameModel";
@@ -252,9 +254,11 @@ export class MainGame extends React.Component<IMainGameProps, IMainGameState> {
         this.props.stats.food <= 0 ||
         this.props.stats.water <= 0
       ) {
-        localStorage.removeItem(LOCAL_STORAGE_SAVED_STATE_NAME);
         this.props.goToEndGame();
       }
+
+      // SAVING GAME STATE TO DATABASE
+      saveGameState(this.props.getLogin.email, this.props.getLogin.uuid, this.props.stats);
     }
   }
 
@@ -285,13 +289,6 @@ export class MainGame extends React.Component<IMainGameProps, IMainGameState> {
     }
   }
 
-  // WARNINGS !!!
-  // public componentWillReceiveProps(nextProps: IMainGameProps) {
-  //   if (nextProps.getGameEvents !== this.props.getGameEvents) {
-  //     this.setState({ historyOfEvents: nextProps.getGameEvents });
-  //   }
-  // }
-
   public render(): JSX.Element {
     if (this.state) {
       return (
@@ -299,48 +296,40 @@ export class MainGame extends React.Component<IMainGameProps, IMainGameState> {
           <div className="main-game-div">
             <div className="main-game-header">
               <MainMenuButton
-                title="ZAPIS I WYJŚCIE"
+                title=""
                 active={true}
                 onClick={() => {
-                  fetch("/api/users", {
-                    method: "PUT",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      email: this.props.getLogin.email,
-                      uuid: this.props.getLogin.uuid,
-                      stats: this.props.stats,
-                    }),
-                  })
-                  .then(res => res.json())
-                  .then((resp: IResponseType) => {
-                    console.log(resp);
-                  });
+                  if (this.props.getLogin.email !== "" && this.props.getLogin.uuid !== "") {
+                    saveGameState(this.props.getLogin.email, this.props.getLogin.uuid, this.props.stats);
+                  }
                   this.props.toggleContinueGame(true);
                   this.props.gotoMainMenu();
                 }}
-              />
+              >
+                <FontAwesomeIcon icon={faArrowAltCircleLeft} />
+              </MainMenuButton>
               <span className="maingame-title">FURY ROAD</span>
-              <div className="imageFuel">
-                <div
-                  className="imageFuelIndicator"
-                  style={{
-                    transform:
-                      "rotate(" + Math.floor((this.props.stats.fuel * 180) / this.props.stats.maxFuel - 90) + "deg)",
-                  }}
-                ></div>
-              </div>
-              <div className="imageCarTemperature">
-                <div
-                  className="imageCarTemperatureIndicator"
-                  style={{
-                    transform:
-                      "rotate(" +
-                      ((this.props.stats.carTemperature * 180) / this.props.stats.carMaxTemperature - 90) +
-                      "deg)",
-                  }}
-                ></div>
+              <div className="indicatorImages">
+                <div className="imageFuel">
+                  <div
+                    className="imageFuelIndicator"
+                    style={{
+                      transform:
+                        "rotate(" + Math.floor((this.props.stats.fuel * 180) / this.props.stats.maxFuel - 90) + "deg)",
+                    }}
+                  ></div>
+                </div>
+                <div className="imageCarTemperature">
+                  <div
+                    className="imageCarTemperatureIndicator"
+                    style={{
+                      transform:
+                        "rotate(" +
+                        ((this.props.stats.carTemperature * 180) / this.props.stats.carMaxTemperature - 90) +
+                        "deg)",
+                    }}
+                  ></div>
+                </div>
               </div>
             </div>
 
@@ -436,12 +425,14 @@ export class MainGame extends React.Component<IMainGameProps, IMainGameState> {
                 </div>
                 <div className="map-button-panel">
                   <MainMenuButton
-                    title={"Mapa"}
+                    title={""}
                     active={true}
                     onClick={() => {
                       console.log("MAPA");
                     }}
-                  />
+                  >
+                    <FontAwesomeIcon icon={faMap} />
+                  </MainMenuButton>
                 </div>
               </div>
             </div>

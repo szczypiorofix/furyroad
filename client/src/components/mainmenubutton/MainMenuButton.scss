@@ -1,7 +1,7 @@
 @import '../../variables';
 
 button {
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 400;
     padding: 8px;
     background-color: $color_dark_gray;
@@ -12,6 +12,7 @@ button {
     margin: 1% 0;
     border-radius: 2px;
     cursor: pointer;
+    box-shadow: 1px 1px 5px 1px $color_dark_gray;
     // text-shadow: 1px 1px 1px @color02;
     transition: all 0.2s;
     &:hover {

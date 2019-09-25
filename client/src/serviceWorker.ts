@@ -21,7 +21,7 @@ const isLocalhost = Boolean(
 interface IConfig {
   onSuccess?: (registration: ServiceWorkerRegistration) => void;
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
-};
+}
 
 export function register(config?: IConfig) {
   if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {

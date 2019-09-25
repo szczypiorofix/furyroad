@@ -15,28 +15,12 @@ import {
 } from "../../redux/actions";
 import initialState from "../../redux/initialstate";
 import { getGameMode, getGameSettings, getLogin } from "../../redux/selectors";
-// import { LOCAL_STORAGE_SAVED_STATE_NAME } from "../../redux/store";
 import { MainMenuButton } from "../mainmenubutton/MainMenuButton";
 import "./MainMenu.scss";
 import { IMainMenuProps } from "./MainMenuModel";
 
 export class MainMenu extends React.Component<IMainMenuProps, {}> {
   public render(): JSX.Element {
-    // if (localStorage.getItem(LOCAL_STORAGE_SAVED_STATE_NAME)) {
-    //   console.log("STATE IN LOCALSTORAGE - OK");
-    //   const checkStore = localStorage.getItem(LOCAL_STORAGE_SAVED_STATE_NAME);
-    //   if (checkStore !== null) {
-    //     const storeObjects: ISavedState = JSON.parse(checkStore);
-    //     if (storeObjects.gamesettings.canContinue) {
-    //       // this.props.toggleContinueGame(true);
-    //     }
-    //   }
-    // } else {
-    //   console.log("NO STATE IN LOCALSTORAGE");
-    //   // OK jeszcze sprawdzanie wersji, jeśli starsza to resetSavedState
-    //   this.props.resetSavedState(initialState.savedstate);
-    // }
-    
     return (
       <React.Fragment>
         <div className="mainmenu-bg">

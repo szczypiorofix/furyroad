@@ -6,10 +6,19 @@ div.main-view-map {
     height: 400px;
     top: calc(0 + 128px);
     left: calc(50% - 16px);
-    
+    background: url("/images/map.png");
+    background-repeat: no-repeat;
+    background-size: cover;
     z-index: 1;
+    border: 5px solid $color_dark_crimson;
+    border-radius: 2px;
+    
     img {
         width: 100%;
         display: none;
+    }
+    button {
+        max-width: 60px;
+        width: 60px;
     }
 }

@@ -10,7 +10,7 @@ export const LOCAL_STORAGE_SAVED_STATE_NAME: string = "gameSavedState";
 export const saveGameState = (savedState: ISavedState) => {
   // const serializedSavedState = JSON.stringify(savedState);
   // localStorage.setItem("gameSavedState", serializedSavedState);
-    
+
   console.log("game saved");
 };
 
@@ -33,8 +33,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
   const logger = createLogger({
     diff: true,
   });
-  middleware = [...middleware
-    , logger];
+  middleware = [...middleware, logger];
 }
 
 const store: Store<IGameRootState, AnyAction> = configureStore(middleware);

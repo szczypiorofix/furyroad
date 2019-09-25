@@ -3,7 +3,15 @@ import { connect } from "react-redux";
 
 import "./MainGame.scss";
 
-import { EventResults, EventTypes, GameStatsEnum, IGameEvent, IResponseType, ISavedState, IStatToModify } from "furyroad-interfaces";
+import {
+  EventResults,
+  EventTypes,
+  GameStatsEnum,
+  IGameEvent,
+  IResponseType,
+  ISavedState,
+  IStatToModify,
+} from "furyroad-interfaces";
 import { IGameRootState } from "../../models";
 import { goToEndGame, goToMainMenu, modStat, resetSavedState, setStat, toggleContinueGame } from "../../redux/actions";
 import { getGameEvents, getGameMode, getGameSettings, getGameStats, getLogin } from "../../redux/selectors";
@@ -313,10 +321,10 @@ export class MainGame extends React.Component<IMainGameProps, IMainGameState> {
                       stats: this.props.stats,
                     }),
                   })
-                  .then(res => res.json())
-                  .then((resp: IResponseType) => {
-                    console.log(resp);
-                  });
+                    .then(res => res.json())
+                    .then((resp: IResponseType) => {
+                      console.log(resp);
+                    });
                   this.props.toggleContinueGame(true);
                   this.props.gotoMainMenu();
                 }}

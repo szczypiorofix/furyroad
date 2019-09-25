@@ -15,7 +15,7 @@ const gameStatsReducer: Reducer<IGameStats, GameStatsAction> = (
     case GameStatsActions.GAME_RESETSTATS:
       return initialState.savedstate.gamestats;
     case GameStatsActions.GAME_LOADSTATS:
-        return action.payload.gamestats;
+      return action.payload.gamestats;
     default:
       return state;
   }

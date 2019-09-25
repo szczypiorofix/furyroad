@@ -28,10 +28,44 @@ div.splash-screen-main {
         }
 
         div.changelog-content {
-            overflow: auto;
             max-height: 330px;
             width: 100%;
+            position: relative;
+            div.ziuuu {
+                position: absolute;
+                top: 50%;
+                left: calc(50% - 32px);
+                width: 250px;
+                height: 250px;
+                width: 64px;
+                height: 64px;
+                & div {
+                    box-sizing: border-box;
+                    display: block;
+                    position: absolute;
+                    width: 51px;
+                    height: 51px;
+                    margin: 6px;
+                    border: 6px solid #fff;
+                    border-radius: 50%;
+                    animation: ziuuu-anim 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                    border-color: #fff transparent transparent transparent;
+                }
+                & div:nth-child(1) {
+                    animation-delay: -0.45s;
+                }
+                & div:nth-child(2) {
+                    animation-delay: -0.3s;
+                }
+                & div:nth-child(3) {
+                    animation-delay: -0.15s;
+                }
+            }
+            p {
+                text-align: center;
+            }
             ul {
+                overflow: auto;
                 list-style: none;
                 padding: 5px;
                 li {
@@ -44,6 +78,7 @@ div.splash-screen-main {
 
     h1 {
         margin-top: 60px;
+        font-size: 54px;
     }
 
     div.splash-buttons {
@@ -71,6 +106,7 @@ div.splash-screen-main {
         background-color: $color_light_gray;
         box-shadow: 1px 1px 1px 3px $color_medium_brown;
 
+        font-size: 24px;
         border: none;
         border-radius: 2px;
 
@@ -97,7 +133,6 @@ div.splash-screen-main {
         }
 
         span.form-title {
-            font-size: 24px;
             margin: 10px;
         }
 
@@ -105,5 +140,14 @@ div.splash-screen-main {
             position: relative;
             margin-top: 25px;
         }
+    }
+}
+
+@keyframes ziuuu-anim {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
 }

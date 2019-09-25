@@ -28,7 +28,11 @@ export interface IGameStatsActionLoadStats {
   payload: ISavedState;
 }
 
-export type GameStatsAction = IGameStatsActionModStat | IGameStatsActionSetStat | IGameStatsActionResetStat | IGameStatsActionLoadStats;
+export type GameStatsAction =
+  | IGameStatsActionModStat
+  | IGameStatsActionSetStat
+  | IGameStatsActionResetStat
+  | IGameStatsActionLoadStats;
 
 export const modStat = (stat: IStatToModify) => action(GameStatsActions.GAME_MODSTAT, stat);
 
@@ -37,4 +41,3 @@ export const setStat = (stat: IStatToModify) => action(GameStatsActions.GAME_SET
 export const resetSavedState = (initial: ISavedState) => action(GameStatsActions.GAME_RESETSTATS, initial);
 
 export const loadSavedState = (initial: ISavedState) => action(GameStatsActions.GAME_LOADSTATS, initial);
-

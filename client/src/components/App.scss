@@ -1,6 +1,6 @@
 @charset 'UTF-8';
 
-@import url('https://fonts.googleapis.com/css?family=Exo+2&display=swap&subset=latin-ext');
+@import url('https://fonts.googleapis.com/css?family=VT323&display=swap&subset=latin-ext');
 
 @import '../variables';
 
@@ -18,11 +18,16 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'VT323', monospace;
     background-color: $color_dark_gray;
     background-image: url('/images/wasteland.png');
     background-position: 0 0;
     background-repeat: no-repeat;
     background-size: cover;
     color: $color_sand;
+}
+
+button {
+    font-family: 'VT323', monospace;
+    letter-spacing: 0.02em;
 }

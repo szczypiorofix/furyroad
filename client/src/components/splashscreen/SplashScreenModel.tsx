@@ -1,4 +1,4 @@
-import { IGameLogin, IGameSettings, ISavedState, IUser } from "furyroad-interfaces";
+import { IGameLogin, IGameSettings, IResponseType, ISavedState, IUser } from "furyroad-interfaces";
 
 export interface ISplashScreenProps {
   gotoMainMenu: () => void;
@@ -8,7 +8,7 @@ export interface ISplashScreenProps {
   resetSavedState: (initial: ISavedState) => void;
   loadSavedState: (initial: ISavedState) => void;
   toggleContinueGame: (v: boolean) => void;
-  
+
   getLogin: IGameLogin;
   getSettings: IGameSettings;
 }
@@ -22,5 +22,6 @@ export interface IChangeLogContent {
 export interface ISplashScreenState {
   loginPopupVisible: boolean;
   changeLogVisible: boolean;
-  changeLogContent: IChangeLogContent[];
+  changeLogContent: IResponseType;
+  changeLogContentLoading: boolean;
 }

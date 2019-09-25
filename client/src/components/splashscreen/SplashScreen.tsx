@@ -1,4 +1,4 @@
-import { IGameLogin, ILoginResponseType, ISavedState, IUser } from "furyroad-interfaces";
+import { IGameLogin, ILoginResponseType, IResponseType, ISavedState, IUser } from "furyroad-interfaces";
 import moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
@@ -6,28 +6,76 @@ import { connect } from "react-redux";
 import "./SplashScreen.scss";
 
 import { IGameRootState } from "../../models";
-import { goToMainMenu, loadSavedState, login, logout, resetSavedState, setOffline, toggleContinueGame } from "../../redux/actions";
-import { getLogin, getGameSettings } from "../../redux/selectors";
+import {
+  goToMainMenu,
+  loadSavedState,
+  login,
+  logout,
+  resetSavedState,
+  setOffline,
+  toggleContinueGame,
+} from "../../redux/actions";
+import { getGameSettings, getLogin } from "../../redux/selectors";
 import { MainMenuButton } from "../mainmenubutton/MainMenuButton";
 import { IChangeLogContent, ISplashScreenProps, ISplashScreenState } from "./SplashScreenModel";
 
+const RESET_RESPONSE: IResponseType = {
+  error: undefined,
+  data: [],
+  msg: "",
+  statusCode: 0,
+};
+
 export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScreenState> {
-  public state = { loginPopupVisible: false, changeLogVisible: false, changeLogContent: [] };
+  public state = {
+    loginPopupVisible: false,
+    changeLogVisible: false,
+    changeLogContentLoading: true,
+    changeLogContent: RESET_RESPONSE,
+  };
   private logginPopupDiv: React.RefObject<HTMLDivElement>;
+  private formEmailInput: React.RefObject<HTMLInputElement>;
+  private formPassInput: React.RefObject<HTMLInputElement>;
 
   constructor(props: any) {
     super(props);
     this.logginPopupDiv = React.createRef();
+
+    this.formEmailInput = React.createRef();
+    this.formPassInput = React.createRef();
 
     if (this.logginPopupDiv.current) {
       this.logginPopupDiv.current.id = "loginRegisterPopup";
     }
   }
 
+  public inputKeyboardListener = (e: any) => {
+    const event = e || window.event;
+    const charCode = event.which || event.keyCode;
+    if (charCode === 13) {
+      this.submitLoginForm();
+      return false;
+    }
+    if (charCode === 27) {
+      this.setState({
+        loginPopupVisible: false,
+      });
+    }
+  };
+
   public componentDidMount() {
     this.setState({
       loginPopupVisible: false,
     });
+
+    if (this.formEmailInput.current && this.formPassInput.current) {
+      this.formEmailInput.current.addEventListener("keyup", e => {
+        this.inputKeyboardListener(e);
+      });
+      this.formPassInput.current.addEventListener("keyup", e => {
+        this.inputKeyboardListener(e);
+      });
+    }
   }
 
   public submitLoginForm = () => {
@@ -55,30 +103,30 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
         password: pass,
       }),
     })
-    .then(res => res.json())
-    .then((resp: ILoginResponseType) => {
-      console.log(resp);
-      if (resp.data) {
-        console.log(resp.data.email);
-        this.props.loadSavedState({
-          gamestats: resp.data.stats,
-          gameeventshistory: [],
-          gamelogin: {
-            email: resp.data.email,
-            uuid: resp.data.uuid,
-            password: resp.data.password
-          },
-          gamesettings: {
-            canContinue: true,
-            musicOn: true,
-            musicVolume: 100,
-            offline: false
-          }
-        });
-        this.props.toggleContinueGame(true);
-        this.props.login(resp.data);
-      }
-    });
+      .then(res => res.json())
+      .then((resp: ILoginResponseType) => {
+        console.log(resp);
+        if (resp.data) {
+          console.log(resp.data.email);
+          this.props.loadSavedState({
+            gamestats: resp.data.stats,
+            gameeventshistory: [],
+            gamelogin: {
+              email: resp.data.email,
+              uuid: resp.data.uuid,
+              password: resp.data.password,
+            },
+            gamesettings: {
+              canContinue: true,
+              musicOn: true,
+              musicVolume: 100,
+              offline: false,
+            },
+          });
+          this.props.toggleContinueGame(true);
+          this.props.login(resp.data);
+        }
+      });
   };
 
   public loginRegisterPopup() {
@@ -92,11 +140,11 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
         <div id="loginform">
           <div className="field">
             <span>e-mail</span>
-            <input id="formEmail" type="email" name="email" required />
+            <input id="formEmail" ref={this.formEmailInput} type="email" name="email" required />
           </div>
           <div className="field">
             <span>hasło</span>
-            <input id="formPass" type="password" name="password" required />
+            <input id="formPass" ref={this.formPassInput} type="password" name="password" required />
           </div>
           <button onClick={this.submitLoginForm}>Zaloguj</button>
           <button
@@ -145,39 +193,86 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
     );
   }
 
-  public showChangelogInfo() {
-    let showChangeLogString: string = "none";
-
-    let items: any;
-    if (this.state && this.state.changeLogContent) {
-      items = this.state.changeLogContent.map((item: IChangeLogContent, key) => (
-        <li key={item._id}>
-          {moment(item.date).format("YYYY-MM-DD - HH:mm")}: {item.text}
-        </li>
-      ));
+  public getChangelogInfo = async () => {
+    if (this.state.changeLogContent.statusCode === 200) {
+      return;
     }
-
-    if (this.state && this.state.changeLogVisible) {
-      showChangeLogString = this.state.changeLogVisible ? "block" : "none";
+    try {
+      const response = await fetch("/api/news", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        this.setState({
+          changeLogContentLoading: false,
+          changeLogContent: {
+            statusCode: 400,
+            msg: response.statusText,
+            data: [],
+            error: "Błąd! " + response.status + " " + response.statusText,
+          },
+        });
+        return;
+      }
+      const responseObject: IResponseType = await response.json();
+      console.log(responseObject);
+      this.setState({
+        changeLogContentLoading: false,
+        changeLogContent: responseObject,
+      });
+    } catch (err) {
+      console.error(err);
+      this.setState({
+        changeLogContent: {
+          statusCode: 400,
+          msg: err,
+          data: [],
+          error: "Błąd! " + err,
+        },
+      });
     }
-    return (
-      <div style={{ display: showChangeLogString }} className="changelogdiv">
-        <button onClick={() => this.setState({ changeLogVisible: false })}>X</button>
-        <div className="changelog-content">
-          <ul>{items}</ul>
-        </div>
-      </div>
-    );
+  };
+
+  public onChangeLogContentRequest() {
+    this.setState({
+      changeLogContentLoading: true,
+      changeLogVisible: !this.state.changeLogVisible,
+    });
+
+    this.getChangelogInfo();
   }
 
   public render(): JSX.Element {
+    const { changeLogVisible, changeLogContent, changeLogContentLoading } = this.state;
+    const showChangeLogString = changeLogVisible ? "block" : "none";
+    const changeLogContentHTML: JSX.Element[] = changeLogContent.data.map((item: IChangeLogContent) => (
+      <li key={item._id}>
+        {moment(item.date).format("YYYY-MM-DD - HH:mm")}: {item.text}
+      </li>
+    ));
+
     return (
       <React.Fragment>
         <div className="splash-screen-main">
-          <h1>FURY ROAD...</h1>
+          <h1>FURY ROAD</h1>
           {this.loginRegisterPopup()}
-          {this.showChangelogInfo()}
-
+          <div style={{ display: showChangeLogString }} className="changelogdiv">
+            <button onClick={() => this.setState({ changeLogVisible: false })}>X</button>
+            <div className="changelog-content">
+              {changeLogContent.error && <p>{changeLogContent.error}</p>}
+              {changeLogContentLoading && changeLogContent.statusCode !== 200 && (
+                <div className="ziuuu">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              )}
+              <ul>{changeLogContentHTML}</ul>
+            </div>
+          </div>
           <div className="splash-buttons">
             {this.props.getLogin.email === "" ? this.loginRegisterButton() : this.continueButton()}
             <MainMenuButton
@@ -188,21 +283,7 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
                 this.props.gotoMainMenu();
               }}
             />
-            <MainMenuButton
-              title="#CHANGELOG"
-              active={true}
-              onClick={() => {
-                fetch("/api/news", {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                })
-                  .then(res => res.json())
-                  .then((content: IChangeLogContent[]) => this.setState({ changeLogContent: content }));
-                this.setState({ changeLogVisible: !this.state.changeLogVisible });
-              }}
-            />
+            <MainMenuButton title="#CHANGELOG" active={true} onClick={() => this.onChangeLogContentRequest()} />
           </div>
         </div>
       </React.Fragment>

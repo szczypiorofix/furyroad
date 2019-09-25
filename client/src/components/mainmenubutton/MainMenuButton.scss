@@ -12,6 +12,7 @@ button {
     margin: 1% 0;
     border-radius: 2px;
     cursor: pointer;
+    box-shadow: 1px 1px 5px 1px $color_dark_gray;
     // text-shadow: 1px 1px 1px @color02;
     transition: all 0.2s;
     &:hover {

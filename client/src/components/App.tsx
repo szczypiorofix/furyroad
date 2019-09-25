@@ -1,9 +1,79 @@
-import React from "react";
 import "./App.scss";
-import Game from "./game/Game";
 
-function App() {
-  return <Game />;
+import React from "react";
+import { connect } from "react-redux";
+
+import Endgame from "./endgame/Endgame";
+import Junkyard from "./junkyard/Junkyard";
+import MainGame from "./maingame/MainGame";
+import MainMenu from "./mainmenu/MainMenu";
+import MusicBox from "./musicbox/MusicBox";
+import Settings from "./settings/Settings";
+import SplashScreen from "./splashscreen/SplashScreen";
+
+import { IGameRootState, MainGameStateTypes } from "../models";
+import { getGameMode, getGameSettings } from "../redux/selectors";
+import { IAppProps } from "./AppModel";
+
+export class App extends React.Component<IAppProps, {}> {
+  public render(): JSX.Element {
+    switch (this.props.gameMode.mode) {
+      case MainGameStateTypes.MAIN_MENU:
+        return (
+          <React.Fragment>
+            <MusicBox />
+            <MainMenu />
+          </React.Fragment>
+        );
+      case MainGameStateTypes.NEW_GAME:
+        return (
+          <React.Fragment>
+            <MusicBox />
+            <MainGame />
+          </React.Fragment>
+        );
+      case MainGameStateTypes.JUNKYARD:
+        return (
+          <React.Fragment>
+            <MusicBox />
+            <Junkyard />
+          </React.Fragment>
+        );
+      case MainGameStateTypes.SETTINGS:
+        return (
+          <React.Fragment>
+            <MusicBox />
+            <Settings />
+          </React.Fragment>
+        );
+      case MainGameStateTypes.CONTINUE:
+        return (
+          <React.Fragment>
+            <MusicBox />
+            <MainGame />
+          </React.Fragment>
+        );
+      case MainGameStateTypes.ENDGAME:
+        return (
+          <React.Fragment>
+            <MusicBox />
+            <Endgame />
+          </React.Fragment>
+        );
+      default:
+        return <SplashScreen />;
+    }
+  }
 }
 
-export default App;
+const mapStateToProps = (state: IGameRootState) => ({
+  gameMode: getGameMode(state),
+  gameSettings: getGameSettings(state),
+});
+
+const mapDispatchToProps = (dispatch: any) => ({});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);

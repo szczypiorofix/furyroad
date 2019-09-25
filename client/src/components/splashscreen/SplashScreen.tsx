@@ -1,3 +1,5 @@
+import { faEnvelope, faLock, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IGameLogin, ILoginResponseType, IResponseType, ISavedState, IUser } from "furyroad-interfaces";
 import moment from "moment";
 import React from "react";
@@ -93,40 +95,42 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
     }
     this.setState({ loginPopupVisible: false });
 
-    fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password: pass,
-      }),
-    })
-      .then(res => res.json())
-      .then((resp: ILoginResponseType) => {
-        console.log(resp);
-        if (resp.data) {
-          console.log(resp.data.email);
-          this.props.loadSavedState({
-            gamestats: resp.data.stats,
-            gameeventshistory: [],
-            gamelogin: {
-              email: resp.data.email,
-              uuid: resp.data.uuid,
-              password: resp.data.password,
-            },
-            gamesettings: {
-              canContinue: true,
-              musicOn: true,
-              musicVolume: 100,
-              offline: false,
-            },
-          });
-          this.props.toggleContinueGame(true);
-          this.props.login(resp.data);
-        }
-      });
+    if (email.length > 0 && pass.length > 0) {
+      fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password: pass,
+        }),
+      })
+        .then(res => res.json())
+        .then((resp: ILoginResponseType) => {
+          if (resp.data) {
+            this.props.loadSavedState({
+              gamestats: resp.data.stats,
+              gameeventshistory: [],
+              gamelogin: {
+                email: resp.data.email,
+                uuid: resp.data.uuid,
+                password: resp.data.password,
+              },
+              gamesettings: {
+                canContinue: true,
+                musicOn: true,
+                musicVolume: 100,
+                offline: false,
+              },
+            });
+            this.props.toggleContinueGame(true);
+            this.props.login(resp.data);
+          }
+        });
+    } else {
+      console.error("Email and/or password cannot be empty !!!");
+    }
   };
 
   public loginRegisterPopup() {
@@ -136,25 +140,38 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
     }
     return (
       <div id="loginRegisterPopup" ref={this.logginPopupDiv} style={{ display: showPopupString }}>
-        <span className="form-title">Zaloguj się do gry</span>
-        <div id="loginform">
-          <div className="field">
-            <span>e-mail</span>
-            <input id="formEmail" ref={this.formEmailInput} type="email" name="email" required />
-          </div>
-          <div className="field">
-            <span>hasło</span>
-            <input id="formPass" ref={this.formPassInput} type="password" name="password" required />
-          </div>
-          <button onClick={this.submitLoginForm}>Zaloguj</button>
+        <div className="title-and-close">
+          <span className="form-title">Zaloguj się do gry</span>
           <button
             type="reset"
             onClick={() => {
               this.setState({ loginPopupVisible: false });
             }}
           >
-            Anuluj
+            <FontAwesomeIcon icon={faTimes} />
           </button>
+        </div>
+        <div id="loginform">
+          <div className="field">
+            <span>
+              <FontAwesomeIcon icon={faEnvelope} />
+            </span>
+            <input id="formEmail" ref={this.formEmailInput} type="email" placeholder="e-mail" name="email" required />
+          </div>
+          <div className="field">
+            <span>
+              <FontAwesomeIcon icon={faLock} />
+            </span>
+            <input
+              id="formPass"
+              ref={this.formPassInput}
+              type="password"
+              placeholder="hasło"
+              name="password"
+              required
+            />
+          </div>
+          <button onClick={this.submitLoginForm}>Zaloguj</button>
         </div>
       </div>
     );
@@ -217,7 +234,6 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
         return;
       }
       const responseObject: IResponseType = await response.json();
-      console.log(responseObject);
       this.setState({
         changeLogContentLoading: false,
         changeLogContent: responseObject,
@@ -275,15 +291,15 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
           </div>
           <div className="splash-buttons">
             {this.props.getLogin.email === "" ? this.loginRegisterButton() : this.continueButton()}
-            <MainMenuButton
+            {/* <MainMenuButton
               title="Graj lokalnie"
               active={true}
               onClick={() => {
                 this.props.setOffline(true);
                 this.props.gotoMainMenu();
               }}
-            />
-            <MainMenuButton title="#CHANGELOG" active={true} onClick={() => this.onChangeLogContentRequest()} />
+            /> */}
+            <MainMenuButton title="CHANGELOG" active={true} onClick={() => this.onChangeLogContentRequest()} />
           </div>
         </div>
       </React.Fragment>

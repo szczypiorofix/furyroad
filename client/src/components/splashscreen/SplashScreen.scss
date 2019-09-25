@@ -104,37 +104,67 @@ div.splash-screen-main {
         
         z-index: 1;
         background-color: $color_light_gray;
-        box-shadow: 1px 1px 1px 3px $color_medium_brown;
+        box-shadow: 1px 1px 6px 2px $color_dark_gray;
 
         font-size: 24px;
         border: none;
         border-radius: 2px;
 
-        div {
+        div.title-and-close {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            text-align: center;
+            position: relative;
+            button[type="reset"] {
+                position: absolute;
+                left: calc( 100% - 40px);
+                max-width: 40px;
+                max-height: 40px;
+                width: 40px;
+                height: 40px;
+                margin: 0;
+                font-size: 16px;
+            }
+            span.form-title {
+                margin: 40px 10px;
+                font-size: 32px;
+                text-shadow: 2px 2px 8px $color_dark_gray;
+            }
+        }
+
+        
+
+        div#loginform {
             div.field {
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
                 align-items: baseline;
+                span {
+                    font-size: 24px;
+                    margin: auto 8px;
+                }
                 input {
                     margin: 10px 5px;
                     padding: 5px;
-                    max-width: 160px;
-                    width: 160px;
+                    max-width: 175px;
+                    width: 175px;
                     border-radius: 5px;
                     outline: none;
                     border: 3px solid $color_dark_brown;
-                    transition: .25s border;
+                    transition: .25s all;
                     &:active, &:focus {
                         border: 3px solid $color_light_brown;
+                    }
+                    &:hover {
+                        box-shadow: 1px 1px 5px 1px $color_dark_gray;
                     }
                 }
             }
         }
 
-        span.form-title {
-            margin: 10px;
-        }
+        
 
         button {
             position: relative;

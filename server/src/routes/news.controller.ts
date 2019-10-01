@@ -11,7 +11,7 @@ const newsRouter: Router = express.Router();
 newsRouter.get("/", (request: Request, response: Response, next: NextFunction) => {
   MongoHelper.connect()
     .then(() => {
-      News.find({}, "date text", {sort: { date: -1}}, (err, results) => {
+      News.find({}, "date text", { sort: { date: -1 } }, (err, results) => {
         if (err) {
           const responseToClient: IResponseType = {
             data: [],

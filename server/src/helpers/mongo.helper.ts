@@ -8,10 +8,11 @@ export class MongoHelper {
 
     return new Promise((resolve, reject) => {
       mongoose
-        .connect(mongodbname, { 
+        .connect(mongodbname, {
           useNewUrlParser: true,
           useUnifiedTopology: true,
-          useFindAndModify: false })
+          useFindAndModify: false,
+        })
         .then(() => {
           resolve(mongoose.connection);
         })

@@ -4,7 +4,6 @@ import uuidv1 from "uuid";
 import { MongoHelper } from "../helpers";
 import { User } from "../models";
 
-
 const usersRouter: Router = express.Router();
 
 /**
@@ -46,7 +45,7 @@ usersRouter.get("/", (request: Request, response: Response, next: NextFunction) 
 });
 
 /**
- * POST api/users - insert information about user into database
+ * POST api/users - insert new user into database
  */
 usersRouter.post("/", (request: Request, response: Response, next: NextFunction) => {
   const email: string | undefined = request.body.email;
@@ -67,36 +66,75 @@ usersRouter.post("/", (request: Request, response: Response, next: NextFunction)
 
   MongoHelper.connect()
     .then(() => {
-      const responseToClient: IResponseType = {
+      let responseToClient: IResponseType = {
         data: [],
         error: undefined,
         msg: "Success - a user has been added to the database.",
         statusCode: 200,
       };
       const uuid = uuidv1();
-      const newUser = new User({ email, password, uuid, stats: defaultStats });
-      newUser
-        .save()
-        .then(() => {
-          console.info(`User ${email} has been added.`);
+      let userAlreadyInDatabase: boolean = true;
+      User.find({ email }, "email", (err, results) => {
+        if (err) {
+          responseToClient = {
+            data: [],
+            error: err,
+            msg: "Ooops! Something went wrong, mister.",
+            statusCode: 400,
+          };
           response
             .status(responseToClient.statusCode)
             .json(responseToClient)
             .end();
-        })
-        .catch(err => {
-          console.error(err);
-          const errorStatus: IResponseType = {
-            data: [],
-            error: err,
-            msg: "Error",
-            statusCode: 400,
-          };
+        } else {
+          if (results.length === 0) {
+            responseToClient = {
+              data: results,
+              error: undefined,
+              msg: "Success",
+              statusCode: 200,
+            };
+            userAlreadyInDatabase = false;
+          } else {
+            responseToClient = {
+              data: [],
+              error: "Użytkownik o podanym adresie e-mail już istnieje w bazie danych!",
+              msg: "Warning",
+              statusCode: 200,
+            };
+          }
           response
-            .status(errorStatus.statusCode)
-            .json(errorStatus)
+            .status(responseToClient.statusCode)
+            .json(responseToClient)
             .end();
-        });
+        }
+      });
+
+      if (!userAlreadyInDatabase) {
+        const newUser = new User({ email, password, uuid, stats: defaultStats });
+        newUser
+          .save()
+          .then(() => {
+            console.info(`User ${email} has been added.`);
+            response
+              .status(responseToClient.statusCode)
+              .json(responseToClient)
+              .end();
+          })
+          .catch(err => {
+            console.error(err);
+            const errorStatus: IResponseType = {
+              data: [],
+              error: err,
+              msg: "Error",
+              statusCode: 400,
+            };
+            response
+              .status(errorStatus.statusCode)
+              .json(errorStatus)
+              .end();
+          });
+      }
     })
     .catch(err => {
       console.error(err);
@@ -136,7 +174,7 @@ usersRouter.put("/", (request: Request, response: Response, next: NextFunction) 
 
   MongoHelper.connect()
     .then(() => {
-      User.findOneAndUpdate({ email: reqEmail, uuid: reqUUID }, {stats: reqStats} ,(err, results) => {
+      User.findOneAndUpdate({ email: reqEmail, uuid: reqUUID }, { stats: reqStats }, (err, results) => {
         if (err) {
           const responseToClient: ILoginResponseType = {
             data: undefined,

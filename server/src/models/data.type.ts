@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     hoursPassed: Number,
     daysPassed: Number,
     score: Number,
-  } 
+  },
 });
 
 /**

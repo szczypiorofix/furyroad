@@ -21,6 +21,8 @@ export interface IChangeLogContent {
 
 export interface ISplashScreenState {
   loginPopupVisible: boolean;
+  registerPopupVisible: boolean;
+  registerPasswordsMatch: boolean;
   changeLogVisible: boolean;
   changeLogContent: IResponseType;
   changeLogContentLoading: boolean;

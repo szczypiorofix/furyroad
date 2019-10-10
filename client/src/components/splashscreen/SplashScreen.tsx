@@ -297,7 +297,7 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
           </div>
           <div className="indicator">
             <span ref={this.formRegisterPasswordMatch}>
-              {this.state.registerPasswordsMatch ? (
+              {this.state.registerPasswordsMatch && this.formRegisterEmailInput.current && this.formRegisterEmailInput.current.value.length > 5 && this.formRegisterEmailInput.current.value.includes("@") ? (
                 <span className="passwordMatchCheck">
                   <FontAwesomeIcon icon={faCheck} />
                 </span>

@@ -9,8 +9,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format_ts": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "format_tsx": "prettier --write \"src/**/*.tsx\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\" && prettier --write \"src/**/*.tsx\" \"src/**/*.js\"",
     "lint": "tslint --project ./tsconfig.json"
   },
   "eslintConfig": {
@@ -31,29 +30,29 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
-    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@fortawesome/react-fontawesome": "^0.1.5",
     "furyroad-interfaces": "^0.1.14",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
     "react-redux": "^7.1.1",
-    "react-scripts": "^3.1.2",
+    "react-scripts": "^3.2.0",
     "redux-logger": "^3.0.6",
     "typesafe-actions": "^4.4.2"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
-    "@types/node": "^12.7.5",
-    "@types/react": "^16.9.2",
+    "@types/node": "^12.7.12",
+    "@types/react": "^16.9.5",
     "@types/react-dom": "^16.9.0",
-    "@types/react-redux": "^7.1.2",
+    "@types/react-redux": "^7.1.4",
     "@types/redux-logger": "^3.0.7",
-    "eslint": "^6.4.0",
+    "eslint": "^6.5.1",
     "prettier": "^1.18.2",
     "ts-node-dev": "^1.0.0-pre.43",
     "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.4"
   }
 }

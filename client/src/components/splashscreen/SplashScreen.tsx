@@ -1,4 +1,4 @@
-import { faEnvelope, faLock, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faEnvelope, faLock, faNotEqual, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IGameLogin, ILoginResponseType, IResponseType, ISavedState, IUser } from "furyroad-interfaces";
 import moment from "moment";
@@ -31,29 +31,72 @@ const RESET_RESPONSE: IResponseType = {
 export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScreenState> {
   public state = {
     loginPopupVisible: false,
+    registerPopupVisible: false,
+    registerPasswordsMatch: false,
     changeLogVisible: false,
     changeLogContentLoading: true,
     changeLogContent: RESET_RESPONSE,
   };
   private logginPopupDiv: React.RefObject<HTMLDivElement>;
-  private formEmailInput: React.RefObject<HTMLInputElement>;
-  private formPassInput: React.RefObject<HTMLInputElement>;
+  private registerPopupDiv: React.RefObject<HTMLDivElement>;
+
+  private formLoginEmailInput: React.RefObject<HTMLInputElement>;
+  private formLoginPassInput: React.RefObject<HTMLInputElement>;
+
+  private formRegisterEmailInput: React.RefObject<HTMLInputElement>;
+  private formRegisterPassInput: React.RefObject<HTMLInputElement>;
+  private formRegisterPassDoubleInput: React.RefObject<HTMLInputElement>;
+
+  private formRegisterPasswordMatch: React.RefObject<HTMLElement>;
 
   constructor(props: any) {
     super(props);
     this.logginPopupDiv = React.createRef();
+    this.registerPopupDiv = React.createRef();
 
-    this.formEmailInput = React.createRef();
-    this.formPassInput = React.createRef();
+    this.formLoginEmailInput = React.createRef();
+    this.formLoginPassInput = React.createRef();
+
+    this.formRegisterEmailInput = React.createRef();
+    this.formRegisterPassInput = React.createRef();
+    this.formRegisterPassDoubleInput = React.createRef();
+    this.formRegisterPasswordMatch = React.createRef();
 
     if (this.logginPopupDiv.current) {
-      this.logginPopupDiv.current.id = "loginRegisterPopup";
+      this.logginPopupDiv.current.id = "loginPopup";
+    }
+
+    if (this.registerPopupDiv.current) {
+      this.registerPopupDiv.current.id = "registerPopup";
     }
   }
 
-  public inputKeyboardListener = (e: any) => {
+  public validatePasswordInputs(
+    input1: React.RefObject<HTMLInputElement>,
+    input2: React.RefObject<HTMLInputElement>,
+  ): boolean {
+    if (input1.current && input2.current) {
+      if (
+        input1.current.value === input2.current.value &&
+        input1.current.value.length >= 6 &&
+        input2.current.value.length >= 6
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public inputKeyboardListener = (e: KeyboardEvent) => {
     const event = e || window.event;
     const charCode = event.which || event.keyCode;
+
+    if (this.validatePasswordInputs(this.formRegisterPassInput, this.formRegisterPassDoubleInput)) {
+      this.setState({ registerPasswordsMatch: true });
+    } else {
+      this.setState({ registerPasswordsMatch: false });
+    }
+
     if (charCode === 13) {
       this.submitLoginForm();
       return false;
@@ -68,27 +111,100 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
   public componentDidMount() {
     this.setState({
       loginPopupVisible: false,
+      changeLogVisible: false,
+      registerPasswordsMatch: false,
+      registerPopupVisible: false,
+      changeLogContentLoading: false,
     });
 
-    if (this.formEmailInput.current && this.formPassInput.current) {
-      this.formEmailInput.current.addEventListener("keyup", e => {
+    if (this.formLoginEmailInput.current && this.formLoginPassInput.current) {
+      this.formLoginEmailInput.current.addEventListener("keyup", e => {
         this.inputKeyboardListener(e);
       });
-      this.formPassInput.current.addEventListener("keyup", e => {
+      this.formLoginPassInput.current.addEventListener("keyup", e => {
+        this.inputKeyboardListener(e);
+      });
+    }
+
+    if (
+      this.formRegisterEmailInput.current &&
+      this.formRegisterPassInput.current &&
+      this.formRegisterPassDoubleInput.current
+    ) {
+      this.formRegisterEmailInput.current.addEventListener("keyup", e => {
+        this.inputKeyboardListener(e);
+      });
+      this.formRegisterPassInput.current.addEventListener("keyup", e => {
+        this.inputKeyboardListener(e);
+      });
+      this.formRegisterPassDoubleInput.current.addEventListener("keyup", e => {
         this.inputKeyboardListener(e);
       });
     }
   }
 
-  public submitLoginForm = () => {
+  public submitRegisterForm = () => {
     let email: string = "";
     let pass: string = "";
-    const emailField: any = document.getElementById("formEmail");
+    let pass2: string = "";
+    const emailField: any = document.getElementById("formRegisterEmail");
     if (emailField) {
       email = emailField.value;
       emailField.value = "";
     }
-    const passField: any = document.getElementById("formPass");
+    const passField: any = document.getElementById("formRegisterPass");
+    if (passField) {
+      pass = passField.value;
+      passField.value = "";
+    }
+    const pass2Field: any = document.getElementById("formRegisterPassDouble");
+    if (pass2Field) {
+      pass2 = pass2Field.value;
+      pass2Field.value = "";
+    }
+    this.setState({ loginPopupVisible: false });
+
+    if (email.length > 0 && pass.length > 0 && pass2.length > 0) {
+      if (pass === pass2) {
+        fetch("/api/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password: pass,
+          }),
+        })
+          .then(res => res.json())
+          .then((resp: ILoginResponseType) => {
+            if (resp.msg === "Success") {
+              alert("Rejestracja przebiegła pomyślnie, teraz możesz się zalogować");
+            }
+            if (resp.msg === "Warning") {
+              console.warn(resp.error);
+              alert(resp.error);
+            }
+          });
+      } else {
+        console.error("Hasła nie są identyczne !!!");
+        alert("Hasła nie są identyczne !!!");
+      }
+    } else {
+      console.error("Email and/or password cannot be empty !!!");
+      alert("Email and/or password cannot be empty !!!");
+    }
+  };
+
+  public submitLoginForm = () => {
+    let email: string = "";
+    let pass: string = "";
+    const emailField: any = document.getElementById("formLoginEmail");
+    if (emailField) {
+      email = emailField.value;
+      emailField.value = "";
+    }
+    const passField: any = document.getElementById("formLoginPass");
     if (passField) {
       pass = passField.value;
       passField.value = "";
@@ -130,16 +246,94 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
         });
     } else {
       console.error("Email and/or password cannot be empty !!!");
+      alert("Email and/or password cannot be empty !!!");
     }
   };
 
-  public loginRegisterPopup() {
+  public registerPopup() {
+    let showPopupString: string = "none";
+    if (this.state && this.state.registerPopupVisible) {
+      showPopupString = this.state.registerPopupVisible ? "flex" : "none";
+    }
+    return (
+      <div id="registerPopup" ref={this.registerPopupDiv} style={{ display: showPopupString }}>
+        <div className="title-and-close">
+          <span className="form-title">Zarejestruj się</span>
+          <button
+            type="reset"
+            onClick={() => {
+              this.setState({ registerPopupVisible: false });
+            }}
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+        </div>
+        <div id="registerform">
+          <div className="field">
+            <span>
+              <FontAwesomeIcon icon={faEnvelope} />
+            </span>
+            <input
+              id="formRegisterEmail"
+              ref={this.formRegisterEmailInput}
+              type="email"
+              placeholder="e-mail"
+              name="email"
+              required
+            />
+          </div>
+          <div className="field">
+            <span>
+              <FontAwesomeIcon icon={faLock} />
+            </span>
+            <input
+              id="formRegisterPass"
+              ref={this.formRegisterPassInput}
+              type="password"
+              placeholder="hasło (min 6 znaków)"
+              name="password"
+              required
+            />
+          </div>
+          <div className="indicator">
+            <span ref={this.formRegisterPasswordMatch}>
+              {this.state.registerPasswordsMatch && this.formRegisterEmailInput.current && this.formRegisterEmailInput.current.value.length > 5 && this.formRegisterEmailInput.current.value.includes("@") ? (
+                <span className="passwordMatchCheck">
+                  <FontAwesomeIcon icon={faCheck} />
+                </span>
+              ) : (
+                <span className="passwordMatchNoEqual">
+                  <FontAwesomeIcon icon={faNotEqual} />
+                </span>
+              )}
+            </span>
+          </div>
+          <div className="field">
+            <span>
+              <FontAwesomeIcon icon={faLock} />
+            </span>
+            <input
+              id="formRegisterPassDouble"
+              ref={this.formRegisterPassDoubleInput}
+              type="password"
+              placeholder="powtórz hasło"
+              name="password"
+              required
+            />
+          </div>
+          <button onClick={this.submitRegisterForm}>Rejestracja</button>
+        </div>
+      </div>
+    );
+  }
+
+  public loginPopup() {
     let showPopupString: string = "none";
     if (this.state && this.state.loginPopupVisible) {
       showPopupString = this.state.loginPopupVisible ? "flex" : "none";
     }
     return (
-      <div id="loginRegisterPopup" ref={this.logginPopupDiv} style={{ display: showPopupString }}>
+      <div id="loginPopup" ref={this.logginPopupDiv} style={{ display: showPopupString }}>
         <div className="title-and-close">
           <span className="form-title">Zaloguj się do gry</span>
           <button
@@ -156,15 +350,22 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
             <span>
               <FontAwesomeIcon icon={faEnvelope} />
             </span>
-            <input id="formEmail" ref={this.formEmailInput} type="email" placeholder="e-mail" name="email" required />
+            <input
+              id="formLoginEmail"
+              ref={this.formLoginEmailInput}
+              type="email"
+              placeholder="e-mail"
+              name="email"
+              required
+            />
           </div>
           <div className="field">
             <span>
               <FontAwesomeIcon icon={faLock} />
             </span>
             <input
-              id="formPass"
-              ref={this.formPassInput}
+              id="formLoginPass"
+              ref={this.formLoginPassInput}
               type="password"
               placeholder="hasło"
               name="password"
@@ -179,11 +380,18 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
 
   public loginRegisterButton() {
     return (
-      <MainMenuButton
-        title="Logowanie / Rejestracja"
-        active={true}
-        onClick={() => this.setState({ loginPopupVisible: !this.state.loginPopupVisible })}
-      />
+      <React.Fragment>
+        <MainMenuButton
+          title="Logowanie"
+          active={true}
+          onClick={() => this.setState({ loginPopupVisible: !this.state.loginPopupVisible })}
+        />
+        <MainMenuButton
+          title="Rejestracja"
+          active={true}
+          onClick={() => this.setState({ registerPopupVisible: !this.state.registerPopupVisible })}
+        />
+      </React.Fragment>
     );
   }
 
@@ -256,7 +464,6 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
       changeLogContentLoading: true,
       changeLogVisible: !this.state.changeLogVisible,
     });
-
     this.getChangelogInfo();
   }
 
@@ -273,7 +480,8 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
       <React.Fragment>
         <div className="splash-screen-main">
           <h1>FURY ROAD</h1>
-          {this.loginRegisterPopup()}
+          {this.loginPopup()}
+          {this.registerPopup()}
           <div style={{ display: showChangeLogString }} className="changelogdiv">
             <button onClick={() => this.setState({ changeLogVisible: false })}>X</button>
             <div className="changelog-content">

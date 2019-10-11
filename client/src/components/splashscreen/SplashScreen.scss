@@ -9,68 +9,83 @@ div.splash-screen-main {
     position: relative;
 
     div.changelogdiv {
-        position: absolute;
+        position: absolute; 
         top: 15%;
-        left: 25%;
-        min-width: 45%;
-        min-height: 75%;
-        max-width: 45%;
-        max-height: 75%;
-        border-radius: 2px;
-        padding: 5px;
-        background-color: $color_dark_gray;
+        left: 0%;
+        width: 100%;
+        min-height: 500px;
         z-index: 10;
-
         text-align: right;
-        button {
-            max-width: 50px;
-            margin: 5px;
-        }
 
-        div.changelog-content {
-            max-height: 330px;
-            width: 100%;
-            position: relative;
-            div.ziuuu {
-                position: absolute;
-                top: 50%;
-                left: calc(50% - 32px);
-                width: 250px;
-                height: 250px;
-                width: 64px;
-                height: 64px;
-                & div {
-                    box-sizing: border-box;
-                    display: block;
+        div.center-content {
+            padding: 5px;
+            background-color: $color_dark_gray;
+            width: 96%;
+            max-width: 960px;
+            min-height: 500px;
+            margin: 0 auto;
+            height: 100%;
+            border-radius: 2px;
+            
+            @include tablet {
+                width: 80%;
+                max-width: 100%;
+            }
+    
+            @include desktop {
+                width: 60%;
+            }
+
+            button {
+                max-width: 50px;
+                margin: 5px;
+            }
+
+            div.changelog-content {
+                max-height: 330px;
+                width: 100%;
+
+                div.ziuuu {
                     position: absolute;
-                    width: 51px;
-                    height: 51px;
-                    margin: 6px;
-                    border: 6px solid #fff;
-                    border-radius: 50%;
-                    animation: ziuuu-anim 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-                    border-color: #fff transparent transparent transparent;
+                    top: 35%;
+                    left: calc(50% - 32px);
+                    width: 250px;
+                    height: 250px;
+                    width: 64px;
+                    height: 64px;
+                    & div {
+                        box-sizing: border-box;
+                        display: block;
+                        position: absolute;
+                        width: 51px;
+                        height: 51px;
+                        margin: 6px;
+                        border: 6px solid #fff;
+                        border-radius: 50%;
+                        animation: ziuuu-anim 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                        border-color: #fff transparent transparent transparent;
+                    }
+                    & div:nth-child(1) {
+                        animation-delay: -0.45s;
+                    }
+                    & div:nth-child(2) {
+                        animation-delay: -0.3s;
+                    }
+                    & div:nth-child(3) {
+                        animation-delay: -0.15s;
+                    }
                 }
-                & div:nth-child(1) {
-                    animation-delay: -0.45s;
+                p {
+                    text-align: center;
                 }
-                & div:nth-child(2) {
-                    animation-delay: -0.3s;
-                }
-                & div:nth-child(3) {
-                    animation-delay: -0.15s;
-                }
-            }
-            p {
-                text-align: center;
-            }
-            ul {
-                overflow: auto;
-                list-style: none;
-                padding: 5px;
-                li {
-                    text-align: left;
-                    margin: 10px 0;
+                ul {
+                    overflow: auto;
+                    list-style: none;
+                    padding: 5px;
+                    li {
+                        text-align: left;
+                        margin: 10px 0;
+                    }
                 }
             }
         }
@@ -78,8 +93,12 @@ div.splash-screen-main {
 
     h1 {
         margin-top: 60px;
-        font-size: 4em;
+        font-size: 4.5em;
         text-shadow: 2px 2px 2px $color_dark_gray;
+        // @include mobile {
+        //     font-size: 3.5em;
+        //     margin-top: 10px;
+        // }
     }
 
     div.splash-buttons {

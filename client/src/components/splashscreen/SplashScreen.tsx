@@ -483,18 +483,20 @@ export class SplashScreen extends React.Component<ISplashScreenProps, ISplashScr
           {this.loginPopup()}
           {this.registerPopup()}
           <div style={{ display: showChangeLogString }} className="changelogdiv">
-            <button onClick={() => this.setState({ changeLogVisible: false })}>X</button>
-            <div className="changelog-content">
-              {changeLogContent.error && <p>{changeLogContent.error}</p>}
-              {changeLogContentLoading && changeLogContent.statusCode !== 200 && (
-                <div className="ziuuu">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-              )}
-              <ul>{changeLogContentHTML}</ul>
+            <div className="center-content">
+              <button onClick={() => this.setState({ changeLogVisible: false })}>X</button>
+              <div className="changelog-content">
+                {changeLogContent.error && <p>{changeLogContent.error}</p>}
+                {changeLogContentLoading && changeLogContent.statusCode !== 200 && (
+                  <div className="ziuuu">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                )}
+                <ul>{changeLogContentHTML}</ul>
+              </div>
             </div>
           </div>
           <div className="splash-buttons">
